@@ -17,8 +17,8 @@ func Api() {
 		router.Post("uploadFile", admin.NewIndexController().UploadFile) //上传普通文件
 	})
 
-	//有权限检查
-	facades.Route().Prefix("admin").Middleware(middleware.AdminCheck(), middleware.Recovery()).Group(func(router route.Router) {
+	//有权限检查 middleware.AdminCheck(),
+	facades.Route().Prefix("api/admin").Middleware(middleware.Recovery()).Group(func(router route.Router) {
 
 		//router.Post("getMenu", admin.NewIndexController().GetMenu)       //获取菜单信息
 		//router.Post("getInfo", admin.NewIndexController().GetInfo)       //获取用户信息
@@ -35,19 +35,19 @@ func Api() {
 		//router.Post("getBannerCateTree", admin.NewIndexController().GetBannerCateTree)
 
 		router.Prefix("admin").Group(func(router1 route.Router) {
-			router1.Get("/getList", admin.NewAdminController().GetList)
-			router1.Get("/getAll", admin.NewAdminController().GetAll)
-			router1.Get("/add", admin.NewAdminController().Add)
-			router1.Get("/save", admin.NewAdminController().Save)
-			router1.Get("/delete", admin.NewAdminController().Delete)
+			router1.Post("/getList", admin.NewAdminController().GetList)
+			router1.Post("/getAll", admin.NewAdminController().GetAll)
+			router1.Post("/add", admin.NewAdminController().Add)
+			router1.Post("/save", admin.NewAdminController().Save)
+			router1.Post("/delete", admin.NewAdminController().Delete)
 		})
 
 		//router.Prefix("index").Group(func(router1 route.Router) {
-		//	router1.Get("/getList", admin.NewIndexController().GetList)
-		//	router1.Get("/getAll", admin.NewIndexController().GetAll)
-		//	router1.Get("/add", admin.NewIndexController().Add)
-		//	router1.Get("/save", admin.NewIndexController().Save)
-		//	router1.Get("/delete", admin.NewIndexController().Delete)
+		//	router1.Post("/getList", admin.NewIndexController().GetList)
+		//	router1.Post("/getAll", admin.NewIndexController().GetAll)
+		//	router1.Post("/add", admin.NewIndexController().Add)
+		//	router1.Post("/save", admin.NewIndexController().Save)
+		//	router1.Post("/delete", admin.NewIndexController().Delete)
 		//})
 
 	})

@@ -22,7 +22,7 @@ func (r *AdminController) GetList(ctx http.Context) http.Response {
 	if ok != nil {
 		return response.Fail(ctx, "", ok.Error())
 	} else {
-		return response.Success(ctx, data, "失败")
+		return response.Success(ctx, data, "获取成功")
 	}
 }
 

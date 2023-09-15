@@ -1,12 +1,7 @@
-package models
+package admin
 
-import (
-	"goravel/app/utils/local"
-)
+import "goravel/app/utils/local"
 
-const TableNameAdmin = "admin"
-
-// Admin mapped from table <admin>
 type Admin struct {
 	ID            int64           `gorm:"column:id;primaryKey;autoIncrement:true;comment:用户ID" json:"id"`                    // 用户ID
 	Name          string          `gorm:"column:name;comment:系统管理用户名" json:"name"`                                           // 系统管理用户名
@@ -26,9 +21,4 @@ type Admin struct {
 	CreateAt      local.LocalTime `gorm:"column:create_at;not null;default:CURRENT_TIMESTAMP;comment:创建时间" json:"create_at"` // 创建时间
 	UpdateAt      local.LocalTime `gorm:"column:update_at;not null;default:CURRENT_TIMESTAMP;comment:更新时间" json:"update_at"` // 更新时间
 	Token         string          `gorm:"column:token;comment:token" json:"token"`                                           // token
-}
-
-// TableName Admin's table name
-func (*Admin) TableName() string {
-	return TableNameAdmin
 }

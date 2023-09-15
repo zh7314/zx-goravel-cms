@@ -2,7 +2,7 @@ package admin
 
 import (
 	"github.com/goravel/framework/facades"
-	models "goravel/app/http/requests/admin"
+	"goravel/app/models"
 )
 
 type AdminService struct {
@@ -14,12 +14,16 @@ func NewAdminService() *AdminService {
 		//Inject model
 	}
 }
-func (r *AdminService) GetList() (int, error) {
+func (r *AdminService) GetList() ([]models.Banner, error) {
 
-	var admin models.Admin
-	facades.Orm().Query().With("Author").With("Publisher").Find(&admin)
+	//var admin models.Admin
+	//facades.Orm().Query().With("Author").With("Publisher").Find(&admin)
 
-	return 12354, nil
+	var banner []models.Banner
+
+	facades.Orm().Query().With("Admin").Get(&banner)
+
+	return banner, nil
 }
 
 func (r *AdminService) GetAll() (int, error) {
