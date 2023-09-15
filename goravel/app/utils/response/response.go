@@ -5,22 +5,20 @@ import (
 	"goravel/app/utils/global"
 )
 
-func Success(ctx http.Context, data interface{}, msg string) {
-	ctx.Response().Json(http.StatusOK, http.Json{
+func Success(ctx http.Context, data interface{}, msg string) http.Response {
+	return ctx.Response().Json(http.StatusOK, http.Json{
 		"code": global.SUCCESS,
 		"data": data,
 		"msg":  msg,
 	})
-	return
 }
 
-func Fail(ctx http.Context, data interface{}, msg string) {
-	ctx.Response().Json(http.StatusOK, http.Json{
+func Fail(ctx http.Context, data interface{}, msg string) http.Response {
+	return ctx.Response().Json(http.StatusOK, http.Json{
 		"code": global.FAIL,
 		"data": data,
 		"msg":  msg,
 	})
-	return
 }
 
 func AbortFail(ctx http.Context, data interface{}, msg string) {
@@ -29,14 +27,12 @@ func AbortFail(ctx http.Context, data interface{}, msg string) {
 		"data": data,
 		"msg":  msg,
 	})
-	return
 }
 
-func Grant(ctx http.Context, data interface{}, msg string) {
-	ctx.Response().Json(http.StatusOK, http.Json{
+func Grant(ctx http.Context, data interface{}, msg string) http.Response {
+	return ctx.Response().Json(http.StatusOK, http.Json{
 		"code": global.GRANT,
 		"data": data,
 		"msg":  msg,
 	})
-	return
 }
