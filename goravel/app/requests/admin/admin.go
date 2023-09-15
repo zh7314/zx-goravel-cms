@@ -3,7 +3,7 @@ package admin
 import "goravel/app/utils/local"
 
 type Admin struct {
-	ID            int64           `gorm:"column:id;primaryKey;autoIncrement:true;comment:用户ID" json:"id"`                    // 用户ID
+	ID            int64           `form:"id" json:"id"`                                                                      // 用户ID
 	Name          string          `gorm:"column:name;comment:系统管理用户名" json:"name"`                                           // 系统管理用户名
 	Password      string          `gorm:"column:password;comment:密码" json:"password"`                                        // 密码
 	Salt          string          `gorm:"column:salt;comment:加密盐" json:"salt"`                                               // 加密盐
@@ -20,5 +20,7 @@ type Admin struct {
 	Sort          int             `gorm:"column:sort;not null;default:255;comment:排序越小越往前" json:"sort"`                      // 排序越小越往前
 	CreateAt      local.LocalTime `gorm:"column:create_at;not null;default:CURRENT_TIMESTAMP;comment:创建时间" json:"create_at"` // 创建时间
 	UpdateAt      local.LocalTime `gorm:"column:update_at;not null;default:CURRENT_TIMESTAMP;comment:更新时间" json:"update_at"` // 更新时间
-	Token         string          `gorm:"column:token;comment:token" json:"token"`                                           // token
+	Token         string          `gorm:"column:token;comment:token" json:"token"`
+	Page          string          `form:"page" json:"page"`
+	PageSize      string          `form:"PageSize" json:"PageSize"`
 }
