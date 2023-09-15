@@ -42,13 +42,13 @@ func Api() {
 			router1.Get("/delete", admin.NewAdminController().Delete)
 		})
 
-		router.Prefix("index").Group(func(router1 route.Router) {
-			router1.Get("/getList", admin.NewIndexController().GetList)
-			router1.Get("/getAll", admin.NewIndexController().GetAll)
-			router1.Get("/add", admin.NewIndexController().Add)
-			router1.Get("/save", admin.NewIndexController().Save)
-			router1.Get("/delete", admin.NewIndexController().Delete)
-		})
+		//router.Prefix("index").Group(func(router1 route.Router) {
+		//	router1.Get("/getList", admin.NewIndexController().GetList)
+		//	router1.Get("/getAll", admin.NewIndexController().GetAll)
+		//	router1.Get("/add", admin.NewIndexController().Add)
+		//	router1.Get("/save", admin.NewIndexController().Save)
+		//	router1.Get("/delete", admin.NewIndexController().Delete)
+		//})
 
 	})
 }
