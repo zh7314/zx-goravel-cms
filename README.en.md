@@ -1,4 +1,4 @@
-# CMS, enterprise official website general PHP management system
+# CMS, enterprise official website general Golang management system
 
 [中文文档](./README.md)
 
@@ -11,6 +11,9 @@
 ### Back-end development component
 go 1.20     
 Goravel 1.13     
+
+### database sql(use the latest date file)
+`webman\doc\sql_bak` mysql 8.0
 
 ### Front-end development component
 scui 1.6.9      

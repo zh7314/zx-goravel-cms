@@ -1,4 +1,4 @@
-# CMS，企业官网通用PHP后台管理系统
+# CMS，企业官网通用Golang后台管理系统
 
 [English doc](./README.en.md)  
 
@@ -11,6 +11,9 @@
 ### 后端开发组件
 go 1.20     
 Goravel 1.13    
+
+### 数据库 sql(使用最新日期文件)
+`goravel\doc\sql_bak` mysql 8.0
 
 ### 前端开发组件
 scui 1.6.9      
