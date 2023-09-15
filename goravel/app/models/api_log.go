@@ -4,7 +4,7 @@ import (
 	"goravel/app/utils/local"
 )
 
-const TableNameAPILog = "api_log"
+const TableName = "api_log"
 
 // APILog mapped from table <api_log>
 type APILog struct {
@@ -20,5 +20,5 @@ type APILog struct {
 
 // TableName APILog's table name
 func (*APILog) TableName() string {
-	return TableNameAPILog
+	return TableName
 }
