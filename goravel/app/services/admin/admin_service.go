@@ -43,7 +43,6 @@ func (r *AdminService) GetList(request requests.AdminRequest) (map[string]interf
 func (r *AdminService) GetAll(request requests.AdminRequest) ([]models.Admin, error) {
 
 	var admins []models.Admin
-	var count int64
 
 	orm := facades.Orm().Query()
 
@@ -54,7 +53,7 @@ func (r *AdminService) GetAll(request requests.AdminRequest) ([]models.Admin, er
 		orm.Where("id", request.ID)
 	}
 
-	orm.Order("id desc").Paginate(request.Page, request.PageSize, &admins, &count)
+	orm.Order("id desc").Get(&admins)
 
 	return admins, nil
 }
@@ -92,6 +91,7 @@ func (r *AdminService) Save(request requests.AdminRequest) (bool, error) {
 }
 
 func (r *AdminService) Delete(id int64) (bool, error) {
+
 	var admin models.Admin
 	_, err := facades.Orm().Query().Delete(&admin)
 	if err != nil {
