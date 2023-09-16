@@ -20,7 +20,7 @@ type AdminRequest struct {
 	Sort          int             `form:"sort" json:"sort"`                       // 排序越小越往前
 	CreateAt      local.LocalTime `form:"create_at" json:"create_at"`             // 创建时间
 	UpdateAt      local.LocalTime `form:"update_at" json:"update_at"`             // 更新时间
-	Token         string          `form:"token" json:"token"`
-	Page          int             `form:"page" json:"page"`
-	PageSize      int             `form:"pageSize" json:"pageSize"`
+	Token         string          `form:"token" json:"token"`                     // token
+	Page          int             `form:"page" json:"page"`                       // 页码
+	PageSize      int             `form:"pageSize" json:"pageSize"`               // 页大小
 }
