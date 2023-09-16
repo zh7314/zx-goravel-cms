@@ -1,7 +1,9 @@
 package admin
 
 import (
+	"fmt"
 	"github.com/goravel/framework/contracts/http"
+	requests "goravel/app/requests/admin"
 	"goravel/app/services/admin"
 	"goravel/app/utils/response"
 )
@@ -18,7 +20,11 @@ func NewAdminController() *AdminController {
 
 func (r *AdminController) GetList(ctx http.Context) http.Response {
 
-	data, ok := admin.NewAdminService().GetList()
+	var request requests.AdminRequest
+	err := ctx.Request().Bind(&request)
+	fmt.Println(err)
+
+	data, ok := admin.NewAdminService().GetList(request)
 	if ok != nil {
 		return response.Fail(ctx, "", ok.Error())
 	} else {
@@ -28,7 +34,11 @@ func (r *AdminController) GetList(ctx http.Context) http.Response {
 
 func (r *AdminController) GetAll(ctx http.Context) http.Response {
 
-	data, ok := admin.NewAdminService().GetAll()
+	var request requests.AdminRequest
+	err := ctx.Request().Bind(&request)
+	fmt.Println(err)
+
+	data, ok := admin.NewAdminService().GetAll(request)
 	if ok != nil {
 		return response.Fail(ctx, "", ok.Error())
 	} else {
@@ -38,7 +48,11 @@ func (r *AdminController) GetAll(ctx http.Context) http.Response {
 
 func (r *AdminController) Add(ctx http.Context) http.Response {
 
-	data, ok := admin.NewAdminService().Add()
+	var request requests.AdminRequest
+	err := ctx.Request().Bind(&request)
+	fmt.Println(err)
+
+	data, ok := admin.NewAdminService().Add(request)
 	if ok != nil {
 		return response.Fail(ctx, "", ok.Error())
 	} else {
@@ -48,7 +62,11 @@ func (r *AdminController) Add(ctx http.Context) http.Response {
 
 func (r *AdminController) Save(ctx http.Context) http.Response {
 
-	data, ok := admin.NewAdminService().Save()
+	var request requests.AdminRequest
+	err := ctx.Request().Bind(&request)
+	fmt.Println(err)
+
+	data, ok := admin.NewAdminService().Save(request)
 	if ok != nil {
 		return response.Fail(ctx, "", ok.Error())
 	} else {
@@ -58,7 +76,11 @@ func (r *AdminController) Save(ctx http.Context) http.Response {
 
 func (r *AdminController) Delete(ctx http.Context) http.Response {
 
-	data, ok := admin.NewAdminService().Delete()
+	var request requests.AdminRequest
+	err := ctx.Request().Bind(&request)
+	fmt.Println(err)
+
+	data, ok := admin.NewAdminService().Delete(request.ID)
 	if ok != nil {
 		return response.Fail(ctx, "", ok.Error())
 	} else {
