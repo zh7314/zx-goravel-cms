@@ -31,7 +31,7 @@ func (r *AdminService) GetList(request requests.AdminRequest) (map[string]interf
 		orm.Where("id", request.ID)
 	}
 
-	orm.Order("id desc").Paginate(request.Page, request.PageSize, &admins, &count)
+	orm.Order("id asc").Order("id desc").Paginate(request.Page, request.PageSize, &admins, &count)
 
 	res := make(map[string]interface{})
 	res["list"] = admins
