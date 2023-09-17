@@ -17,8 +17,7 @@ func NewAdminController() *AdminController {
 func (r *AdminController) GetList(ctx http.Context) http.Response {
 
 	var request requests.AdminRequest
-	err := ctx.Request().Bind(&request)
-	if err != nil {
+	if err := ctx.Request().Bind(&request); err != nil {
 		return response.Fail(ctx, "", err.Error())
 	}
 
@@ -33,8 +32,8 @@ func (r *AdminController) GetList(ctx http.Context) http.Response {
 func (r *AdminController) GetAll(ctx http.Context) http.Response {
 
 	var request requests.AdminRequest
-	err := ctx.Request().Bind(&request)
-	if err != nil {
+
+	if err := ctx.Request().Bind(&request); err != nil {
 		return response.Fail(ctx, "", err.Error())
 	}
 
@@ -42,15 +41,14 @@ func (r *AdminController) GetAll(ctx http.Context) http.Response {
 	if ok != nil {
 		return response.Fail(ctx, "", ok.Error())
 	} else {
-		return response.Success(ctx, data, "失败")
+		return response.Success(ctx, data, "成功")
 	}
 }
 
 func (r *AdminController) Add(ctx http.Context) http.Response {
 
 	var request requests.AdminRequest
-	err := ctx.Request().Bind(&request)
-	if err != nil {
+	if err := ctx.Request().Bind(&request); err != nil {
 		return response.Fail(ctx, "", err.Error())
 	}
 
@@ -58,15 +56,14 @@ func (r *AdminController) Add(ctx http.Context) http.Response {
 	if ok != nil {
 		return response.Fail(ctx, "", ok.Error())
 	} else {
-		return response.Success(ctx, data, "失败")
+		return response.Success(ctx, data, "成功")
 	}
 }
 
 func (r *AdminController) Save(ctx http.Context) http.Response {
 
 	var request requests.AdminRequest
-	err := ctx.Request().Bind(&request)
-	if err != nil {
+	if err := ctx.Request().Bind(&request); err != nil {
 		return response.Fail(ctx, "", err.Error())
 	}
 
@@ -74,15 +71,14 @@ func (r *AdminController) Save(ctx http.Context) http.Response {
 	if ok != nil {
 		return response.Fail(ctx, "", ok.Error())
 	} else {
-		return response.Success(ctx, data, "失败")
+		return response.Success(ctx, data, "成功")
 	}
 }
 
 func (r *AdminController) Delete(ctx http.Context) http.Response {
 
 	var request requests.AdminRequest
-	err := ctx.Request().Bind(&request)
-	if err != nil {
+	if err := ctx.Request().Bind(&request); err != nil {
 		return response.Fail(ctx, "", err.Error())
 	}
 
@@ -90,6 +86,6 @@ func (r *AdminController) Delete(ctx http.Context) http.Response {
 	if ok != nil {
 		return response.Fail(ctx, "", ok.Error())
 	} else {
-		return response.Success(ctx, data, "失败")
+		return response.Success(ctx, data, "成功")
 	}
 }

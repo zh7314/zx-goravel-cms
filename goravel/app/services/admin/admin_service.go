@@ -8,18 +8,15 @@ import (
 )
 
 type AdminService struct {
-	//Dependent services
 }
 
 func NewAdminService() *AdminService {
-	return &AdminService{
-		//Inject model
-	}
+	return &AdminService{}
 }
 
 func (r *AdminService) GetList(request requests.AdminRequest) (map[string]interface{}, error) {
 
-	var admins []models.Admin
+	var list []models.Admin
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -31,10 +28,10 @@ func (r *AdminService) GetList(request requests.AdminRequest) (map[string]interf
 		orm.Where("id", request.ID)
 	}
 
-	orm.Order("id asc").Order("id desc").Paginate(request.Page, request.PageSize, &admins, &count)
+	orm.Order("id asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
 
 	res := make(map[string]interface{})
-	res["list"] = admins
+	res["list"] = list
 	res["count"] = count
 
 	return res, nil
@@ -42,7 +39,7 @@ func (r *AdminService) GetList(request requests.AdminRequest) (map[string]interf
 
 func (r *AdminService) GetAll(request requests.AdminRequest) ([]models.Admin, error) {
 
-	var admins []models.Admin
+	var list []models.Admin
 
 	orm := facades.Orm().Query()
 
@@ -53,9 +50,9 @@ func (r *AdminService) GetAll(request requests.AdminRequest) ([]models.Admin, er
 		orm.Where("id", request.ID)
 	}
 
-	orm.Order("id desc").Get(&admins)
+	orm.Order("id desc").Get(&list)
 
-	return admins, nil
+	return list, nil
 }
 
 func (r *AdminService) Add(request requests.AdminRequest) (bool, error) {
