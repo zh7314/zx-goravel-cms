@@ -22,27 +22,26 @@ func (r *AdminController) GetList(ctx http.Context) http.Response {
 	}
 
 	data, ok := admin.NewAdminService().GetList(request)
-	if ok != nil {
-		return response.Fail(ctx, "", ok.Error())
-	} else {
-		return response.Success(ctx, data, "获取成功")
-	}
+	if ok == nil {
+    	return response.Success(ctx, data, "成功")
+    } else {
+    	return response.Fail(ctx, "", ok.Error())
+    }
 }
 
 func (r *AdminController) GetAll(ctx http.Context) http.Response {
 
 	var request requests.AdminRequest
-
 	if err := ctx.Request().Bind(&request); err != nil {
 		return response.Fail(ctx, "", err.Error())
 	}
 
 	data, ok := admin.NewAdminService().GetAll(request)
-	if ok != nil {
-		return response.Fail(ctx, "", ok.Error())
-	} else {
-		return response.Success(ctx, data, "成功")
-	}
+	if ok == nil {
+    	return response.Success(ctx, data, "成功")
+    } else {
+    	return response.Fail(ctx, "", ok.Error())
+    }
 }
 
 func (r *AdminController) Add(ctx http.Context) http.Response {
@@ -53,11 +52,11 @@ func (r *AdminController) Add(ctx http.Context) http.Response {
 	}
 
 	data, ok := admin.NewAdminService().Add(request)
-	if ok != nil {
-		return response.Fail(ctx, "", ok.Error())
-	} else {
-		return response.Success(ctx, data, "成功")
-	}
+	if ok == nil {
+    	return response.Success(ctx, data, "成功")
+    } else {
+    	return response.Fail(ctx, "", ok.Error())
+    }
 }
 
 func (r *AdminController) Save(ctx http.Context) http.Response {
@@ -68,11 +67,11 @@ func (r *AdminController) Save(ctx http.Context) http.Response {
 	}
 
 	data, ok := admin.NewAdminService().Save(request)
-	if ok != nil {
-		return response.Fail(ctx, "", ok.Error())
-	} else {
-		return response.Success(ctx, data, "成功")
-	}
+	if ok == nil {
+    	return response.Success(ctx, data, "成功")
+    } else {
+    	return response.Fail(ctx, "", ok.Error())
+    }
 }
 
 func (r *AdminController) Delete(ctx http.Context) http.Response {
@@ -83,9 +82,9 @@ func (r *AdminController) Delete(ctx http.Context) http.Response {
 	}
 
 	data, ok := admin.NewAdminService().Delete(request.ID)
-	if ok != nil {
-		return response.Fail(ctx, "", ok.Error())
-	} else {
+	if ok == nil {
 		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
 	}
 }
