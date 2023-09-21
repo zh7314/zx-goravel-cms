@@ -22,10 +22,7 @@ func (r *FileService) GetList(request requests.FileRequest) (map[string]interfac
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.AdminId) {
-	orm.Where("admin_id", request.AdminId)
-}
-if !gconv.IsEmpty(request.FileName) {
+	if !gconv.IsEmpty(request.FileName) {
 	orm.Where("file_name", request.FileName)
 }
 if !gconv.IsEmpty(request.FilePath) {
@@ -33,6 +30,9 @@ if !gconv.IsEmpty(request.FilePath) {
 }
 if !gconv.IsEmpty(request.FileSize) {
 	orm.Where("file_size", request.FileSize)
+}
+if !gconv.IsEmpty(request.AdminId) {
+	orm.Where("admin_id", request.AdminId)
 }
 
 
@@ -51,10 +51,7 @@ func (r *FileService) GetAll(request requests.FileRequest) ([]models.File, error
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.AdminId) {
-	orm.Where("admin_id", request.AdminId)
-}
-if !gconv.IsEmpty(request.FileName) {
+    if !gconv.IsEmpty(request.FileName) {
 	orm.Where("file_name", request.FileName)
 }
 if !gconv.IsEmpty(request.FilePath) {
@@ -62,6 +59,9 @@ if !gconv.IsEmpty(request.FilePath) {
 }
 if !gconv.IsEmpty(request.FileSize) {
 	orm.Where("file_size", request.FileSize)
+}
+if !gconv.IsEmpty(request.AdminId) {
+	orm.Where("admin_id", request.AdminId)
 }
 
 
@@ -74,10 +74,10 @@ func (r *FileService) Add(request requests.FileRequest) (bool, error) {
 
 	var file models.File
 
-	file.AdminId = request.AdminId
-file.FileName = html.EscapeString(request.FileName)
+	file.FileName = html.EscapeString(request.FileName)
 file.FilePath = html.EscapeString(request.FilePath)
 file.FileSize = request.FileSize
+file.AdminId = request.AdminId
 
 
 	err := facades.Orm().Query().Create(&file)
@@ -92,10 +92,10 @@ func (r *FileService) Save(request requests.FileRequest) (bool, error) {
 	var file models.File
 
 	file.ID = request.ID
-	file.AdminId = request.AdminId
-file.FileName = html.EscapeString(request.FileName)
+	file.FileName = html.EscapeString(request.FileName)
 file.FilePath = html.EscapeString(request.FilePath)
 file.FileSize = request.FileSize
+file.AdminId = request.AdminId
 
 
 	err := facades.Orm().Query().Save(&file)

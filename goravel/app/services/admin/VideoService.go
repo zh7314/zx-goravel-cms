@@ -22,44 +22,44 @@ func (r *VideoService) GetList(request requests.VideoRequest) (map[string]interf
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.AdminId) {
+	if !gconv.IsEmpty(request.VideoCateId) {
+	orm.Where("video_cate_id", request.VideoCateId)
+}
+if !gconv.IsEmpty(request.IsLocal) {
+	orm.Where("is_local", request.IsLocal)
+}
+if !gconv.IsEmpty(request.Url) {
+	orm.Where("url", request.Url)
+}
+if !gconv.IsEmpty(request.Name) {
+	orm.Where("name", request.Name)
+}
+if !gconv.IsEmpty(request.Introduce) {
+	orm.Where("introduce", request.Introduce)
+}
+if !gconv.IsEmpty(request.IsShow) {
+	orm.Where("is_show", request.IsShow)
+}
+if !gconv.IsEmpty(request.AdminId) {
 	orm.Where("admin_id", request.AdminId)
 }
 if !gconv.IsEmpty(request.Count) {
 	orm.Where("count", request.Count)
 }
-if !gconv.IsEmpty(request.File) {
-	orm.Where("file", request.File)
-}
-if !gconv.IsEmpty(request.Introduce) {
-	orm.Where("introduce", request.Introduce)
-}
-if !gconv.IsEmpty(request.IsLocal) {
-	orm.Where("is_local", request.IsLocal)
-}
-if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
+if !gconv.IsEmpty(request.Sort) {
+	orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Pic) {
 	orm.Where("pic", request.Pic)
 }
+if !gconv.IsEmpty(request.File) {
+	orm.Where("file", request.File)
+}
 if !gconv.IsEmpty(request.Platform) {
 	orm.Where("platform", request.Platform)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
-}
-if !gconv.IsEmpty(request.VideoCateId) {
-	orm.Where("video_cate_id", request.VideoCateId)
+if !gconv.IsEmpty(request.Lang) {
+	orm.Where("lang", request.Lang)
 }
 
 
@@ -78,44 +78,44 @@ func (r *VideoService) GetAll(request requests.VideoRequest) ([]models.Video, er
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.AdminId) {
+    if !gconv.IsEmpty(request.VideoCateId) {
+	orm.Where("video_cate_id", request.VideoCateId)
+}
+if !gconv.IsEmpty(request.IsLocal) {
+	orm.Where("is_local", request.IsLocal)
+}
+if !gconv.IsEmpty(request.Url) {
+	orm.Where("url", request.Url)
+}
+if !gconv.IsEmpty(request.Name) {
+	orm.Where("name", request.Name)
+}
+if !gconv.IsEmpty(request.Introduce) {
+	orm.Where("introduce", request.Introduce)
+}
+if !gconv.IsEmpty(request.IsShow) {
+	orm.Where("is_show", request.IsShow)
+}
+if !gconv.IsEmpty(request.AdminId) {
 	orm.Where("admin_id", request.AdminId)
 }
 if !gconv.IsEmpty(request.Count) {
 	orm.Where("count", request.Count)
 }
-if !gconv.IsEmpty(request.File) {
-	orm.Where("file", request.File)
-}
-if !gconv.IsEmpty(request.Introduce) {
-	orm.Where("introduce", request.Introduce)
-}
-if !gconv.IsEmpty(request.IsLocal) {
-	orm.Where("is_local", request.IsLocal)
-}
-if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
+if !gconv.IsEmpty(request.Sort) {
+	orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Pic) {
 	orm.Where("pic", request.Pic)
 }
+if !gconv.IsEmpty(request.File) {
+	orm.Where("file", request.File)
+}
 if !gconv.IsEmpty(request.Platform) {
 	orm.Where("platform", request.Platform)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
-}
-if !gconv.IsEmpty(request.VideoCateId) {
-	orm.Where("video_cate_id", request.VideoCateId)
+if !gconv.IsEmpty(request.Lang) {
+	orm.Where("lang", request.Lang)
 }
 
 
@@ -128,19 +128,19 @@ func (r *VideoService) Add(request requests.VideoRequest) (bool, error) {
 
 	var video models.Video
 
-	video.AdminId = request.AdminId
-video.Count = request.Count
-video.File = html.EscapeString(request.File)
-video.Introduce = html.EscapeString(request.Introduce)
+	video.VideoCateId = request.VideoCateId
 video.IsLocal = request.IsLocal
-video.IsShow = request.IsShow
-video.Lang = html.EscapeString(request.Lang)
-video.Name = html.EscapeString(request.Name)
-video.Pic = html.EscapeString(request.Pic)
-video.Platform = html.EscapeString(request.Platform)
-video.Sort = request.Sort
 video.Url = html.EscapeString(request.Url)
-video.VideoCateId = request.VideoCateId
+video.Name = html.EscapeString(request.Name)
+video.Introduce = html.EscapeString(request.Introduce)
+video.IsShow = request.IsShow
+video.AdminId = request.AdminId
+video.Count = request.Count
+video.Sort = request.Sort
+video.Pic = html.EscapeString(request.Pic)
+video.File = html.EscapeString(request.File)
+video.Platform = html.EscapeString(request.Platform)
+video.Lang = html.EscapeString(request.Lang)
 
 
 	err := facades.Orm().Query().Create(&video)
@@ -155,19 +155,19 @@ func (r *VideoService) Save(request requests.VideoRequest) (bool, error) {
 	var video models.Video
 
 	video.ID = request.ID
-	video.AdminId = request.AdminId
-video.Count = request.Count
-video.File = html.EscapeString(request.File)
-video.Introduce = html.EscapeString(request.Introduce)
+	video.VideoCateId = request.VideoCateId
 video.IsLocal = request.IsLocal
-video.IsShow = request.IsShow
-video.Lang = html.EscapeString(request.Lang)
-video.Name = html.EscapeString(request.Name)
-video.Pic = html.EscapeString(request.Pic)
-video.Platform = html.EscapeString(request.Platform)
-video.Sort = request.Sort
 video.Url = html.EscapeString(request.Url)
-video.VideoCateId = request.VideoCateId
+video.Name = html.EscapeString(request.Name)
+video.Introduce = html.EscapeString(request.Introduce)
+video.IsShow = request.IsShow
+video.AdminId = request.AdminId
+video.Count = request.Count
+video.Sort = request.Sort
+video.Pic = html.EscapeString(request.Pic)
+video.File = html.EscapeString(request.File)
+video.Platform = html.EscapeString(request.Platform)
+video.Lang = html.EscapeString(request.Lang)
 
 
 	err := facades.Orm().Query().Save(&video)

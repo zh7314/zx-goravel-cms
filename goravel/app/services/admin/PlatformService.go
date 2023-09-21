@@ -22,11 +22,11 @@ func (r *PlatformService) GetList(request requests.PlatformRequest) (map[string]
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.Sort) {
+	if !gconv.IsEmpty(request.Sort) {
 	orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.Name) {
+	orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.Value) {
 	orm.Where("value", request.Value)
@@ -48,11 +48,11 @@ func (r *PlatformService) GetAll(request requests.PlatformRequest) ([]models.Pla
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.Sort) {
+    if !gconv.IsEmpty(request.Sort) {
 	orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.Name) {
+	orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.Value) {
 	orm.Where("value", request.Value)
@@ -68,8 +68,8 @@ func (r *PlatformService) Add(request requests.PlatformRequest) (bool, error) {
 
 	var platform models.Platform
 
-	platform.Name = html.EscapeString(request.Name)
-platform.Sort = request.Sort
+	platform.Sort = request.Sort
+platform.Name = html.EscapeString(request.Name)
 platform.Value = html.EscapeString(request.Value)
 
 
@@ -85,8 +85,8 @@ func (r *PlatformService) Save(request requests.PlatformRequest) (bool, error) {
 	var platform models.Platform
 
 	platform.ID = request.ID
-	platform.Name = html.EscapeString(request.Name)
-platform.Sort = request.Sort
+	platform.Sort = request.Sort
+platform.Name = html.EscapeString(request.Name)
 platform.Value = html.EscapeString(request.Value)
 
 

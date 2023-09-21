@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"fmt"
 	"github.com/goravel/framework/contracts/http"
 	requests "goravel/app/requests/admin"
 	"goravel/app/services/admin"
@@ -23,10 +24,10 @@ func (r *NewsController) GetList(ctx http.Context) http.Response {
 
 	data, ok := admin.NewNewsService().GetList(request)
 	if ok == nil {
-    	return response.Success(ctx, data, "成功")
-    } else {
-    	return response.Fail(ctx, "", ok.Error())
-    }
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
 }
 
 func (r *NewsController) GetAll(ctx http.Context) http.Response {
@@ -38,10 +39,10 @@ func (r *NewsController) GetAll(ctx http.Context) http.Response {
 
 	data, ok := admin.NewNewsService().GetAll(request)
 	if ok == nil {
-    	return response.Success(ctx, data, "成功")
-    } else {
-    	return response.Fail(ctx, "", ok.Error())
-    }
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
 }
 
 func (r *NewsController) Add(ctx http.Context) http.Response {
@@ -51,12 +52,14 @@ func (r *NewsController) Add(ctx http.Context) http.Response {
 		return response.Fail(ctx, "", err.Error())
 	}
 
+	fmt.Println(request)
+
 	data, ok := admin.NewNewsService().Add(request)
 	if ok == nil {
-    	return response.Success(ctx, data, "成功")
-    } else {
-    	return response.Fail(ctx, "", ok.Error())
-    }
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
 }
 
 func (r *NewsController) Save(ctx http.Context) http.Response {
@@ -68,10 +71,10 @@ func (r *NewsController) Save(ctx http.Context) http.Response {
 
 	data, ok := admin.NewNewsService().Save(request)
 	if ok == nil {
-    	return response.Success(ctx, data, "成功")
-    } else {
-    	return response.Fail(ctx, "", ok.Error())
-    }
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
 }
 
 func (r *NewsController) Delete(ctx http.Context) http.Response {

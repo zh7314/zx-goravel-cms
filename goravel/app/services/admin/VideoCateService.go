@@ -22,23 +22,23 @@ func (r *VideoCateService) GetList(request requests.VideoCateRequest) (map[strin
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	if !gconv.IsEmpty(request.ParentId) {
+	orm.Where("parent_id", request.ParentId)
 }
 if !gconv.IsEmpty(request.Name) {
 	orm.Where("name", request.Name)
 }
-if !gconv.IsEmpty(request.ParentId) {
-	orm.Where("parent_id", request.ParentId)
+if !gconv.IsEmpty(request.IsShow) {
+	orm.Where("is_show", request.IsShow)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Platform) {
 	orm.Where("platform", request.Platform)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+if !gconv.IsEmpty(request.Lang) {
+	orm.Where("lang", request.Lang)
 }
 
 
@@ -57,23 +57,23 @@ func (r *VideoCateService) GetAll(request requests.VideoCateRequest) ([]models.V
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+    if !gconv.IsEmpty(request.ParentId) {
+	orm.Where("parent_id", request.ParentId)
 }
 if !gconv.IsEmpty(request.Name) {
 	orm.Where("name", request.Name)
 }
-if !gconv.IsEmpty(request.ParentId) {
-	orm.Where("parent_id", request.ParentId)
+if !gconv.IsEmpty(request.IsShow) {
+	orm.Where("is_show", request.IsShow)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Platform) {
 	orm.Where("platform", request.Platform)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+if !gconv.IsEmpty(request.Lang) {
+	orm.Where("lang", request.Lang)
 }
 
 
@@ -86,12 +86,12 @@ func (r *VideoCateService) Add(request requests.VideoCateRequest) (bool, error) 
 
 	var videoCate models.VideoCate
 
-	videoCate.IsShow = request.IsShow
-videoCate.Lang = html.EscapeString(request.Lang)
+	videoCate.ParentId = request.ParentId
 videoCate.Name = html.EscapeString(request.Name)
-videoCate.ParentId = request.ParentId
-videoCate.Platform = html.EscapeString(request.Platform)
+videoCate.IsShow = request.IsShow
 videoCate.Sort = request.Sort
+videoCate.Platform = html.EscapeString(request.Platform)
+videoCate.Lang = html.EscapeString(request.Lang)
 
 
 	err := facades.Orm().Query().Create(&videoCate)
@@ -106,12 +106,12 @@ func (r *VideoCateService) Save(request requests.VideoCateRequest) (bool, error)
 	var videoCate models.VideoCate
 
 	videoCate.ID = request.ID
-	videoCate.IsShow = request.IsShow
-videoCate.Lang = html.EscapeString(request.Lang)
+	videoCate.ParentId = request.ParentId
 videoCate.Name = html.EscapeString(request.Name)
-videoCate.ParentId = request.ParentId
-videoCate.Platform = html.EscapeString(request.Platform)
+videoCate.IsShow = request.IsShow
 videoCate.Sort = request.Sort
+videoCate.Platform = html.EscapeString(request.Platform)
+videoCate.Lang = html.EscapeString(request.Lang)
 
 
 	err := facades.Orm().Query().Save(&videoCate)

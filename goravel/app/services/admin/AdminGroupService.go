@@ -22,11 +22,11 @@ func (r *AdminGroupService) GetList(request requests.AdminGroupRequest) (map[str
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.ParentId) {
+	if !gconv.IsEmpty(request.ParentId) {
 	orm.Where("parent_id", request.ParentId)
+}
+if !gconv.IsEmpty(request.Name) {
+	orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.PermissionIds) {
 	orm.Where("permission_ids", request.PermissionIds)
@@ -51,11 +51,11 @@ func (r *AdminGroupService) GetAll(request requests.AdminGroupRequest) ([]models
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.ParentId) {
+    if !gconv.IsEmpty(request.ParentId) {
 	orm.Where("parent_id", request.ParentId)
+}
+if !gconv.IsEmpty(request.Name) {
+	orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.PermissionIds) {
 	orm.Where("permission_ids", request.PermissionIds)
@@ -74,8 +74,8 @@ func (r *AdminGroupService) Add(request requests.AdminGroupRequest) (bool, error
 
 	var adminGroup models.AdminGroup
 
-	adminGroup.Name = html.EscapeString(request.Name)
-adminGroup.ParentId = request.ParentId
+	adminGroup.ParentId = request.ParentId
+adminGroup.Name = html.EscapeString(request.Name)
 adminGroup.PermissionIds = html.EscapeString(request.PermissionIds)
 adminGroup.Sort = request.Sort
 
@@ -92,8 +92,8 @@ func (r *AdminGroupService) Save(request requests.AdminGroupRequest) (bool, erro
 	var adminGroup models.AdminGroup
 
 	adminGroup.ID = request.ID
-	adminGroup.Name = html.EscapeString(request.Name)
-adminGroup.ParentId = request.ParentId
+	adminGroup.ParentId = request.ParentId
+adminGroup.Name = html.EscapeString(request.Name)
 adminGroup.PermissionIds = html.EscapeString(request.PermissionIds)
 adminGroup.Sort = request.Sort
 

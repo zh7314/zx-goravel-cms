@@ -22,20 +22,23 @@ func (r *ProductCateService) GetList(request requests.ProductCateRequest) (map[s
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.Description) {
-	orm.Where("description", request.Description)
-}
-if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	if !gconv.IsEmpty(request.ParentId) {
+	orm.Where("parent_id", request.ParentId)
 }
 if !gconv.IsEmpty(request.Name) {
 	orm.Where("name", request.Name)
 }
-if !gconv.IsEmpty(request.ParentId) {
-	orm.Where("parent_id", request.ParentId)
+if !gconv.IsEmpty(request.IsShow) {
+	orm.Where("is_show", request.IsShow)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.Url) {
+	orm.Where("url", request.Url)
+}
+if !gconv.IsEmpty(request.Description) {
+	orm.Where("description", request.Description)
 }
 if !gconv.IsEmpty(request.Pic) {
 	orm.Where("pic", request.Pic)
@@ -43,11 +46,8 @@ if !gconv.IsEmpty(request.Pic) {
 if !gconv.IsEmpty(request.Platform) {
 	orm.Where("platform", request.Platform)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
+if !gconv.IsEmpty(request.Lang) {
+	orm.Where("lang", request.Lang)
 }
 
 
@@ -66,20 +66,23 @@ func (r *ProductCateService) GetAll(request requests.ProductCateRequest) ([]mode
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Description) {
-	orm.Where("description", request.Description)
-}
-if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+    if !gconv.IsEmpty(request.ParentId) {
+	orm.Where("parent_id", request.ParentId)
 }
 if !gconv.IsEmpty(request.Name) {
 	orm.Where("name", request.Name)
 }
-if !gconv.IsEmpty(request.ParentId) {
-	orm.Where("parent_id", request.ParentId)
+if !gconv.IsEmpty(request.IsShow) {
+	orm.Where("is_show", request.IsShow)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.Url) {
+	orm.Where("url", request.Url)
+}
+if !gconv.IsEmpty(request.Description) {
+	orm.Where("description", request.Description)
 }
 if !gconv.IsEmpty(request.Pic) {
 	orm.Where("pic", request.Pic)
@@ -87,11 +90,8 @@ if !gconv.IsEmpty(request.Pic) {
 if !gconv.IsEmpty(request.Platform) {
 	orm.Where("platform", request.Platform)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
+if !gconv.IsEmpty(request.Lang) {
+	orm.Where("lang", request.Lang)
 }
 
 
@@ -104,15 +104,15 @@ func (r *ProductCateService) Add(request requests.ProductCateRequest) (bool, err
 
 	var productCate models.ProductCate
 
-	productCate.Description = html.EscapeString(request.Description)
-productCate.IsShow = request.IsShow
-productCate.Lang = html.EscapeString(request.Lang)
+	productCate.ParentId = request.ParentId
 productCate.Name = html.EscapeString(request.Name)
-productCate.ParentId = request.ParentId
-productCate.Pic = html.EscapeString(request.Pic)
-productCate.Platform = html.EscapeString(request.Platform)
+productCate.IsShow = request.IsShow
 productCate.Sort = request.Sort
 productCate.Url = html.EscapeString(request.Url)
+productCate.Description = html.EscapeString(request.Description)
+productCate.Pic = html.EscapeString(request.Pic)
+productCate.Platform = html.EscapeString(request.Platform)
+productCate.Lang = html.EscapeString(request.Lang)
 
 
 	err := facades.Orm().Query().Create(&productCate)
@@ -127,15 +127,15 @@ func (r *ProductCateService) Save(request requests.ProductCateRequest) (bool, er
 	var productCate models.ProductCate
 
 	productCate.ID = request.ID
-	productCate.Description = html.EscapeString(request.Description)
-productCate.IsShow = request.IsShow
-productCate.Lang = html.EscapeString(request.Lang)
+	productCate.ParentId = request.ParentId
 productCate.Name = html.EscapeString(request.Name)
-productCate.ParentId = request.ParentId
-productCate.Pic = html.EscapeString(request.Pic)
-productCate.Platform = html.EscapeString(request.Platform)
+productCate.IsShow = request.IsShow
 productCate.Sort = request.Sort
 productCate.Url = html.EscapeString(request.Url)
+productCate.Description = html.EscapeString(request.Description)
+productCate.Pic = html.EscapeString(request.Pic)
+productCate.Platform = html.EscapeString(request.Platform)
+productCate.Lang = html.EscapeString(request.Lang)
 
 
 	err := facades.Orm().Query().Save(&productCate)

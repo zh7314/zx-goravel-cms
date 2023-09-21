@@ -22,11 +22,11 @@ func (r *ConfigService) GetList(request requests.ConfigRequest) (map[string]inte
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.Type) {
+	if !gconv.IsEmpty(request.Type) {
 	orm.Where("type", request.Type)
+}
+if !gconv.IsEmpty(request.Name) {
+	orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.Value) {
 	orm.Where("value", request.Value)
@@ -48,11 +48,11 @@ func (r *ConfigService) GetAll(request requests.ConfigRequest) ([]models.Config,
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.Type) {
+    if !gconv.IsEmpty(request.Type) {
 	orm.Where("type", request.Type)
+}
+if !gconv.IsEmpty(request.Name) {
+	orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.Value) {
 	orm.Where("value", request.Value)
@@ -68,8 +68,8 @@ func (r *ConfigService) Add(request requests.ConfigRequest) (bool, error) {
 
 	var config models.Config
 
-	config.Name = html.EscapeString(request.Name)
-config.Type = html.EscapeString(request.Type)
+	config.Type = html.EscapeString(request.Type)
+config.Name = html.EscapeString(request.Name)
 config.Value = html.EscapeString(request.Value)
 
 
@@ -85,8 +85,8 @@ func (r *ConfigService) Save(request requests.ConfigRequest) (bool, error) {
 	var config models.Config
 
 	config.ID = request.ID
-	config.Name = html.EscapeString(request.Name)
-config.Type = html.EscapeString(request.Type)
+	config.Type = html.EscapeString(request.Type)
+config.Name = html.EscapeString(request.Name)
 config.Value = html.EscapeString(request.Value)
 
 

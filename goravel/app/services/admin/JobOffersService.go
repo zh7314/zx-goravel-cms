@@ -22,35 +22,35 @@ func (r *JobOffersService) GetList(request requests.JobOffersRequest) (map[strin
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.Content) {
+	if !gconv.IsEmpty(request.Title) {
+	orm.Where("title", request.Title)
+}
+if !gconv.IsEmpty(request.Url) {
+	orm.Where("url", request.Url)
+}
+if !gconv.IsEmpty(request.Content) {
 	orm.Where("content", request.Content)
 }
 if !gconv.IsEmpty(request.IsShow) {
 	orm.Where("is_show", request.IsShow)
 }
-if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.Number) {
-	orm.Where("number", request.Number)
-}
-if !gconv.IsEmpty(request.Place) {
-	orm.Where("place", request.Place)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+if !gconv.IsEmpty(request.Sort) {
+	orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.SalaryRange) {
 	orm.Where("salary_range", request.SalaryRange)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+if !gconv.IsEmpty(request.Place) {
+	orm.Where("place", request.Place)
 }
-if !gconv.IsEmpty(request.Title) {
-	orm.Where("title", request.Title)
+if !gconv.IsEmpty(request.Number) {
+	orm.Where("number", request.Number)
 }
-if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
+if !gconv.IsEmpty(request.Platform) {
+	orm.Where("platform", request.Platform)
+}
+if !gconv.IsEmpty(request.Lang) {
+	orm.Where("lang", request.Lang)
 }
 
 
@@ -69,35 +69,35 @@ func (r *JobOffersService) GetAll(request requests.JobOffersRequest) ([]models.J
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Content) {
+    if !gconv.IsEmpty(request.Title) {
+	orm.Where("title", request.Title)
+}
+if !gconv.IsEmpty(request.Url) {
+	orm.Where("url", request.Url)
+}
+if !gconv.IsEmpty(request.Content) {
 	orm.Where("content", request.Content)
 }
 if !gconv.IsEmpty(request.IsShow) {
 	orm.Where("is_show", request.IsShow)
 }
-if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.Number) {
-	orm.Where("number", request.Number)
-}
-if !gconv.IsEmpty(request.Place) {
-	orm.Where("place", request.Place)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+if !gconv.IsEmpty(request.Sort) {
+	orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.SalaryRange) {
 	orm.Where("salary_range", request.SalaryRange)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+if !gconv.IsEmpty(request.Place) {
+	orm.Where("place", request.Place)
 }
-if !gconv.IsEmpty(request.Title) {
-	orm.Where("title", request.Title)
+if !gconv.IsEmpty(request.Number) {
+	orm.Where("number", request.Number)
 }
-if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
+if !gconv.IsEmpty(request.Platform) {
+	orm.Where("platform", request.Platform)
+}
+if !gconv.IsEmpty(request.Lang) {
+	orm.Where("lang", request.Lang)
 }
 
 
@@ -110,16 +110,16 @@ func (r *JobOffersService) Add(request requests.JobOffersRequest) (bool, error) 
 
 	var jobOffers models.JobOffers
 
-	jobOffers.Content = html.EscapeString(request.Content)
-jobOffers.IsShow = request.IsShow
-jobOffers.Lang = html.EscapeString(request.Lang)
-jobOffers.Number = html.EscapeString(request.Number)
-jobOffers.Place = html.EscapeString(request.Place)
-jobOffers.Platform = html.EscapeString(request.Platform)
-jobOffers.SalaryRange = html.EscapeString(request.SalaryRange)
-jobOffers.Sort = request.Sort
-jobOffers.Title = html.EscapeString(request.Title)
+	jobOffers.Title = html.EscapeString(request.Title)
 jobOffers.Url = html.EscapeString(request.Url)
+jobOffers.Content = html.EscapeString(request.Content)
+jobOffers.IsShow = request.IsShow
+jobOffers.Sort = request.Sort
+jobOffers.SalaryRange = html.EscapeString(request.SalaryRange)
+jobOffers.Place = html.EscapeString(request.Place)
+jobOffers.Number = html.EscapeString(request.Number)
+jobOffers.Platform = html.EscapeString(request.Platform)
+jobOffers.Lang = html.EscapeString(request.Lang)
 
 
 	err := facades.Orm().Query().Create(&jobOffers)
@@ -134,16 +134,16 @@ func (r *JobOffersService) Save(request requests.JobOffersRequest) (bool, error)
 	var jobOffers models.JobOffers
 
 	jobOffers.ID = request.ID
-	jobOffers.Content = html.EscapeString(request.Content)
-jobOffers.IsShow = request.IsShow
-jobOffers.Lang = html.EscapeString(request.Lang)
-jobOffers.Number = html.EscapeString(request.Number)
-jobOffers.Place = html.EscapeString(request.Place)
-jobOffers.Platform = html.EscapeString(request.Platform)
-jobOffers.SalaryRange = html.EscapeString(request.SalaryRange)
-jobOffers.Sort = request.Sort
-jobOffers.Title = html.EscapeString(request.Title)
+	jobOffers.Title = html.EscapeString(request.Title)
 jobOffers.Url = html.EscapeString(request.Url)
+jobOffers.Content = html.EscapeString(request.Content)
+jobOffers.IsShow = request.IsShow
+jobOffers.Sort = request.Sort
+jobOffers.SalaryRange = html.EscapeString(request.SalaryRange)
+jobOffers.Place = html.EscapeString(request.Place)
+jobOffers.Number = html.EscapeString(request.Number)
+jobOffers.Platform = html.EscapeString(request.Platform)
+jobOffers.Lang = html.EscapeString(request.Lang)
 
 
 	err := facades.Orm().Query().Save(&jobOffers)

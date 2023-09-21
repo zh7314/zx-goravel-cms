@@ -22,29 +22,29 @@ func (r *SeoService) GetList(request requests.SeoRequest) (map[string]interface{
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.Description) {
-	orm.Where("description", request.Description)
-}
-if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
+	if !gconv.IsEmpty(request.Title) {
+	orm.Where("title", request.Title)
 }
 if !gconv.IsEmpty(request.Keyword) {
 	orm.Where("keyword", request.Keyword)
 }
-if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+if !gconv.IsEmpty(request.Description) {
+	orm.Where("description", request.Description)
 }
 if !gconv.IsEmpty(request.Position) {
 	orm.Where("position", request.Position)
 }
+if !gconv.IsEmpty(request.IsShow) {
+	orm.Where("is_show", request.IsShow)
+}
 if !gconv.IsEmpty(request.Sort) {
 	orm.Where("sort", request.Sort)
 }
-if !gconv.IsEmpty(request.Title) {
-	orm.Where("title", request.Title)
+if !gconv.IsEmpty(request.Platform) {
+	orm.Where("platform", request.Platform)
+}
+if !gconv.IsEmpty(request.Lang) {
+	orm.Where("lang", request.Lang)
 }
 
 
@@ -63,29 +63,29 @@ func (r *SeoService) GetAll(request requests.SeoRequest) ([]models.Seo, error) {
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Description) {
-	orm.Where("description", request.Description)
-}
-if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
+    if !gconv.IsEmpty(request.Title) {
+	orm.Where("title", request.Title)
 }
 if !gconv.IsEmpty(request.Keyword) {
 	orm.Where("keyword", request.Keyword)
 }
-if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+if !gconv.IsEmpty(request.Description) {
+	orm.Where("description", request.Description)
 }
 if !gconv.IsEmpty(request.Position) {
 	orm.Where("position", request.Position)
 }
+if !gconv.IsEmpty(request.IsShow) {
+	orm.Where("is_show", request.IsShow)
+}
 if !gconv.IsEmpty(request.Sort) {
 	orm.Where("sort", request.Sort)
 }
-if !gconv.IsEmpty(request.Title) {
-	orm.Where("title", request.Title)
+if !gconv.IsEmpty(request.Platform) {
+	orm.Where("platform", request.Platform)
+}
+if !gconv.IsEmpty(request.Lang) {
+	orm.Where("lang", request.Lang)
 }
 
 
@@ -98,14 +98,14 @@ func (r *SeoService) Add(request requests.SeoRequest) (bool, error) {
 
 	var seo models.Seo
 
-	seo.Description = html.EscapeString(request.Description)
-seo.IsShow = request.IsShow
+	seo.Title = html.EscapeString(request.Title)
 seo.Keyword = html.EscapeString(request.Keyword)
-seo.Lang = html.EscapeString(request.Lang)
-seo.Platform = html.EscapeString(request.Platform)
+seo.Description = html.EscapeString(request.Description)
 seo.Position = html.EscapeString(request.Position)
+seo.IsShow = request.IsShow
 seo.Sort = request.Sort
-seo.Title = html.EscapeString(request.Title)
+seo.Platform = html.EscapeString(request.Platform)
+seo.Lang = html.EscapeString(request.Lang)
 
 
 	err := facades.Orm().Query().Create(&seo)
@@ -120,14 +120,14 @@ func (r *SeoService) Save(request requests.SeoRequest) (bool, error) {
 	var seo models.Seo
 
 	seo.ID = request.ID
-	seo.Description = html.EscapeString(request.Description)
-seo.IsShow = request.IsShow
+	seo.Title = html.EscapeString(request.Title)
 seo.Keyword = html.EscapeString(request.Keyword)
-seo.Lang = html.EscapeString(request.Lang)
-seo.Platform = html.EscapeString(request.Platform)
+seo.Description = html.EscapeString(request.Description)
 seo.Position = html.EscapeString(request.Position)
+seo.IsShow = request.IsShow
 seo.Sort = request.Sort
-seo.Title = html.EscapeString(request.Title)
+seo.Platform = html.EscapeString(request.Platform)
+seo.Lang = html.EscapeString(request.Lang)
 
 
 	err := facades.Orm().Query().Save(&seo)

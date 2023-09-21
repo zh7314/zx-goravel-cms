@@ -22,23 +22,23 @@ func (r *NewsCateService) GetList(request requests.NewsCateRequest) (map[string]
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	if !gconv.IsEmpty(request.ParentId) {
+	orm.Where("parent_id", request.ParentId)
 }
 if !gconv.IsEmpty(request.Name) {
 	orm.Where("name", request.Name)
 }
-if !gconv.IsEmpty(request.ParentId) {
-	orm.Where("parent_id", request.ParentId)
+if !gconv.IsEmpty(request.IsShow) {
+	orm.Where("is_show", request.IsShow)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Platform) {
 	orm.Where("platform", request.Platform)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+if !gconv.IsEmpty(request.Lang) {
+	orm.Where("lang", request.Lang)
 }
 
 
@@ -57,23 +57,23 @@ func (r *NewsCateService) GetAll(request requests.NewsCateRequest) ([]models.New
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+    if !gconv.IsEmpty(request.ParentId) {
+	orm.Where("parent_id", request.ParentId)
 }
 if !gconv.IsEmpty(request.Name) {
 	orm.Where("name", request.Name)
 }
-if !gconv.IsEmpty(request.ParentId) {
-	orm.Where("parent_id", request.ParentId)
+if !gconv.IsEmpty(request.IsShow) {
+	orm.Where("is_show", request.IsShow)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Platform) {
 	orm.Where("platform", request.Platform)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+if !gconv.IsEmpty(request.Lang) {
+	orm.Where("lang", request.Lang)
 }
 
 
@@ -86,12 +86,12 @@ func (r *NewsCateService) Add(request requests.NewsCateRequest) (bool, error) {
 
 	var newsCate models.NewsCate
 
-	newsCate.IsShow = request.IsShow
-newsCate.Lang = html.EscapeString(request.Lang)
+	newsCate.ParentId = request.ParentId
 newsCate.Name = html.EscapeString(request.Name)
-newsCate.ParentId = request.ParentId
-newsCate.Platform = html.EscapeString(request.Platform)
+newsCate.IsShow = request.IsShow
 newsCate.Sort = request.Sort
+newsCate.Platform = html.EscapeString(request.Platform)
+newsCate.Lang = html.EscapeString(request.Lang)
 
 
 	err := facades.Orm().Query().Create(&newsCate)
@@ -106,12 +106,12 @@ func (r *NewsCateService) Save(request requests.NewsCateRequest) (bool, error) {
 	var newsCate models.NewsCate
 
 	newsCate.ID = request.ID
-	newsCate.IsShow = request.IsShow
-newsCate.Lang = html.EscapeString(request.Lang)
+	newsCate.ParentId = request.ParentId
 newsCate.Name = html.EscapeString(request.Name)
-newsCate.ParentId = request.ParentId
-newsCate.Platform = html.EscapeString(request.Platform)
+newsCate.IsShow = request.IsShow
 newsCate.Sort = request.Sort
+newsCate.Platform = html.EscapeString(request.Platform)
+newsCate.Lang = html.EscapeString(request.Lang)
 
 
 	err := facades.Orm().Query().Save(&newsCate)

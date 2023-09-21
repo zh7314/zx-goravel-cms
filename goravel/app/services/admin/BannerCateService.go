@@ -22,17 +22,14 @@ func (r *BannerCateService) GetList(request requests.BannerCateRequest) (map[str
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.Name) {
+	if !gconv.IsEmpty(request.Name) {
 	orm.Where("name", request.Name)
 }
-if !gconv.IsEmpty(request.ParentId) {
-	orm.Where("parent_id", request.ParentId)
+if !gconv.IsEmpty(request.IsShow) {
+	orm.Where("is_show", request.IsShow)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Pic) {
 	orm.Where("pic", request.Pic)
@@ -40,8 +37,11 @@ if !gconv.IsEmpty(request.Pic) {
 if !gconv.IsEmpty(request.Platform) {
 	orm.Where("platform", request.Platform)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+if !gconv.IsEmpty(request.Lang) {
+	orm.Where("lang", request.Lang)
+}
+if !gconv.IsEmpty(request.ParentId) {
+	orm.Where("parent_id", request.ParentId)
 }
 
 
@@ -60,17 +60,14 @@ func (r *BannerCateService) GetAll(request requests.BannerCateRequest) ([]models
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.Name) {
+    if !gconv.IsEmpty(request.Name) {
 	orm.Where("name", request.Name)
 }
-if !gconv.IsEmpty(request.ParentId) {
-	orm.Where("parent_id", request.ParentId)
+if !gconv.IsEmpty(request.IsShow) {
+	orm.Where("is_show", request.IsShow)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Pic) {
 	orm.Where("pic", request.Pic)
@@ -78,8 +75,11 @@ if !gconv.IsEmpty(request.Pic) {
 if !gconv.IsEmpty(request.Platform) {
 	orm.Where("platform", request.Platform)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+if !gconv.IsEmpty(request.Lang) {
+	orm.Where("lang", request.Lang)
+}
+if !gconv.IsEmpty(request.ParentId) {
+	orm.Where("parent_id", request.ParentId)
 }
 
 
@@ -92,13 +92,13 @@ func (r *BannerCateService) Add(request requests.BannerCateRequest) (bool, error
 
 	var bannerCate models.BannerCate
 
-	bannerCate.IsShow = request.IsShow
-bannerCate.Lang = html.EscapeString(request.Lang)
-bannerCate.Name = html.EscapeString(request.Name)
-bannerCate.ParentId = request.ParentId
+	bannerCate.Name = html.EscapeString(request.Name)
+bannerCate.IsShow = request.IsShow
+bannerCate.Sort = request.Sort
 bannerCate.Pic = html.EscapeString(request.Pic)
 bannerCate.Platform = html.EscapeString(request.Platform)
-bannerCate.Sort = request.Sort
+bannerCate.Lang = html.EscapeString(request.Lang)
+bannerCate.ParentId = request.ParentId
 
 
 	err := facades.Orm().Query().Create(&bannerCate)
@@ -113,13 +113,13 @@ func (r *BannerCateService) Save(request requests.BannerCateRequest) (bool, erro
 	var bannerCate models.BannerCate
 
 	bannerCate.ID = request.ID
-	bannerCate.IsShow = request.IsShow
-bannerCate.Lang = html.EscapeString(request.Lang)
-bannerCate.Name = html.EscapeString(request.Name)
-bannerCate.ParentId = request.ParentId
+	bannerCate.Name = html.EscapeString(request.Name)
+bannerCate.IsShow = request.IsShow
+bannerCate.Sort = request.Sort
 bannerCate.Pic = html.EscapeString(request.Pic)
 bannerCate.Platform = html.EscapeString(request.Platform)
-bannerCate.Sort = request.Sort
+bannerCate.Lang = html.EscapeString(request.Lang)
+bannerCate.ParentId = request.ParentId
 
 
 	err := facades.Orm().Query().Save(&bannerCate)

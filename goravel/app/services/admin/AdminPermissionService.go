@@ -22,29 +22,29 @@ func (r *AdminPermissionService) GetList(request requests.AdminPermissionRequest
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.Component) {
-	orm.Where("component", request.Component)
-}
-if !gconv.IsEmpty(request.Hidden) {
-	orm.Where("hidden", request.Hidden)
-}
-if !gconv.IsEmpty(request.Icon) {
-	orm.Where("icon", request.Icon)
-}
-if !gconv.IsEmpty(request.IsMenu) {
-	orm.Where("is_menu", request.IsMenu)
+	if !gconv.IsEmpty(request.ParentId) {
+	orm.Where("parent_id", request.ParentId)
 }
 if !gconv.IsEmpty(request.Name) {
 	orm.Where("name", request.Name)
 }
-if !gconv.IsEmpty(request.ParentId) {
-	orm.Where("parent_id", request.ParentId)
-}
 if !gconv.IsEmpty(request.Path) {
 	orm.Where("path", request.Path)
 }
+if !gconv.IsEmpty(request.Component) {
+	orm.Where("component", request.Component)
+}
+if !gconv.IsEmpty(request.IsMenu) {
+	orm.Where("is_menu", request.IsMenu)
+}
+if !gconv.IsEmpty(request.Icon) {
+	orm.Where("icon", request.Icon)
+}
 if !gconv.IsEmpty(request.Sort) {
 	orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.Hidden) {
+	orm.Where("hidden", request.Hidden)
 }
 
 
@@ -63,29 +63,29 @@ func (r *AdminPermissionService) GetAll(request requests.AdminPermissionRequest)
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Component) {
-	orm.Where("component", request.Component)
-}
-if !gconv.IsEmpty(request.Hidden) {
-	orm.Where("hidden", request.Hidden)
-}
-if !gconv.IsEmpty(request.Icon) {
-	orm.Where("icon", request.Icon)
-}
-if !gconv.IsEmpty(request.IsMenu) {
-	orm.Where("is_menu", request.IsMenu)
+    if !gconv.IsEmpty(request.ParentId) {
+	orm.Where("parent_id", request.ParentId)
 }
 if !gconv.IsEmpty(request.Name) {
 	orm.Where("name", request.Name)
 }
-if !gconv.IsEmpty(request.ParentId) {
-	orm.Where("parent_id", request.ParentId)
-}
 if !gconv.IsEmpty(request.Path) {
 	orm.Where("path", request.Path)
 }
+if !gconv.IsEmpty(request.Component) {
+	orm.Where("component", request.Component)
+}
+if !gconv.IsEmpty(request.IsMenu) {
+	orm.Where("is_menu", request.IsMenu)
+}
+if !gconv.IsEmpty(request.Icon) {
+	orm.Where("icon", request.Icon)
+}
 if !gconv.IsEmpty(request.Sort) {
 	orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.Hidden) {
+	orm.Where("hidden", request.Hidden)
 }
 
 
@@ -98,14 +98,14 @@ func (r *AdminPermissionService) Add(request requests.AdminPermissionRequest) (b
 
 	var adminPermission models.AdminPermission
 
-	adminPermission.Component = html.EscapeString(request.Component)
-adminPermission.Hidden = request.Hidden
-adminPermission.Icon = html.EscapeString(request.Icon)
-adminPermission.IsMenu = request.IsMenu
+	adminPermission.ParentId = request.ParentId
 adminPermission.Name = html.EscapeString(request.Name)
-adminPermission.ParentId = request.ParentId
 adminPermission.Path = html.EscapeString(request.Path)
+adminPermission.Component = html.EscapeString(request.Component)
+adminPermission.IsMenu = request.IsMenu
+adminPermission.Icon = html.EscapeString(request.Icon)
 adminPermission.Sort = request.Sort
+adminPermission.Hidden = request.Hidden
 
 
 	err := facades.Orm().Query().Create(&adminPermission)
@@ -120,14 +120,14 @@ func (r *AdminPermissionService) Save(request requests.AdminPermissionRequest) (
 	var adminPermission models.AdminPermission
 
 	adminPermission.ID = request.ID
-	adminPermission.Component = html.EscapeString(request.Component)
-adminPermission.Hidden = request.Hidden
-adminPermission.Icon = html.EscapeString(request.Icon)
-adminPermission.IsMenu = request.IsMenu
+	adminPermission.ParentId = request.ParentId
 adminPermission.Name = html.EscapeString(request.Name)
-adminPermission.ParentId = request.ParentId
 adminPermission.Path = html.EscapeString(request.Path)
+adminPermission.Component = html.EscapeString(request.Component)
+adminPermission.IsMenu = request.IsMenu
+adminPermission.Icon = html.EscapeString(request.Icon)
 adminPermission.Sort = request.Sort
+adminPermission.Hidden = request.Hidden
 
 
 	err := facades.Orm().Query().Save(&adminPermission)

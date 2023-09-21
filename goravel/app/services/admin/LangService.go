@@ -22,11 +22,11 @@ func (r *LangService) GetList(request requests.LangRequest) (map[string]interfac
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.Sort) {
+	if !gconv.IsEmpty(request.Sort) {
 	orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.Name) {
+	orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.Value) {
 	orm.Where("value", request.Value)
@@ -48,11 +48,11 @@ func (r *LangService) GetAll(request requests.LangRequest) ([]models.Lang, error
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.Sort) {
+    if !gconv.IsEmpty(request.Sort) {
 	orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.Name) {
+	orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.Value) {
 	orm.Where("value", request.Value)
@@ -68,8 +68,8 @@ func (r *LangService) Add(request requests.LangRequest) (bool, error) {
 
 	var lang models.Lang
 
-	lang.Name = html.EscapeString(request.Name)
-lang.Sort = request.Sort
+	lang.Sort = request.Sort
+lang.Name = html.EscapeString(request.Name)
 lang.Value = html.EscapeString(request.Value)
 
 
@@ -85,8 +85,8 @@ func (r *LangService) Save(request requests.LangRequest) (bool, error) {
 	var lang models.Lang
 
 	lang.ID = request.ID
-	lang.Name = html.EscapeString(request.Name)
-lang.Sort = request.Sort
+	lang.Sort = request.Sort
+lang.Name = html.EscapeString(request.Name)
 lang.Value = html.EscapeString(request.Value)
 
 

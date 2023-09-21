@@ -12,9 +12,9 @@ func Api() {
 	//无权限
 	facades.Route().Prefix("api/admin").Middleware(middleware.AdminCheck(), middleware.Recovery()).Group(func(router route.Router) {
 
-		router.Post("login", admin.NewIndexController().Login)           //登录请求
-		router.Post("uploadPic", admin.NewIndexController().UploadPic)   //上传图片文件
-		router.Post("uploadFile", admin.NewIndexController().UploadFile) //上传普通文件
+		//router.Post("login", admin.NewIndexController().Login)           //登录请求
+		//router.Post("uploadPic", admin.NewIndexController().UploadPic)   //上传图片文件
+		//router.Post("uploadFile", admin.NewIndexController().UploadFile) //上传普通文件
 	})
 
 	//有权限检查 middleware.AdminCheck(),
@@ -34,13 +34,13 @@ func Api() {
 		//router.Post("getVideoCateTree", admin.NewIndexController().GetVideoCateTree)
 		//router.Post("getBannerCateTree", admin.NewIndexController().GetBannerCateTree)
 
-		router.Prefix("admin").Group(func(router1 route.Router) {
-			router1.Post("/getList", admin.NewAdminController().GetList)
-			router1.Post("/getAll", admin.NewAdminController().GetAll)
-			router1.Post("/add", admin.NewAdminController().Add)
-			router1.Post("/save", admin.NewAdminController().Save)
-			router1.Post("/delete", admin.NewAdminController().Delete)
-		})
+		//router.Prefix("admin").Group(func(router1 route.Router) {
+		//	router1.Post("/getList", admin.NewAdminController().GetList)
+		//	router1.Post("/getAll", admin.NewAdminController().GetAll)
+		//	router1.Post("/add", admin.NewAdminController().Add)
+		//	router1.Post("/save", admin.NewAdminController().Save)
+		//	router1.Post("/delete", admin.NewAdminController().Delete)
+		//})
 
 		router.Prefix("adminGroup").Group(func(router1 route.Router) {
 			router1.Post("/getList", admin.NewAdminGroupController().GetList)

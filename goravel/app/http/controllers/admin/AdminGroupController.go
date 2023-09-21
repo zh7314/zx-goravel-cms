@@ -23,10 +23,10 @@ func (r *AdminGroupController) GetList(ctx http.Context) http.Response {
 
 	data, ok := admin.NewAdminGroupService().GetList(request)
 	if ok == nil {
-    	return response.Success(ctx, data, "成功")
-    } else {
-    	return response.Fail(ctx, "", ok.Error())
-    }
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
 }
 
 func (r *AdminGroupController) GetAll(ctx http.Context) http.Response {
@@ -38,10 +38,10 @@ func (r *AdminGroupController) GetAll(ctx http.Context) http.Response {
 
 	data, ok := admin.NewAdminGroupService().GetAll(request)
 	if ok == nil {
-    	return response.Success(ctx, data, "成功")
-    } else {
-    	return response.Fail(ctx, "", ok.Error())
-    }
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
 }
 
 func (r *AdminGroupController) Add(ctx http.Context) http.Response {
@@ -53,10 +53,10 @@ func (r *AdminGroupController) Add(ctx http.Context) http.Response {
 
 	data, ok := admin.NewAdminGroupService().Add(request)
 	if ok == nil {
-    	return response.Success(ctx, data, "成功")
-    } else {
-    	return response.Fail(ctx, "", ok.Error())
-    }
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
 }
 
 func (r *AdminGroupController) Save(ctx http.Context) http.Response {
@@ -68,10 +68,10 @@ func (r *AdminGroupController) Save(ctx http.Context) http.Response {
 
 	data, ok := admin.NewAdminGroupService().Save(request)
 	if ok == nil {
-    	return response.Success(ctx, data, "成功")
-    } else {
-    	return response.Fail(ctx, "", ok.Error())
-    }
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
 }
 
 func (r *AdminGroupController) Delete(ctx http.Context) http.Response {
