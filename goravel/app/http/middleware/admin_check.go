@@ -16,7 +16,6 @@ func AdminCheck() http.Middleware {
 		if err != nil {
 			response.AbortFail(ctx, "", err.Error())
 		}
-
 		defer func() {
 			if r := recover(); r != nil {
 				fmt.Println("系统内部错误")
@@ -24,7 +23,6 @@ func AdminCheck() http.Middleware {
 				return
 			}
 		}()
-
 		ctx.Request().Next()
 	}
 }
@@ -34,10 +32,8 @@ func check(ctx http.Context) (res bool, ok error) {
 	if token == "" {
 		token = ctx.Request().Input(global.API_TOKEN)
 	}
-
 	if token == "" {
 		return false, errors.New("token不能为空")
 	}
-
 	return true, nil
 }
