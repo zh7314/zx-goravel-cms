@@ -12,35 +12,35 @@ func Api() {
 	//无权限
 	facades.Route().Prefix("api/admin").Middleware(middleware.AdminCheck(), middleware.Recovery()).Group(func(router route.Router) {
 
-		//router.Post("login", admin.NewIndexController().Login)           //登录请求
-		//router.Post("uploadPic", admin.NewIndexController().UploadPic)   //上传图片文件
-		//router.Post("uploadFile", admin.NewIndexController().UploadFile) //上传普通文件
+		router.Post("login", admin.NewIndexController().Login)           //登录请求
+		router.Post("uploadPic", admin.NewIndexController().UploadPic)   //上传图片文件
+		router.Post("uploadFile", admin.NewIndexController().UploadFile) //上传普通文件
 	})
 
 	//有权限检查 middleware.AdminCheck(),
 	facades.Route().Prefix("api/admin").Middleware(middleware.Recovery()).Group(func(router route.Router) {
 
-		//router.Post("getMenu", admin.NewIndexController().GetMenu)       //获取菜单信息
-		//router.Post("getInfo", admin.NewIndexController().GetInfo)       //获取用户信息
-		//router.Post("logout", admin.NewIndexController().logout)         //登出
-		//router.Post("getVersion", admin.NewIndexController().getVersion) //获取版本信息
-		//router.Post("changePwd", admin.NewIndexController().changePwd)   //修改密码
-		//
-		//router.Post("getGroupTree", admin.NewIndexController().GetGroupTree)
-		//router.Post("getMenuTree", admin.NewIndexController().GetMenuTree)
-		//router.Post("getDownloadCateTree", admin.NewIndexController().GetDownloadCateTree)
-		//router.Post("getNewsCateTree", admin.NewIndexController().GetNewsCateTree)
-		//router.Post("getProductCateTree", admin.NewIndexController().GetProductCateTree)
-		//router.Post("getVideoCateTree", admin.NewIndexController().GetVideoCateTree)
-		//router.Post("getBannerCateTree", admin.NewIndexController().GetBannerCateTree)
+		router.Post("getMenu", admin.NewIndexController().GetMenu)       //获取菜单信息
+		router.Post("getInfo", admin.NewIndexController().GetInfo)       //获取用户信息
+		router.Post("logout", admin.NewIndexController().Logout)         //登出
+		router.Post("getVersion", admin.NewIndexController().GetVersion) //获取版本信息
+		router.Post("changePwd", admin.NewIndexController().ChangePwd)   //修改密码
 
-		//router.Prefix("admin").Group(func(router1 route.Router) {
-		//	router1.Post("/getList", admin.NewAdminController().GetList)
-		//	router1.Post("/getAll", admin.NewAdminController().GetAll)
-		//	router1.Post("/add", admin.NewAdminController().Add)
-		//	router1.Post("/save", admin.NewAdminController().Save)
-		//	router1.Post("/delete", admin.NewAdminController().Delete)
-		//})
+		router.Post("getGroupTree", admin.NewIndexController().GetGroupTree)
+		router.Post("getMenuTree", admin.NewIndexController().GetMenuTree)
+		router.Post("getDownloadCateTree", admin.NewIndexController().GetDownloadCateTree)
+		router.Post("getNewsCateTree", admin.NewIndexController().GetNewsCateTree)
+		router.Post("getProductCateTree", admin.NewIndexController().GetProductCateTree)
+		router.Post("getVideoCateTree", admin.NewIndexController().GetVideoCateTree)
+		router.Post("getBannerCateTree", admin.NewIndexController().GetBannerCateTree)
+
+		router.Prefix("admin").Group(func(router1 route.Router) {
+			router1.Post("/getList", admin.NewAdminController().GetList)
+			router1.Post("/getAll", admin.NewAdminController().GetAll)
+			router1.Post("/add", admin.NewAdminController().Add)
+			router1.Post("/save", admin.NewAdminController().Save)
+			router1.Post("/delete", admin.NewAdminController().Delete)
+		})
 
 		router.Prefix("adminGroup").Group(func(router1 route.Router) {
 			router1.Post("/getList", admin.NewAdminGroupController().GetList)
