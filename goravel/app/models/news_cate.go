@@ -2,13 +2,14 @@ package models
 
 import "goravel/app/utils/local"
 
-const TableNameFeedback = "feedback"
+const TableNameNewsCate = "news_cate"
 
-type Feedback struct {
+type NewsCate struct {
 	ID            int64           `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"` // comment ID
-    NickName            string           `gorm:"column:nick_name" json:"nick_name"`           // comment 反馈昵称
-    Contact            string           `gorm:"column:contact" json:"contact"`           // comment 联系方式
-    Content            string           `gorm:"column:content" json:"content"`           // comment 反馈内容
+    ParentId            int64           `gorm:"column:parent_id" json:"parent_id"`           // comment 父分类ID
+    Name            string           `gorm:"column:name" json:"name"`           // comment 新闻分类名称
+    IsShow            int           `gorm:"column:is_show" json:"is_show"`           // comment 10是默认显示，20是不显示
+    Sort            int           `gorm:"column:sort" json:"sort"`           // comment 排序越小越往前
     CreateAt            local.LocalTime           `gorm:"-" json:"create_at"`           // comment 创建时间
     UpdateAt            local.LocalTime           `gorm:"-" json:"update_at"`           // comment 更新时间
     Platform            string           `gorm:"column:platform" json:"platform"`           // comment 平台类型
@@ -16,6 +17,6 @@ type Feedback struct {
 
 }
 
-func (*Feedback) TableName() string {
-	return TableNameFeedback
+func (*NewsCate) TableName() string {
+	return TableNameNewsCate
 }
