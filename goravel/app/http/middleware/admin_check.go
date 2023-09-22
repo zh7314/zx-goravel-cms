@@ -4,9 +4,12 @@ import (
 	"errors"
 	"fmt"
 	"github.com/goravel/framework/contracts/http"
+	"github.com/goravel/framework/facades"
+	"goravel/app/models"
 	"goravel/app/utils"
 	"goravel/app/utils/global"
 	"goravel/app/utils/response"
+	"time"
 )
 
 func AdminCheck() http.Middleware {
@@ -35,5 +38,22 @@ func check(ctx http.Context) (res bool, ok error) {
 	if token == "" {
 		return false, errors.New("token不能为空")
 	}
+
+	var admin models.Admin
+	err := facades.Orm().Query().Where("token", token).FirstOrFail(&admin)
+	if err != nil {
+		return false, errors.New("token不存在")
+	}
+
+	timeObj, err := utils.LocalTimeToTime(admin.TokenTime)
+
+	if err != nil {
+		return false, errors.New("token时间解析错误")
+	}
+
+	if time.Now().Unix() > timeObj.Unix()+int64(global.TOKEN_TIME) {
+		return false, errors.New("token过期，请重新登录")
+	}
+
 	return true, nil
 }
