@@ -23,33 +23,32 @@ func (r *AdminLogService) GetList(request requests.AdminLogRequest) (map[string]
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.Method) {
-	orm.Where("method", request.Method)
-}
-if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
-}
-if !gconv.IsEmpty(request.RouteName) {
-	orm.Where("route_name", request.RouteName)
-}
-if !gconv.IsEmpty(request.Path) {
-	orm.Where("path", request.Path)
-}
-if !gconv.IsEmpty(request.RequestIp) {
-	orm.Where("request_ip", request.RequestIp)
-}
-if !gconv.IsEmpty(request.Data) {
-	orm.Where("data", request.Data)
-}
-if !gconv.IsEmpty(request.AdminId) {
-	orm.Where("admin_id", request.AdminId)
-}
-if !gconv.IsEmpty(request.AdminName) {
-	orm.Where("admin_name", request.AdminName)
-}
-if !gconv.IsEmpty(request.RouteDesc) {
-	orm.Where("route_desc", request.RouteDesc)
-}
-
+		orm.Where("method", request.Method)
+	}
+	if !gconv.IsEmpty(request.Url) {
+		orm.Where("url", request.Url)
+	}
+	if !gconv.IsEmpty(request.RouteName) {
+		orm.Where("route_name", request.RouteName)
+	}
+	if !gconv.IsEmpty(request.Path) {
+		orm.Where("path", request.Path)
+	}
+	if !gconv.IsEmpty(request.RequestIp) {
+		orm.Where("request_ip", request.RequestIp)
+	}
+	if !gconv.IsEmpty(request.Data) {
+		orm.Where("data", request.Data)
+	}
+	if !gconv.IsEmpty(request.AdminId) {
+		orm.Where("admin_id", request.AdminId)
+	}
+	if !gconv.IsEmpty(request.AdminName) {
+		orm.Where("admin_name", request.AdminName)
+	}
+	if !gconv.IsEmpty(request.RouteDesc) {
+		orm.Where("route_desc", request.RouteDesc)
+	}
 
 	orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
 
@@ -66,34 +65,33 @@ func (r *AdminLogService) GetAll(request requests.AdminLogRequest) ([]models.Adm
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Method) {
-	orm.Where("method", request.Method)
-}
-if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
-}
-if !gconv.IsEmpty(request.RouteName) {
-	orm.Where("route_name", request.RouteName)
-}
-if !gconv.IsEmpty(request.Path) {
-	orm.Where("path", request.Path)
-}
-if !gconv.IsEmpty(request.RequestIp) {
-	orm.Where("request_ip", request.RequestIp)
-}
-if !gconv.IsEmpty(request.Data) {
-	orm.Where("data", request.Data)
-}
-if !gconv.IsEmpty(request.AdminId) {
-	orm.Where("admin_id", request.AdminId)
-}
-if !gconv.IsEmpty(request.AdminName) {
-	orm.Where("admin_name", request.AdminName)
-}
-if !gconv.IsEmpty(request.RouteDesc) {
-	orm.Where("route_desc", request.RouteDesc)
-}
-
+	if !gconv.IsEmpty(request.Method) {
+		orm.Where("method", request.Method)
+	}
+	if !gconv.IsEmpty(request.Url) {
+		orm.Where("url", request.Url)
+	}
+	if !gconv.IsEmpty(request.RouteName) {
+		orm.Where("route_name", request.RouteName)
+	}
+	if !gconv.IsEmpty(request.Path) {
+		orm.Where("path", request.Path)
+	}
+	if !gconv.IsEmpty(request.RequestIp) {
+		orm.Where("request_ip", request.RequestIp)
+	}
+	if !gconv.IsEmpty(request.Data) {
+		orm.Where("data", request.Data)
+	}
+	if !gconv.IsEmpty(request.AdminId) {
+		orm.Where("admin_id", request.AdminId)
+	}
+	if !gconv.IsEmpty(request.AdminName) {
+		orm.Where("admin_name", request.AdminName)
+	}
+	if !gconv.IsEmpty(request.RouteDesc) {
+		orm.Where("route_desc", request.RouteDesc)
+	}
 
 	orm.Order("id desc").Get(&list)
 
@@ -105,20 +103,19 @@ func (r *AdminLogService) Add(request requests.AdminLogRequest) (bool, error) {
 	var adminLog models.AdminLog
 
 	adminLog.Method = html.EscapeString(request.Method)
-adminLog.Url = html.EscapeString(request.Url)
-adminLog.RouteName = html.EscapeString(request.RouteName)
-adminLog.Path = html.EscapeString(request.Path)
-adminLog.RequestIp = html.EscapeString(request.RequestIp)
-adminLog.Data = html.EscapeString(request.Data)
-adminLog.AdminId = request.AdminId
-adminLog.AdminName = html.EscapeString(request.AdminName)
-adminLog.RouteDesc = html.EscapeString(request.RouteDesc)
-
+	adminLog.Url = html.EscapeString(request.Url)
+	adminLog.RouteName = html.EscapeString(request.RouteName)
+	adminLog.Path = html.EscapeString(request.Path)
+	adminLog.RequestIp = html.EscapeString(request.RequestIp)
+	adminLog.Data = html.EscapeString(request.Data)
+	adminLog.AdminId = request.AdminId
+	adminLog.AdminName = html.EscapeString(request.AdminName)
+	adminLog.RouteDesc = html.EscapeString(request.RouteDesc)
 
 	err := facades.Orm().Query().Create(&adminLog)
 	if err != nil {
-    		return false, err
-    }
+		return false, err
+	}
 	return true, nil
 }
 
@@ -128,15 +125,14 @@ func (r *AdminLogService) Save(request requests.AdminLogRequest) (bool, error) {
 
 	adminLog.ID = request.ID
 	adminLog.Method = html.EscapeString(request.Method)
-adminLog.Url = html.EscapeString(request.Url)
-adminLog.RouteName = html.EscapeString(request.RouteName)
-adminLog.Path = html.EscapeString(request.Path)
-adminLog.RequestIp = html.EscapeString(request.RequestIp)
-adminLog.Data = html.EscapeString(request.Data)
-adminLog.AdminId = request.AdminId
-adminLog.AdminName = html.EscapeString(request.AdminName)
-adminLog.RouteDesc = html.EscapeString(request.RouteDesc)
-
+	adminLog.Url = html.EscapeString(request.Url)
+	adminLog.RouteName = html.EscapeString(request.RouteName)
+	adminLog.Path = html.EscapeString(request.Path)
+	adminLog.RequestIp = html.EscapeString(request.RequestIp)
+	adminLog.Data = html.EscapeString(request.Data)
+	adminLog.AdminId = request.AdminId
+	adminLog.AdminName = html.EscapeString(request.AdminName)
+	adminLog.RouteDesc = html.EscapeString(request.RouteDesc)
 
 	err := facades.Orm().Query().Save(&adminLog)
 	if err != nil {

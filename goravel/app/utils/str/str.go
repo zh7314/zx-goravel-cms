@@ -14,9 +14,11 @@ import (
 	"unsafe"
 )
 
-func Md5(buf []byte) string {
+func Md5(buf string) string {
+
+	data := []byte(buf)
 	hash := md5.New()
-	hash.Write(buf)
+	hash.Write(data)
 	return fmt.Sprintf("%x", hash.Sum(nil))
 }
 
@@ -93,13 +95,13 @@ func GetBase64ByFile(path string) (string, error) {
 	return sourcestring, nil
 }
 
-func Struct2MapByTag(obj interface{},tagName string) map[string]interface{} {
+func Struct2MapByTag(obj interface{}, tagName string) map[string]interface{} {
 	t := reflect.TypeOf(obj)
 	v := reflect.ValueOf(obj)
 
 	var data = make(map[string]interface{})
 	for i := 0; i < t.NumField(); i++ {
-		if t.Field(i).Tag.Get(tagName) == ""{
+		if t.Field(i).Tag.Get(tagName) == "" {
 			continue
 		}
 		data[t.Field(i).Tag.Get(tagName)] = v.Field(i).Interface()
@@ -120,11 +122,11 @@ func IsContain(items []string, item string) bool {
 func SetPassword(len int, pwdO string) (pwd string, salt string) {
 	salt = GetRandomString(len)
 	defaultPwd := pwdO
-	pwd = Md5([]byte(defaultPwd + salt))
+	pwd = Md5(defaultPwd + salt)
 	return pwd, salt
 }
 
-//生成随机字符串
+// 生成随机字符串
 func GetRandomString(lens int) string {
 	str := "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	bytes := []byte(str)
@@ -193,4 +195,3 @@ func LCS(s1 string, s2 string) string {
 	}
 	return s1[xLongest-longest : xLongest]
 }
-

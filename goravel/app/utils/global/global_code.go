@@ -15,7 +15,7 @@ const (
 	// 后台token名称
 	API_TOKEN string = "X-Token"
 	// token存活时间
-	TOKEN_TIME int = 10 * 3600
+	TOKEN_TIME int = 24 * 3600
 
 	// 定义debug开启判断的字符
 	DEBUG = "JUMP_DEBUG"

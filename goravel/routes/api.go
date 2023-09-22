@@ -10,7 +10,7 @@ import (
 func Api() {
 
 	//无权限
-	facades.Route().Prefix("api/admin").Middleware(middleware.AdminCheck(), middleware.Recovery()).Group(func(router route.Router) {
+	facades.Route().Prefix("api/admin").Middleware(middleware.Recovery()).Group(func(router route.Router) {
 
 		router.Post("login", admin.NewIndexController().Login)           //登录请求
 		router.Post("uploadPic", admin.NewIndexController().UploadPic)   //上传图片文件
@@ -18,7 +18,7 @@ func Api() {
 	})
 
 	//有权限检查 middleware.AdminCheck(),
-	facades.Route().Prefix("api/admin").Middleware(middleware.Recovery()).Group(func(router route.Router) {
+	facades.Route().Prefix("api/admin").Middleware(middleware.AdminCheck(), middleware.Recovery()).Group(func(router route.Router) {
 
 		router.Post("getMenu", admin.NewIndexController().GetMenu)       //获取菜单信息
 		router.Post("getInfo", admin.NewIndexController().GetInfo)       //获取用户信息

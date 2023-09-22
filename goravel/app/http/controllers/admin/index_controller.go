@@ -18,6 +18,7 @@ func NewIndexController() *IndexController {
 }
 
 func (r *IndexController) Login(ctx http.Context) http.Response {
+
 	var request requests.AdminLoginRequest
 	if err := ctx.Request().Bind(&request); err != nil {
 		return response.Fail(ctx, "", err.Error())
