@@ -1,6 +1,9 @@
 package models
 
-import "goravel/app/utils/local"
+import (
+	"github.com/goravel/framework/support/carbon"
+	"time"
+)
 
 const TableNameAdmin = "admin"
 
@@ -16,12 +19,12 @@ type Admin struct {
 	Status        int             `gorm:"column:status" json:"status"`                       // comment 用户状态10是默认正常 20是禁止登陆
 	Avatar        string          `gorm:"column:avatar" json:"avatar"`                       // comment 用户头像
 	RealName      string          `gorm:"column:real_name" json:"real_name"`                 // comment 真是姓名
-	TokenTime     local.LocalTime `gorm:"column:token_time" json:"token_time"`               // comment 登陆token时间
+	TokenTime     time.Time       `gorm:"column:token_time" json:"token_time"`               // comment 登陆token时间
 	AdminGroupIds string          `gorm:"column:admin_group_ids" json:"admin_group_ids"`     // comment 用户权限组ID集合
 	IsAdmin       int             `gorm:"column:is_admin" json:"is_admin"`                   // comment 是否管理员 10是，99不是
 	Sort          int             `gorm:"column:sort" json:"sort"`                           // comment 排序越小越往前
-	CreateAt      local.LocalTime `gorm:"-" json:"create_at"`                                // comment 创建时间
-	UpdateAt      local.LocalTime `gorm:"-" json:"update_at"`                                // comment 更新时间
+	CreateAt      carbon.DateTime `gorm:"column:create_at;->" json:"create_at"`              // comment 创建时间
+	UpdateAt      carbon.DateTime `gorm:"column:update_at;->" json:"update_at"`              // comment 更新时间
 	Token         string          `gorm:"column:token" json:"token"`                         // comment token
 
 }

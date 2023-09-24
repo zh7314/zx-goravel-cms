@@ -9,7 +9,6 @@ import (
 	"goravel/app/utils"
 	"goravel/app/utils/global"
 	"goravel/app/utils/response"
-	"time"
 )
 
 func AdminCheck() http.Middleware {
@@ -45,15 +44,15 @@ func check(ctx http.Context) (res bool, ok error) {
 		return false, errors.New("token不存在")
 	}
 
-	timeObj, err := utils.LocalTimeToTime(admin.TokenTime)
+	//timeObj, err := utils.LocalTimeToTime(admin.TokenTime)
 
-	if err != nil {
-		return false, errors.New("token时间解析错误")
-	}
+	//if err != nil {
+	//	return false, errors.New("token时间解析错误")
+	//}
 
-	if time.Now().Unix() > timeObj.Unix()+int64(global.TOKEN_TIME) {
-		return false, errors.New("token过期，请重新登录")
-	}
+	//if time.Now().Unix() > timeObj.Unix()+int64(global.TOKEN_TIME) {
+	//	return false, errors.New("token过期，请重新登录")
+	//}
 
 	return true, nil
 }

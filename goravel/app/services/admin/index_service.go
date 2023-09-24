@@ -2,6 +2,7 @@ package admin
 
 import (
 	"errors"
+	"fmt"
 	"github.com/goravel/framework/database/orm"
 	"github.com/goravel/framework/facades"
 	"goravel/app/models"
@@ -55,12 +56,16 @@ func (r *IndexService) Login(request requests.AdminLoginRequest) (res map[string
 
 	token := str.GetRandomString(32)
 
-	tokenTime, err := utils.StrToLocalTime(time.Now().Format("2006-01-02 15:04:05"))
+	str := time.Now().Format("2006-01-02 15:04:05")
+	fmt.Print(str)
+
+	tokenTime, err := utils.StrToLocalTime(str)
 	if err != nil {
 		return res, errors.New("获取时间失败")
 	}
+	fmt.Print(tokenTime)
 
-	admin.TokenTime = tokenTime
+	admin.TokenTime = time.Now()
 	admin.Token = token
 
 	err = facades.Orm().Query().Save(&admin)

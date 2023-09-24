@@ -1,6 +1,6 @@
 package models
 
-import "goravel/app/utils/local"
+import "github.com/goravel/framework/support/carbon"
 
 const TableNameAdminGroup = "admin_group"
 
@@ -10,8 +10,8 @@ type AdminGroup struct {
 	Name          string          `gorm:"column:name" json:"name"`                           // comment 分组名称
 	PermissionIds string          `gorm:"column:permission_ids" json:"permission_ids"`       // comment permission_id集合
 	Sort          int             `gorm:"column:sort" json:"sort"`                           // comment 排序越小越往前
-	CreateAt      local.LocalTime `gorm:"-" json:"create_at"`                                // comment 创建时间
-	UpdateAt      local.LocalTime `gorm:"-" json:"update_at"`                                // comment 更新时间
+	CreateAt      carbon.DateTime `gorm:"column:create_at;->" json:"create_at"`              // comment 创建时间
+	UpdateAt      carbon.DateTime `gorm:"column:update_at;->" json:"update_at"`              // comment 更新时间
 
 }
 
