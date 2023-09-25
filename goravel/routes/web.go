@@ -15,6 +15,8 @@ func Web() {
 			"version": support.Version,
 		})
 	})
+	//映射静态文件路由
+	facades.Route().Static("public", "./public")
 
 	//无权限
 	facades.Route().Prefix("/open").Middleware(middleware.Recovery()).Group(func(router route.Router) {
