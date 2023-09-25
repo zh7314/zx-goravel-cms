@@ -33,12 +33,13 @@ func (r *IndexController) Login(ctx http.Context) http.Response {
 }
 
 func (r *IndexController) UploadPic(ctx http.Context) http.Response {
-	var request requests.AdminLoginRequest
-	if err := ctx.Request().Bind(&request); err != nil {
+
+	file, err := ctx.Request().File("file")
+	if err != nil {
 		return response.Fail(ctx, "", err.Error())
 	}
 
-	data, ok := admin.NewIndexService().UploadPic(request)
+	data, ok := admin.NewIndexService().UploadFile(file, []string{"jpg", "jpeg", "png", "mbp", "gif"}, "image")
 	if ok == nil {
 		return response.Success(ctx, data, "成功")
 	} else {
@@ -47,12 +48,12 @@ func (r *IndexController) UploadPic(ctx http.Context) http.Response {
 }
 
 func (r *IndexController) UploadFile(ctx http.Context) http.Response {
-	var request requests.AdminLoginRequest
-	if err := ctx.Request().Bind(&request); err != nil {
+	file, err := ctx.Request().File("file")
+	if err != nil {
 		return response.Fail(ctx, "", err.Error())
 	}
 
-	data, ok := admin.NewIndexService().UploadFile(request)
+	data, ok := admin.NewIndexService().UploadFile(file, []string{"xls", "xlsx", "pdf", "xls", "xlsx", "doc", "docx", "ppt", "zip", "pptx", "mp4", "flv"}, "image")
 	if ok == nil {
 		return response.Success(ctx, data, "成功")
 	} else {
@@ -75,12 +76,10 @@ func (r *IndexController) GetMenu(ctx http.Context) http.Response {
 }
 
 func (r *IndexController) GetInfo(ctx http.Context) http.Response {
-	var request requests.AdminLoginRequest
-	if err := ctx.Request().Bind(&request); err != nil {
-		return response.Fail(ctx, "", err.Error())
-	}
 
-	data, ok := admin.NewIndexService().GetInfo(request)
+	adminId := ctx.Value("admin_id").(int64)
+
+	data, ok := admin.NewIndexService().GetInfo(adminId)
 	if ok == nil {
 		return response.Success(ctx, data, "成功")
 	} else {

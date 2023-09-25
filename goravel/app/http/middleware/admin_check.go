@@ -6,9 +6,11 @@ import (
 	"github.com/goravel/framework/contracts/http"
 	"github.com/goravel/framework/facades"
 	"goravel/app/models"
+	services "goravel/app/services/admin"
 	"goravel/app/utils"
 	"goravel/app/utils/global"
 	"goravel/app/utils/response"
+	"time"
 )
 
 func AdminCheck() http.Middleware {
@@ -30,6 +32,7 @@ func AdminCheck() http.Middleware {
 }
 
 func check(ctx http.Context) (res bool, ok error) {
+
 	token := ctx.Request().Header(global.API_TOKEN, "")
 	if token == "" {
 		token = ctx.Request().Input(global.API_TOKEN)
@@ -38,21 +41,24 @@ func check(ctx http.Context) (res bool, ok error) {
 		return false, errors.New("token不能为空")
 	}
 
-	var admin models.Admin
-	err := facades.Orm().Query().Where("token", token).FirstOrFail(&admin)
+	var a models.Admin
+	err := facades.Orm().Query().Where("token", token).FirstOrFail(&a)
 	if err != nil {
 		return false, errors.New("token不存在")
 	}
 
-	//timeObj, err := utils.LocalTimeToTime(admin.TokenTime)
+	if time.Now().Unix() > a.TokenTime.Unix()+int64(global.TOKEN_TIME) {
+		return false, errors.New("token过期，请重新登录")
+	}
 
-	//if err != nil {
-	//	return false, errors.New("token时间解析错误")
-	//}
+	ctx.WithValue("admin_id", a.ID)
 
-	//if time.Now().Unix() > timeObj.Unix()+int64(global.TOKEN_TIME) {
-	//	return false, errors.New("token过期，请重新登录")
-	//}
+	url := ctx.Request().Path()
+	//权限验证
+	err = services.NewCommonService().Check(a.ID, url)
+	if err != nil {
+		return false, err
+	}
 
 	return true, nil
 }

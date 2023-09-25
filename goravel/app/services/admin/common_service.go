@@ -1,15 +1,17 @@
 package admin
 
+import "fmt"
+
 type CommonService struct {
-	//Dependent services
 }
 
 func NewCommonService() *CommonService {
-	return &CommonService{
-		//Inject model
-	}
+	return &CommonService{}
 }
 
-func (r *CommonService) UploadPic() {
+func (r *CommonService) Check(adminId int64, url string) error {
+	fmt.Println(adminId)
+	fmt.Println(url)
 
+	return nil
 }

@@ -3,11 +3,11 @@ package admin
 import (
 	"errors"
 	"fmt"
+	"github.com/goravel/framework/contracts/filesystem"
 	"github.com/goravel/framework/database/orm"
 	"github.com/goravel/framework/facades"
 	"goravel/app/models"
 	requests "goravel/app/requests/admin"
-	"goravel/app/utils"
 	"goravel/app/utils/gconv"
 	"goravel/app/utils/global"
 	"goravel/app/utils/str"
@@ -15,21 +15,20 @@ import (
 )
 
 type IndexService struct {
-	//Dependent services
 }
 
 func NewIndexService() *IndexService {
-	return &IndexService{
-		//Inject model
-	}
+	return &IndexService{}
 }
 
-func (r *IndexService) UploadPic(request requests.AdminLoginRequest) (res map[string]interface{}, err error) {
+func (r *IndexService) UploadFile(file filesystem.File, acceptExt []string, fileType string) (res map[string]interface{}, err error) {
 
-	return res, nil
-}
+	fmt.Println(file)
+	fmt.Println(acceptExt)
+	fmt.Println(fileType)
 
-func (r *IndexService) UploadFile(request requests.AdminLoginRequest) (res map[string]interface{}, err error) {
+	ext := file.GetClientOriginalExtension()
+	fmt.Println(ext)
 
 	return res, nil
 }
@@ -56,15 +55,6 @@ func (r *IndexService) Login(request requests.AdminLoginRequest) (res map[string
 
 	token := str.GetRandomString(32)
 
-	str := time.Now().Format("2006-01-02 15:04:05")
-	fmt.Print(str)
-
-	tokenTime, err := utils.StrToLocalTime(str)
-	if err != nil {
-		return res, errors.New("获取时间失败")
-	}
-	fmt.Print(tokenTime)
-
 	admin.TokenTime = time.Now()
 	admin.Token = token
 
@@ -90,13 +80,21 @@ func (r *IndexService) Login(request requests.AdminLoginRequest) (res map[string
 	return data, nil
 }
 
-func (r *IndexService) GetInfo(request requests.AdminLoginRequest) (res map[string]interface{}, err error) {
+func (r *IndexService) GetInfo(adminId int64) (res map[string]interface{}, err error) {
 
-	//res := make(map[string]interface{})
-	//res["list"] = list
-	//res["count"] = count
+	var a models.Admin
+	err = facades.Orm().Query().Where("id", adminId).FirstOrFail(&a)
+	if err != nil {
+		return res, errors.New("用户不存在")
+	}
 
-	return res, nil
+	data := make(map[string]interface{})
+	data["name"] = a.Name
+	data["avatar"] = a.Avatar
+	data["introduction"] = "admin"
+	data["roles"] = []string{"admin"}
+
+	return data, nil
 }
 
 func (r *IndexService) GetMenu(request requests.AdminLoginRequest) (res map[string]interface{}, err error) {
