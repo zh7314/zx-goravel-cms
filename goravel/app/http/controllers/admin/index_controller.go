@@ -53,7 +53,7 @@ func (r *IndexController) UploadFile(ctx http.Context) http.Response {
 		return response.Fail(ctx, "", err.Error())
 	}
 
-	data, ok := admin.NewIndexService().UploadFile(file, []string{"xls", "xlsx", "pdf", "xls", "xlsx", "doc", "docx", "ppt", "zip", "pptx", "mp4", "flv"}, "image")
+	data, ok := admin.NewIndexService().UploadFile(file, []string{"xls", "xlsx", "pdf", "xls", "xlsx", "doc", "docx", "ppt", "zip", "pptx", "mp4", "flv"}, "file")
 	if ok == nil {
 		return response.Success(ctx, data, "成功")
 	} else {

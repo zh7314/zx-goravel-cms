@@ -6,6 +6,7 @@ import (
 	"github.com/goravel/framework/contracts/filesystem"
 	"github.com/goravel/framework/database/orm"
 	"github.com/goravel/framework/facades"
+	"github.com/jianfengye/collection"
 	"goravel/app/models"
 	requests "goravel/app/requests/admin"
 	"goravel/app/utils/gconv"
@@ -23,12 +24,34 @@ func NewIndexService() *IndexService {
 
 func (r *IndexService) UploadFile(file filesystem.File, acceptExt []string, fileType string) (res map[string]interface{}, err error) {
 
-	fmt.Println(file)
-	fmt.Println(acceptExt)
-	fmt.Println(fileType)
+	//fmt.Println(file)
+	//fmt.Println(acceptExt)
+	//fmt.Println(fileType)
+
+	size, err := file.Size()
+	if err != nil {
+		return res, err
+	}
+	if size <= 0 {
+		return res, errors.New("上传文件大小为0")
+	}
 
 	ext := file.GetClientOriginalExtension()
-	fmt.Println(ext)
+	co := collection.NewStrCollection(acceptExt)
+
+	if !co.Contains(ext) {
+		return res, errors.New("上传类型不允许")
+	}
+
+	if fileType == "image" {
+		//图片安全检测 todo
+	}
+
+	path, err := file.Store("upload/" + fileType + "/" + time.Now().Format("20060102"))
+	fmt.Println(path)
+
+	url := facades.Storage().Url(path)
+	fmt.Println(url)
 
 	return res, nil
 }
