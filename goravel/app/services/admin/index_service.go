@@ -24,16 +24,12 @@ func NewIndexService() *IndexService {
 
 func (r *IndexService) UploadFile(file filesystem.File, acceptExt []string, fileType string) (res map[string]interface{}, err error) {
 
-	//fmt.Println(file)
-	//fmt.Println(acceptExt)
-	//fmt.Println(fileType)
-
 	size, err := file.Size()
 	if err != nil {
 		return res, err
 	}
 	if size <= 0 {
-		return res, errors.New("上传文件大小为0")
+		return res, errors.New("上传文件大小为空")
 	}
 
 	ext := file.GetClientOriginalExtension()
@@ -46,10 +42,9 @@ func (r *IndexService) UploadFile(file filesystem.File, acceptExt []string, file
 	if fileType == "image" {
 		//图片安全检测 todo
 	}
-
+	//本地存储
 	path, err := file.Store("upload/" + fileType + "/" + time.Now().Format("20060102"))
 	fmt.Println(path)
-
 	url := facades.Storage().Url(path)
 	fmt.Println(url)
 
