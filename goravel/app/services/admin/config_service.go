@@ -24,13 +24,13 @@ func (r *ConfigService) GetList(request requests.ConfigRequest) (map[string]inte
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.Type) {
-	orm.Where("type", request.Type)
+	orm = orm.Where("type", request.Type)
 }
 if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
+	orm = orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.Value) {
-	orm.Where("value", request.Value)
+	orm = orm.Where("value", request.Value)
 }
 
 
@@ -50,13 +50,13 @@ func (r *ConfigService) GetAll(request requests.ConfigRequest) ([]models.Config,
 	orm := facades.Orm().Query()
 
     if !gconv.IsEmpty(request.Type) {
-	orm.Where("type", request.Type)
+	orm = orm.Where("type", request.Type)
 }
 if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
+	orm = orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.Value) {
-	orm.Where("value", request.Value)
+	orm = orm.Where("value", request.Value)
 }
 
 

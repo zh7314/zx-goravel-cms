@@ -24,31 +24,31 @@ func (r *AdminLogService) GetList(request requests.AdminLogRequest) (map[string]
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.Method) {
-	orm.Where("method", request.Method)
+	orm = orm.Where("method", request.Method)
 }
 if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
+	orm = orm.Where("url", request.Url)
 }
 if !gconv.IsEmpty(request.RouteName) {
-	orm.Where("route_name", request.RouteName)
+	orm = orm.Where("route_name", request.RouteName)
 }
 if !gconv.IsEmpty(request.Path) {
-	orm.Where("path", request.Path)
+	orm = orm.Where("path", request.Path)
 }
 if !gconv.IsEmpty(request.RequestIp) {
-	orm.Where("request_ip", request.RequestIp)
+	orm = orm.Where("request_ip", request.RequestIp)
 }
 if !gconv.IsEmpty(request.Data) {
-	orm.Where("data", request.Data)
+	orm = orm.Where("data", request.Data)
 }
 if !gconv.IsEmpty(request.AdminId) {
-	orm.Where("admin_id", request.AdminId)
+	orm = orm.Where("admin_id", request.AdminId)
 }
 if !gconv.IsEmpty(request.AdminName) {
-	orm.Where("admin_name", request.AdminName)
+	orm = orm.Where("admin_name", request.AdminName)
 }
 if !gconv.IsEmpty(request.RouteDesc) {
-	orm.Where("route_desc", request.RouteDesc)
+	orm = orm.Where("route_desc", request.RouteDesc)
 }
 
 
@@ -68,31 +68,31 @@ func (r *AdminLogService) GetAll(request requests.AdminLogRequest) ([]models.Adm
 	orm := facades.Orm().Query()
 
     if !gconv.IsEmpty(request.Method) {
-	orm.Where("method", request.Method)
+	orm = orm.Where("method", request.Method)
 }
 if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
+	orm = orm.Where("url", request.Url)
 }
 if !gconv.IsEmpty(request.RouteName) {
-	orm.Where("route_name", request.RouteName)
+	orm = orm.Where("route_name", request.RouteName)
 }
 if !gconv.IsEmpty(request.Path) {
-	orm.Where("path", request.Path)
+	orm = orm.Where("path", request.Path)
 }
 if !gconv.IsEmpty(request.RequestIp) {
-	orm.Where("request_ip", request.RequestIp)
+	orm = orm.Where("request_ip", request.RequestIp)
 }
 if !gconv.IsEmpty(request.Data) {
-	orm.Where("data", request.Data)
+	orm = orm.Where("data", request.Data)
 }
 if !gconv.IsEmpty(request.AdminId) {
-	orm.Where("admin_id", request.AdminId)
+	orm = orm.Where("admin_id", request.AdminId)
 }
 if !gconv.IsEmpty(request.AdminName) {
-	orm.Where("admin_name", request.AdminName)
+	orm = orm.Where("admin_name", request.AdminName)
 }
 if !gconv.IsEmpty(request.RouteDesc) {
-	orm.Where("route_desc", request.RouteDesc)
+	orm = orm.Where("route_desc", request.RouteDesc)
 }
 
 

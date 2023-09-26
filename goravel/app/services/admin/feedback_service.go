@@ -24,19 +24,19 @@ func (r *FeedbackService) GetList(request requests.FeedbackRequest) (map[string]
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.NickName) {
-	orm.Where("nick_name", request.NickName)
+	orm = orm.Where("nick_name", request.NickName)
 }
 if !gconv.IsEmpty(request.Contact) {
-	orm.Where("contact", request.Contact)
+	orm = orm.Where("contact", request.Contact)
 }
 if !gconv.IsEmpty(request.Content) {
-	orm.Where("content", request.Content)
+	orm = orm.Where("content", request.Content)
 }
 if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	orm = orm.Where("lang", request.Lang)
 }
 
 
@@ -56,19 +56,19 @@ func (r *FeedbackService) GetAll(request requests.FeedbackRequest) ([]models.Fee
 	orm := facades.Orm().Query()
 
     if !gconv.IsEmpty(request.NickName) {
-	orm.Where("nick_name", request.NickName)
+	orm = orm.Where("nick_name", request.NickName)
 }
 if !gconv.IsEmpty(request.Contact) {
-	orm.Where("contact", request.Contact)
+	orm = orm.Where("contact", request.Contact)
 }
 if !gconv.IsEmpty(request.Content) {
-	orm.Where("content", request.Content)
+	orm = orm.Where("content", request.Content)
 }
 if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	orm = orm.Where("lang", request.Lang)
 }
 
 

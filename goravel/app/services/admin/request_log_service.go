@@ -24,25 +24,25 @@ func (r *RequestLogService) GetList(request requests.RequestLogRequest) (map[str
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.Method) {
-	orm.Where("method", request.Method)
+	orm = orm.Where("method", request.Method)
 }
 if !gconv.IsEmpty(request.Ip) {
-	orm.Where("ip", request.Ip)
+	orm = orm.Where("ip", request.Ip)
 }
 if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
+	orm = orm.Where("url", request.Url)
 }
 if !gconv.IsEmpty(request.Params) {
-	orm.Where("params", request.Params)
+	orm = orm.Where("params", request.Params)
 }
 if !gconv.IsEmpty(request.Header) {
-	orm.Where("header", request.Header)
+	orm = orm.Where("header", request.Header)
 }
 if !gconv.IsEmpty(request.Data) {
-	orm.Where("data", request.Data)
+	orm = orm.Where("data", request.Data)
 }
 if !gconv.IsEmpty(request.ReturnAt) {
-	orm.Where("return_at", request.ReturnAt)
+	orm = orm.Where("return_at", request.ReturnAt)
 }
 
 
@@ -62,25 +62,25 @@ func (r *RequestLogService) GetAll(request requests.RequestLogRequest) ([]models
 	orm := facades.Orm().Query()
 
     if !gconv.IsEmpty(request.Method) {
-	orm.Where("method", request.Method)
+	orm = orm.Where("method", request.Method)
 }
 if !gconv.IsEmpty(request.Ip) {
-	orm.Where("ip", request.Ip)
+	orm = orm.Where("ip", request.Ip)
 }
 if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
+	orm = orm.Where("url", request.Url)
 }
 if !gconv.IsEmpty(request.Params) {
-	orm.Where("params", request.Params)
+	orm = orm.Where("params", request.Params)
 }
 if !gconv.IsEmpty(request.Header) {
-	orm.Where("header", request.Header)
+	orm = orm.Where("header", request.Header)
 }
 if !gconv.IsEmpty(request.Data) {
-	orm.Where("data", request.Data)
+	orm = orm.Where("data", request.Data)
 }
 if !gconv.IsEmpty(request.ReturnAt) {
-	orm.Where("return_at", request.ReturnAt)
+	orm = orm.Where("return_at", request.ReturnAt)
 }
 
 

@@ -24,37 +24,37 @@ func (r *BannerService) GetList(request requests.BannerRequest) (map[string]inte
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.BannerCateId) {
-	orm.Where("banner_cate_id", request.BannerCateId)
+	orm = orm.Where("banner_cate_id", request.BannerCateId)
 }
 if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
+	orm = orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.AdminId) {
-	orm.Where("admin_id", request.AdminId)
+	orm = orm.Where("admin_id", request.AdminId)
 }
 if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
+	orm = orm.Where("url", request.Url)
 }
 if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.StartTime) {
-	orm.Where("start_time", request.StartTime)
+	orm = orm.Where("start_time", request.StartTime)
 }
 if !gconv.IsEmpty(request.EndTime) {
-	orm.Where("end_time", request.EndTime)
+	orm = orm.Where("end_time", request.EndTime)
 }
 if !gconv.IsEmpty(request.PicPath) {
-	orm.Where("pic_path", request.PicPath)
+	orm = orm.Where("pic_path", request.PicPath)
 }
 if !gconv.IsEmpty(request.VideoPath) {
-	orm.Where("video_path", request.VideoPath)
+	orm = orm.Where("video_path", request.VideoPath)
 }
 if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	orm = orm.Where("lang", request.Lang)
 }
 
 
@@ -74,37 +74,37 @@ func (r *BannerService) GetAll(request requests.BannerRequest) ([]models.Banner,
 	orm := facades.Orm().Query()
 
     if !gconv.IsEmpty(request.BannerCateId) {
-	orm.Where("banner_cate_id", request.BannerCateId)
+	orm = orm.Where("banner_cate_id", request.BannerCateId)
 }
 if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
+	orm = orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.AdminId) {
-	orm.Where("admin_id", request.AdminId)
+	orm = orm.Where("admin_id", request.AdminId)
 }
 if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
+	orm = orm.Where("url", request.Url)
 }
 if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.StartTime) {
-	orm.Where("start_time", request.StartTime)
+	orm = orm.Where("start_time", request.StartTime)
 }
 if !gconv.IsEmpty(request.EndTime) {
-	orm.Where("end_time", request.EndTime)
+	orm = orm.Where("end_time", request.EndTime)
 }
 if !gconv.IsEmpty(request.PicPath) {
-	orm.Where("pic_path", request.PicPath)
+	orm = orm.Where("pic_path", request.PicPath)
 }
 if !gconv.IsEmpty(request.VideoPath) {
-	orm.Where("video_path", request.VideoPath)
+	orm = orm.Where("video_path", request.VideoPath)
 }
 if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	orm = orm.Where("lang", request.Lang)
 }
 
 

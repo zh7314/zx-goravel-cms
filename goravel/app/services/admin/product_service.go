@@ -24,52 +24,52 @@ func (r *ProductService) GetList(request requests.ProductRequest) (map[string]in
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.ProductCateId) {
-	orm.Where("product_cate_id", request.ProductCateId)
+	orm = orm.Where("product_cate_id", request.ProductCateId)
 }
 if !gconv.IsEmpty(request.Title) {
-	orm.Where("title", request.Title)
+	orm = orm.Where("title", request.Title)
 }
 if !gconv.IsEmpty(request.ShortTitle) {
-	orm.Where("short_title", request.ShortTitle)
+	orm = orm.Where("short_title", request.ShortTitle)
 }
 if !gconv.IsEmpty(request.Content) {
-	orm.Where("content", request.Content)
+	orm = orm.Where("content", request.Content)
 }
 if !gconv.IsEmpty(request.AdminId) {
-	orm.Where("admin_id", request.AdminId)
+	orm = orm.Where("admin_id", request.AdminId)
 }
 if !gconv.IsEmpty(request.ViewCount) {
-	orm.Where("view_count", request.ViewCount)
+	orm = orm.Where("view_count", request.ViewCount)
 }
 if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
+	orm = orm.Where("is_show", request.IsShow)
 }
 if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
+	orm = orm.Where("url", request.Url)
 }
 if !gconv.IsEmpty(request.StartTime) {
-	orm.Where("start_time", request.StartTime)
+	orm = orm.Where("start_time", request.StartTime)
 }
 if !gconv.IsEmpty(request.EndTime) {
-	orm.Where("end_time", request.EndTime)
+	orm = orm.Where("end_time", request.EndTime)
 }
 if !gconv.IsEmpty(request.Pic) {
-	orm.Where("pic", request.Pic)
+	orm = orm.Where("pic", request.Pic)
 }
 if !gconv.IsEmpty(request.Pics) {
-	orm.Where("pics", request.Pics)
+	orm = orm.Where("pics", request.Pics)
 }
 if !gconv.IsEmpty(request.VideoUrl) {
-	orm.Where("video_url", request.VideoUrl)
+	orm = orm.Where("video_url", request.VideoUrl)
 }
 if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	orm = orm.Where("lang", request.Lang)
 }
 
 
@@ -89,52 +89,52 @@ func (r *ProductService) GetAll(request requests.ProductRequest) ([]models.Produ
 	orm := facades.Orm().Query()
 
     if !gconv.IsEmpty(request.ProductCateId) {
-	orm.Where("product_cate_id", request.ProductCateId)
+	orm = orm.Where("product_cate_id", request.ProductCateId)
 }
 if !gconv.IsEmpty(request.Title) {
-	orm.Where("title", request.Title)
+	orm = orm.Where("title", request.Title)
 }
 if !gconv.IsEmpty(request.ShortTitle) {
-	orm.Where("short_title", request.ShortTitle)
+	orm = orm.Where("short_title", request.ShortTitle)
 }
 if !gconv.IsEmpty(request.Content) {
-	orm.Where("content", request.Content)
+	orm = orm.Where("content", request.Content)
 }
 if !gconv.IsEmpty(request.AdminId) {
-	orm.Where("admin_id", request.AdminId)
+	orm = orm.Where("admin_id", request.AdminId)
 }
 if !gconv.IsEmpty(request.ViewCount) {
-	orm.Where("view_count", request.ViewCount)
+	orm = orm.Where("view_count", request.ViewCount)
 }
 if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
+	orm = orm.Where("is_show", request.IsShow)
 }
 if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
+	orm = orm.Where("url", request.Url)
 }
 if !gconv.IsEmpty(request.StartTime) {
-	orm.Where("start_time", request.StartTime)
+	orm = orm.Where("start_time", request.StartTime)
 }
 if !gconv.IsEmpty(request.EndTime) {
-	orm.Where("end_time", request.EndTime)
+	orm = orm.Where("end_time", request.EndTime)
 }
 if !gconv.IsEmpty(request.Pic) {
-	orm.Where("pic", request.Pic)
+	orm = orm.Where("pic", request.Pic)
 }
 if !gconv.IsEmpty(request.Pics) {
-	orm.Where("pics", request.Pics)
+	orm = orm.Where("pics", request.Pics)
 }
 if !gconv.IsEmpty(request.VideoUrl) {
-	orm.Where("video_url", request.VideoUrl)
+	orm = orm.Where("video_url", request.VideoUrl)
 }
 if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	orm = orm.Where("lang", request.Lang)
 }
 
 

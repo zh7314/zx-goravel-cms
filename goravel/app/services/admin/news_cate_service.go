@@ -24,22 +24,22 @@ func (r *NewsCateService) GetList(request requests.NewsCateRequest) (map[string]
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.ParentId) {
-	orm.Where("parent_id", request.ParentId)
+	orm = orm.Where("parent_id", request.ParentId)
 }
 if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
+	orm = orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
+	orm = orm.Where("is_show", request.IsShow)
 }
 if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	orm = orm.Where("lang", request.Lang)
 }
 
 
@@ -59,22 +59,22 @@ func (r *NewsCateService) GetAll(request requests.NewsCateRequest) ([]models.New
 	orm := facades.Orm().Query()
 
     if !gconv.IsEmpty(request.ParentId) {
-	orm.Where("parent_id", request.ParentId)
+	orm = orm.Where("parent_id", request.ParentId)
 }
 if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
+	orm = orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
+	orm = orm.Where("is_show", request.IsShow)
 }
 if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	orm = orm.Where("lang", request.Lang)
 }
 
 

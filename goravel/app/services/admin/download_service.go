@@ -24,40 +24,40 @@ func (r *DownloadService) GetList(request requests.DownloadRequest) (map[string]
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
+	orm = orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.Introduction) {
-	orm.Where("introduction", request.Introduction)
+	orm = orm.Where("introduction", request.Introduction)
 }
 if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
+	orm = orm.Where("url", request.Url)
 }
 if !gconv.IsEmpty(request.IsLocal) {
-	orm.Where("is_local", request.IsLocal)
+	orm = orm.Where("is_local", request.IsLocal)
 }
 if !gconv.IsEmpty(request.AdminId) {
-	orm.Where("admin_id", request.AdminId)
+	orm = orm.Where("admin_id", request.AdminId)
 }
 if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
+	orm = orm.Where("is_show", request.IsShow)
 }
 if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Path) {
-	orm.Where("path", request.Path)
+	orm = orm.Where("path", request.Path)
 }
 if !gconv.IsEmpty(request.DownloadCateId) {
-	orm.Where("download_cate_id", request.DownloadCateId)
+	orm = orm.Where("download_cate_id", request.DownloadCateId)
 }
 if !gconv.IsEmpty(request.Pic) {
-	orm.Where("pic", request.Pic)
+	orm = orm.Where("pic", request.Pic)
 }
 if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	orm = orm.Where("lang", request.Lang)
 }
 
 
@@ -77,40 +77,40 @@ func (r *DownloadService) GetAll(request requests.DownloadRequest) ([]models.Dow
 	orm := facades.Orm().Query()
 
     if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
+	orm = orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.Introduction) {
-	orm.Where("introduction", request.Introduction)
+	orm = orm.Where("introduction", request.Introduction)
 }
 if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
+	orm = orm.Where("url", request.Url)
 }
 if !gconv.IsEmpty(request.IsLocal) {
-	orm.Where("is_local", request.IsLocal)
+	orm = orm.Where("is_local", request.IsLocal)
 }
 if !gconv.IsEmpty(request.AdminId) {
-	orm.Where("admin_id", request.AdminId)
+	orm = orm.Where("admin_id", request.AdminId)
 }
 if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
+	orm = orm.Where("is_show", request.IsShow)
 }
 if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Path) {
-	orm.Where("path", request.Path)
+	orm = orm.Where("path", request.Path)
 }
 if !gconv.IsEmpty(request.DownloadCateId) {
-	orm.Where("download_cate_id", request.DownloadCateId)
+	orm = orm.Where("download_cate_id", request.DownloadCateId)
 }
 if !gconv.IsEmpty(request.Pic) {
-	orm.Where("pic", request.Pic)
+	orm = orm.Where("pic", request.Pic)
 }
 if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	orm = orm.Where("lang", request.Lang)
 }
 
 

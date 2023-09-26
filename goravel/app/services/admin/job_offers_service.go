@@ -24,34 +24,34 @@ func (r *JobOffersService) GetList(request requests.JobOffersRequest) (map[strin
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.Title) {
-	orm.Where("title", request.Title)
+	orm = orm.Where("title", request.Title)
 }
 if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
+	orm = orm.Where("url", request.Url)
 }
 if !gconv.IsEmpty(request.Content) {
-	orm.Where("content", request.Content)
+	orm = orm.Where("content", request.Content)
 }
 if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
+	orm = orm.Where("is_show", request.IsShow)
 }
 if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.SalaryRange) {
-	orm.Where("salary_range", request.SalaryRange)
+	orm = orm.Where("salary_range", request.SalaryRange)
 }
 if !gconv.IsEmpty(request.Place) {
-	orm.Where("place", request.Place)
+	orm = orm.Where("place", request.Place)
 }
 if !gconv.IsEmpty(request.Number) {
-	orm.Where("number", request.Number)
+	orm = orm.Where("number", request.Number)
 }
 if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	orm = orm.Where("lang", request.Lang)
 }
 
 
@@ -71,34 +71,34 @@ func (r *JobOffersService) GetAll(request requests.JobOffersRequest) ([]models.J
 	orm := facades.Orm().Query()
 
     if !gconv.IsEmpty(request.Title) {
-	orm.Where("title", request.Title)
+	orm = orm.Where("title", request.Title)
 }
 if !gconv.IsEmpty(request.Url) {
-	orm.Where("url", request.Url)
+	orm = orm.Where("url", request.Url)
 }
 if !gconv.IsEmpty(request.Content) {
-	orm.Where("content", request.Content)
+	orm = orm.Where("content", request.Content)
 }
 if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
+	orm = orm.Where("is_show", request.IsShow)
 }
 if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.SalaryRange) {
-	orm.Where("salary_range", request.SalaryRange)
+	orm = orm.Where("salary_range", request.SalaryRange)
 }
 if !gconv.IsEmpty(request.Place) {
-	orm.Where("place", request.Place)
+	orm = orm.Where("place", request.Place)
 }
 if !gconv.IsEmpty(request.Number) {
-	orm.Where("number", request.Number)
+	orm = orm.Where("number", request.Number)
 }
 if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	orm = orm.Where("lang", request.Lang)
 }
 
 

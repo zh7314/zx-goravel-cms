@@ -24,13 +24,13 @@ func (r *LangService) GetList(request requests.LangRequest) (map[string]interfac
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
+	orm = orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.Value) {
-	orm.Where("value", request.Value)
+	orm = orm.Where("value", request.Value)
 }
 
 
@@ -50,13 +50,13 @@ func (r *LangService) GetAll(request requests.LangRequest) ([]models.Lang, error
 	orm := facades.Orm().Query()
 
     if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
+	orm = orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.Value) {
-	orm.Where("value", request.Value)
+	orm = orm.Where("value", request.Value)
 }
 
 

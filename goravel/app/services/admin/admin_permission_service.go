@@ -24,28 +24,28 @@ func (r *AdminPermissionService) GetList(request requests.AdminPermissionRequest
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.ParentId) {
-	orm.Where("parent_id", request.ParentId)
+	orm = orm.Where("parent_id", request.ParentId)
 }
 if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
+	orm = orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.Path) {
-	orm.Where("path", request.Path)
+	orm = orm.Where("path", request.Path)
 }
 if !gconv.IsEmpty(request.Component) {
-	orm.Where("component", request.Component)
+	orm = orm.Where("component", request.Component)
 }
 if !gconv.IsEmpty(request.IsMenu) {
-	orm.Where("is_menu", request.IsMenu)
+	orm = orm.Where("is_menu", request.IsMenu)
 }
 if !gconv.IsEmpty(request.Icon) {
-	orm.Where("icon", request.Icon)
+	orm = orm.Where("icon", request.Icon)
 }
 if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Hidden) {
-	orm.Where("hidden", request.Hidden)
+	orm = orm.Where("hidden", request.Hidden)
 }
 
 
@@ -65,28 +65,28 @@ func (r *AdminPermissionService) GetAll(request requests.AdminPermissionRequest)
 	orm := facades.Orm().Query()
 
     if !gconv.IsEmpty(request.ParentId) {
-	orm.Where("parent_id", request.ParentId)
+	orm = orm.Where("parent_id", request.ParentId)
 }
 if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
+	orm = orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.Path) {
-	orm.Where("path", request.Path)
+	orm = orm.Where("path", request.Path)
 }
 if !gconv.IsEmpty(request.Component) {
-	orm.Where("component", request.Component)
+	orm = orm.Where("component", request.Component)
 }
 if !gconv.IsEmpty(request.IsMenu) {
-	orm.Where("is_menu", request.IsMenu)
+	orm = orm.Where("is_menu", request.IsMenu)
 }
 if !gconv.IsEmpty(request.Icon) {
-	orm.Where("icon", request.Icon)
+	orm = orm.Where("icon", request.Icon)
 }
 if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Hidden) {
-	orm.Where("hidden", request.Hidden)
+	orm = orm.Where("hidden", request.Hidden)
 }
 
 

@@ -24,16 +24,16 @@ func (r *AdminGroupService) GetList(request requests.AdminGroupRequest) (map[str
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.ParentId) {
-	orm.Where("parent_id", request.ParentId)
+	orm = orm.Where("parent_id", request.ParentId)
 }
 if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
+	orm = orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.PermissionIds) {
-	orm.Where("permission_ids", request.PermissionIds)
+	orm = orm.Where("permission_ids", request.PermissionIds)
 }
 if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+	orm = orm.Where("sort", request.Sort)
 }
 
 
@@ -53,16 +53,16 @@ func (r *AdminGroupService) GetAll(request requests.AdminGroupRequest) ([]models
 	orm := facades.Orm().Query()
 
     if !gconv.IsEmpty(request.ParentId) {
-	orm.Where("parent_id", request.ParentId)
+	orm = orm.Where("parent_id", request.ParentId)
 }
 if !gconv.IsEmpty(request.Name) {
-	orm.Where("name", request.Name)
+	orm = orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.PermissionIds) {
-	orm.Where("permission_ids", request.PermissionIds)
+	orm = orm.Where("permission_ids", request.PermissionIds)
 }
 if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+	orm = orm.Where("sort", request.Sort)
 }
 
 

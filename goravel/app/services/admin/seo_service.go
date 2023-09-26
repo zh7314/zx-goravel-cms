@@ -24,28 +24,28 @@ func (r *SeoService) GetList(request requests.SeoRequest) (map[string]interface{
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.Title) {
-	orm.Where("title", request.Title)
+	orm = orm.Where("title", request.Title)
 }
 if !gconv.IsEmpty(request.Keyword) {
-	orm.Where("keyword", request.Keyword)
+	orm = orm.Where("keyword", request.Keyword)
 }
 if !gconv.IsEmpty(request.Description) {
-	orm.Where("description", request.Description)
+	orm = orm.Where("description", request.Description)
 }
 if !gconv.IsEmpty(request.Position) {
-	orm.Where("position", request.Position)
+	orm = orm.Where("position", request.Position)
 }
 if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
+	orm = orm.Where("is_show", request.IsShow)
 }
 if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	orm = orm.Where("lang", request.Lang)
 }
 
 
@@ -65,28 +65,28 @@ func (r *SeoService) GetAll(request requests.SeoRequest) ([]models.Seo, error) {
 	orm := facades.Orm().Query()
 
     if !gconv.IsEmpty(request.Title) {
-	orm.Where("title", request.Title)
+	orm = orm.Where("title", request.Title)
 }
 if !gconv.IsEmpty(request.Keyword) {
-	orm.Where("keyword", request.Keyword)
+	orm = orm.Where("keyword", request.Keyword)
 }
 if !gconv.IsEmpty(request.Description) {
-	orm.Where("description", request.Description)
+	orm = orm.Where("description", request.Description)
 }
 if !gconv.IsEmpty(request.Position) {
-	orm.Where("position", request.Position)
+	orm = orm.Where("position", request.Position)
 }
 if !gconv.IsEmpty(request.IsShow) {
-	orm.Where("is_show", request.IsShow)
+	orm = orm.Where("is_show", request.IsShow)
 }
 if !gconv.IsEmpty(request.Sort) {
-	orm.Where("sort", request.Sort)
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	orm = orm.Where("lang", request.Lang)
 }
 
 

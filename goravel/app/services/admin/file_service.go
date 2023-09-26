@@ -24,16 +24,16 @@ func (r *FileService) GetList(request requests.FileRequest) (map[string]interfac
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.FileName) {
-	orm.Where("file_name", request.FileName)
+	orm = orm.Where("file_name", request.FileName)
 }
 if !gconv.IsEmpty(request.FilePath) {
-	orm.Where("file_path", request.FilePath)
+	orm = orm.Where("file_path", request.FilePath)
 }
 if !gconv.IsEmpty(request.FileSize) {
-	orm.Where("file_size", request.FileSize)
+	orm = orm.Where("file_size", request.FileSize)
 }
 if !gconv.IsEmpty(request.AdminId) {
-	orm.Where("admin_id", request.AdminId)
+	orm = orm.Where("admin_id", request.AdminId)
 }
 
 
@@ -53,16 +53,16 @@ func (r *FileService) GetAll(request requests.FileRequest) ([]models.File, error
 	orm := facades.Orm().Query()
 
     if !gconv.IsEmpty(request.FileName) {
-	orm.Where("file_name", request.FileName)
+	orm = orm.Where("file_name", request.FileName)
 }
 if !gconv.IsEmpty(request.FilePath) {
-	orm.Where("file_path", request.FilePath)
+	orm = orm.Where("file_path", request.FilePath)
 }
 if !gconv.IsEmpty(request.FileSize) {
-	orm.Where("file_size", request.FileSize)
+	orm = orm.Where("file_size", request.FileSize)
 }
 if !gconv.IsEmpty(request.AdminId) {
-	orm.Where("admin_id", request.AdminId)
+	orm = orm.Where("admin_id", request.AdminId)
 }
 
 

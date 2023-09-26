@@ -24,43 +24,43 @@ func (r *MessageService) GetList(request requests.MessageRequest) (map[string]in
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.Type) {
-	orm.Where("type", request.Type)
+	orm = orm.Where("type", request.Type)
 }
 if !gconv.IsEmpty(request.Mobile) {
-	orm.Where("mobile", request.Mobile)
+	orm = orm.Where("mobile", request.Mobile)
 }
 if !gconv.IsEmpty(request.RealName) {
-	orm.Where("real_name", request.RealName)
+	orm = orm.Where("real_name", request.RealName)
 }
 if !gconv.IsEmpty(request.Email) {
-	orm.Where("email", request.Email)
+	orm = orm.Where("email", request.Email)
 }
 if !gconv.IsEmpty(request.Ip) {
-	orm.Where("ip", request.Ip)
+	orm = orm.Where("ip", request.Ip)
 }
 if !gconv.IsEmpty(request.Status) {
-	orm.Where("status", request.Status)
+	orm = orm.Where("status", request.Status)
 }
 if !gconv.IsEmpty(request.Title) {
-	orm.Where("title", request.Title)
+	orm = orm.Where("title", request.Title)
 }
 if !gconv.IsEmpty(request.Content) {
-	orm.Where("content", request.Content)
+	orm = orm.Where("content", request.Content)
 }
 if !gconv.IsEmpty(request.Pics) {
-	orm.Where("pics", request.Pics)
+	orm = orm.Where("pics", request.Pics)
 }
 if !gconv.IsEmpty(request.IsSent) {
-	orm.Where("is_sent", request.IsSent)
+	orm = orm.Where("is_sent", request.IsSent)
 }
 if !gconv.IsEmpty(request.Remark) {
-	orm.Where("remark", request.Remark)
+	orm = orm.Where("remark", request.Remark)
 }
 if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	orm = orm.Where("lang", request.Lang)
 }
 
 
@@ -80,43 +80,43 @@ func (r *MessageService) GetAll(request requests.MessageRequest) ([]models.Messa
 	orm := facades.Orm().Query()
 
     if !gconv.IsEmpty(request.Type) {
-	orm.Where("type", request.Type)
+	orm = orm.Where("type", request.Type)
 }
 if !gconv.IsEmpty(request.Mobile) {
-	orm.Where("mobile", request.Mobile)
+	orm = orm.Where("mobile", request.Mobile)
 }
 if !gconv.IsEmpty(request.RealName) {
-	orm.Where("real_name", request.RealName)
+	orm = orm.Where("real_name", request.RealName)
 }
 if !gconv.IsEmpty(request.Email) {
-	orm.Where("email", request.Email)
+	orm = orm.Where("email", request.Email)
 }
 if !gconv.IsEmpty(request.Ip) {
-	orm.Where("ip", request.Ip)
+	orm = orm.Where("ip", request.Ip)
 }
 if !gconv.IsEmpty(request.Status) {
-	orm.Where("status", request.Status)
+	orm = orm.Where("status", request.Status)
 }
 if !gconv.IsEmpty(request.Title) {
-	orm.Where("title", request.Title)
+	orm = orm.Where("title", request.Title)
 }
 if !gconv.IsEmpty(request.Content) {
-	orm.Where("content", request.Content)
+	orm = orm.Where("content", request.Content)
 }
 if !gconv.IsEmpty(request.Pics) {
-	orm.Where("pics", request.Pics)
+	orm = orm.Where("pics", request.Pics)
 }
 if !gconv.IsEmpty(request.IsSent) {
-	orm.Where("is_sent", request.IsSent)
+	orm = orm.Where("is_sent", request.IsSent)
 }
 if !gconv.IsEmpty(request.Remark) {
-	orm.Where("remark", request.Remark)
+	orm = orm.Where("remark", request.Remark)
 }
 if !gconv.IsEmpty(request.Platform) {
-	orm.Where("platform", request.Platform)
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Lang) {
-	orm.Where("lang", request.Lang)
+	orm = orm.Where("lang", request.Lang)
 }
 
 
