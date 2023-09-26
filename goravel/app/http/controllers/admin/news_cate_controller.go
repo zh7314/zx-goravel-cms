@@ -44,6 +44,21 @@ func (r *NewsCateController) GetAll(ctx http.Context) http.Response {
     }
 }
 
+func (r *NewsCateController) GetOne(ctx http.Context) http.Response {
+
+	var request requests.NewsCateRequest
+	if err := ctx.Request().Bind(&request); err != nil {
+		return response.Fail(ctx, "", err.Error())
+	}
+
+	data, ok := admin.NewNewsCateService().GetOne(request.ID)
+	if ok == nil {
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
+}
+
 func (r *NewsCateController) Add(ctx http.Context) http.Response {
 
 	var request requests.NewsCateRequest

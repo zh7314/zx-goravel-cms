@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"errors"
 	"github.com/goravel/framework/facades"
 	"goravel/app/models"
 	requests "goravel/app/requests/admin"
@@ -86,6 +87,21 @@ if !gconv.IsEmpty(request.ParentId) {
 	orm.Order("id desc").Get(&list)
 
 	return list, nil
+}
+
+func (r *BannerCateService) GetOne(id int64) (res models.BannerCate, err error) {
+
+	if gconv.IsEmpty(id) {
+		return res, errors.New("id不能为空")
+	}
+
+	var bannerCate models.BannerCate
+	err = facades.Orm().Query().Where("id", id).FirstOrFail(&bannerCate)
+	if err != nil {
+		return res, errors.New("数据不存在")
+	}
+
+	return bannerCate, nil
 }
 
 func (r *BannerCateService) Add(request requests.BannerCateRequest) (bool, error) {

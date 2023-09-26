@@ -44,6 +44,21 @@ func (r *LangController) GetAll(ctx http.Context) http.Response {
     }
 }
 
+func (r *LangController) GetOne(ctx http.Context) http.Response {
+
+	var request requests.LangRequest
+	if err := ctx.Request().Bind(&request); err != nil {
+		return response.Fail(ctx, "", err.Error())
+	}
+
+	data, ok := admin.NewLangService().GetOne(request.ID)
+	if ok == nil {
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
+}
+
 func (r *LangController) Add(ctx http.Context) http.Response {
 
 	var request requests.LangRequest

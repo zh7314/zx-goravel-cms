@@ -18,7 +18,8 @@ func AdminCheck() http.Middleware {
 
 		_, err := check(ctx)
 		if err != nil {
-			response.AbortFail(ctx, "", err.Error())
+			response.Grant(ctx, "", err.Error())
+			return
 		}
 		defer func() {
 			if r := recover(); r != nil {

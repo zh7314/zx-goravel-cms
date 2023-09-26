@@ -21,5 +21,4 @@ type AdminRequest struct {
 	IsAdmin       int       `form:"is_admin" json:"is_admin"`               // comment 是否管理员 10是，99不是
 	Sort          int       `form:"sort" json:"sort"`                       // comment 排序越小越往前
 	Token         string    `form:"token" json:"token"`                     // comment token
-
 }

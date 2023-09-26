@@ -44,6 +44,21 @@ func (r *NewsController) GetAll(ctx http.Context) http.Response {
     }
 }
 
+func (r *NewsController) GetOne(ctx http.Context) http.Response {
+
+	var request requests.NewsRequest
+	if err := ctx.Request().Bind(&request); err != nil {
+		return response.Fail(ctx, "", err.Error())
+	}
+
+	data, ok := admin.NewNewsService().GetOne(request.ID)
+	if ok == nil {
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
+}
+
 func (r *NewsController) Add(ctx http.Context) http.Response {
 
 	var request requests.NewsRequest

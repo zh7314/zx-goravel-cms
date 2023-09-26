@@ -44,6 +44,21 @@ func (r *AdminGroupController) GetAll(ctx http.Context) http.Response {
     }
 }
 
+func (r *AdminGroupController) GetOne(ctx http.Context) http.Response {
+
+	var request requests.AdminGroupRequest
+	if err := ctx.Request().Bind(&request); err != nil {
+		return response.Fail(ctx, "", err.Error())
+	}
+
+	data, ok := admin.NewAdminGroupService().GetOne(request.ID)
+	if ok == nil {
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
+}
+
 func (r *AdminGroupController) Add(ctx http.Context) http.Response {
 
 	var request requests.AdminGroupRequest

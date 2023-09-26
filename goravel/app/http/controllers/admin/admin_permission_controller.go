@@ -44,6 +44,21 @@ func (r *AdminPermissionController) GetAll(ctx http.Context) http.Response {
     }
 }
 
+func (r *AdminPermissionController) GetOne(ctx http.Context) http.Response {
+
+	var request requests.AdminPermissionRequest
+	if err := ctx.Request().Bind(&request); err != nil {
+		return response.Fail(ctx, "", err.Error())
+	}
+
+	data, ok := admin.NewAdminPermissionService().GetOne(request.ID)
+	if ok == nil {
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
+}
+
 func (r *AdminPermissionController) Add(ctx http.Context) http.Response {
 
 	var request requests.AdminPermissionRequest

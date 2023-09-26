@@ -1,8 +1,6 @@
 package admin
 
 import (
-	"errors"
-	"fmt"
 	"github.com/goravel/framework/facades"
 	"goravel/app/models"
 )
@@ -15,8 +13,6 @@ func NewCommonService() *CommonService {
 }
 
 func (r *CommonService) Check(adminId int64, url string) error {
-	fmt.Println(adminId)
-	fmt.Println(url)
 
 	return nil
 }
@@ -26,7 +22,7 @@ func (r *CommonService) GetMenu(adminId int64, IsAdmin int) (res []map[string]in
 	var count int64
 	facades.Orm().Query().Model(&models.AdminPermission{}).Count(&count)
 	if count <= 0 {
-		return res, errors.New("菜单为空")
+		return res, nil
 	}
 
 	var list []*models.AdminPermission

@@ -44,6 +44,21 @@ func (r *DownloadCateController) GetAll(ctx http.Context) http.Response {
     }
 }
 
+func (r *DownloadCateController) GetOne(ctx http.Context) http.Response {
+
+	var request requests.DownloadCateRequest
+	if err := ctx.Request().Bind(&request); err != nil {
+		return response.Fail(ctx, "", err.Error())
+	}
+
+	data, ok := admin.NewDownloadCateService().GetOne(request.ID)
+	if ok == nil {
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
+}
+
 func (r *DownloadCateController) Add(ctx http.Context) http.Response {
 
 	var request requests.DownloadCateRequest

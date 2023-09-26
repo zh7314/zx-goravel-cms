@@ -44,6 +44,21 @@ func (r *FileController) GetAll(ctx http.Context) http.Response {
     }
 }
 
+func (r *FileController) GetOne(ctx http.Context) http.Response {
+
+	var request requests.FileRequest
+	if err := ctx.Request().Bind(&request); err != nil {
+		return response.Fail(ctx, "", err.Error())
+	}
+
+	data, ok := admin.NewFileService().GetOne(request.ID)
+	if ok == nil {
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
+}
+
 func (r *FileController) Add(ctx http.Context) http.Response {
 
 	var request requests.FileRequest

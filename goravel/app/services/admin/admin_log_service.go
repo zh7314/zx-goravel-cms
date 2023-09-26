@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"errors"
 	"github.com/goravel/framework/facades"
 	"goravel/app/models"
 	requests "goravel/app/requests/admin"
@@ -98,6 +99,21 @@ if !gconv.IsEmpty(request.RouteDesc) {
 	orm.Order("id desc").Get(&list)
 
 	return list, nil
+}
+
+func (r *AdminLogService) GetOne(id int64) (res models.AdminLog, err error) {
+
+	if gconv.IsEmpty(id) {
+		return res, errors.New("id不能为空")
+	}
+
+	var adminLog models.AdminLog
+	err = facades.Orm().Query().Where("id", id).FirstOrFail(&adminLog)
+	if err != nil {
+		return res, errors.New("数据不存在")
+	}
+
+	return adminLog, nil
 }
 
 func (r *AdminLogService) Add(request requests.AdminLogRequest) (bool, error) {

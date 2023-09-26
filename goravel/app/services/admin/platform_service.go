@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"errors"
 	"github.com/goravel/framework/facades"
 	"goravel/app/models"
 	requests "goravel/app/requests/admin"
@@ -62,6 +63,21 @@ if !gconv.IsEmpty(request.Value) {
 	orm.Order("id desc").Get(&list)
 
 	return list, nil
+}
+
+func (r *PlatformService) GetOne(id int64) (res models.Platform, err error) {
+
+	if gconv.IsEmpty(id) {
+		return res, errors.New("id不能为空")
+	}
+
+	var platform models.Platform
+	err = facades.Orm().Query().Where("id", id).FirstOrFail(&platform)
+	if err != nil {
+		return res, errors.New("数据不存在")
+	}
+
+	return platform, nil
 }
 
 func (r *PlatformService) Add(request requests.PlatformRequest) (bool, error) {

@@ -44,6 +44,21 @@ func (r *BannerCateController) GetAll(ctx http.Context) http.Response {
     }
 }
 
+func (r *BannerCateController) GetOne(ctx http.Context) http.Response {
+
+	var request requests.BannerCateRequest
+	if err := ctx.Request().Bind(&request); err != nil {
+		return response.Fail(ctx, "", err.Error())
+	}
+
+	data, ok := admin.NewBannerCateService().GetOne(request.ID)
+	if ok == nil {
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
+}
+
 func (r *BannerCateController) Add(ctx http.Context) http.Response {
 
 	var request requests.BannerCateRequest

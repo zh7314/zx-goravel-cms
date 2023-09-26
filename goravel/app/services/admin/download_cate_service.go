@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"errors"
 	"github.com/goravel/framework/facades"
 	"goravel/app/models"
 	requests "goravel/app/requests/admin"
@@ -86,6 +87,21 @@ if !gconv.IsEmpty(request.ParentId) {
 	orm.Order("id desc").Get(&list)
 
 	return list, nil
+}
+
+func (r *DownloadCateService) GetOne(id int64) (res models.DownloadCate, err error) {
+
+	if gconv.IsEmpty(id) {
+		return res, errors.New("id不能为空")
+	}
+
+	var downloadCate models.DownloadCate
+	err = facades.Orm().Query().Where("id", id).FirstOrFail(&downloadCate)
+	if err != nil {
+		return res, errors.New("数据不存在")
+	}
+
+	return downloadCate, nil
 }
 
 func (r *DownloadCateService) Add(request requests.DownloadCateRequest) (bool, error) {

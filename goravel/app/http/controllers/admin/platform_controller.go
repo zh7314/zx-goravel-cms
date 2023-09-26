@@ -44,6 +44,21 @@ func (r *PlatformController) GetAll(ctx http.Context) http.Response {
     }
 }
 
+func (r *PlatformController) GetOne(ctx http.Context) http.Response {
+
+	var request requests.PlatformRequest
+	if err := ctx.Request().Bind(&request); err != nil {
+		return response.Fail(ctx, "", err.Error())
+	}
+
+	data, ok := admin.NewPlatformService().GetOne(request.ID)
+	if ok == nil {
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
+}
+
 func (r *PlatformController) Add(ctx http.Context) http.Response {
 
 	var request requests.PlatformRequest

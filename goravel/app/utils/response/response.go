@@ -29,8 +29,8 @@ func AbortFail(ctx http.Context, data interface{}, msg string) {
 	})
 }
 
-func Grant(ctx http.Context, data interface{}, msg string) http.Response {
-	return ctx.Response().Json(http.StatusOK, http.Json{
+func Grant(ctx http.Context, data interface{}, msg string) {
+	ctx.Request().AbortWithStatusJson(http.StatusOK, http.Json{
 		"code": global.GRANT,
 		"data": data,
 		"msg":  msg,

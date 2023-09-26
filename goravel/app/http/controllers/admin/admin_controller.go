@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"fmt"
 	"github.com/goravel/framework/contracts/http"
 	requests "goravel/app/requests/admin"
 	"goravel/app/services/admin"
@@ -17,11 +18,13 @@ func NewAdminController() *AdminController {
 func (r *AdminController) GetList(ctx http.Context) http.Response {
 
 	var request requests.AdminRequest
-	//fmt.Println(ctx.Value("admin_id"))
-
 	if err := ctx.Request().Bind(&request); err != nil {
 		return response.Fail(ctx, "", err.Error())
 	}
+
+	fmt.Print(ctx.Request().Input("name"))
+
+	fmt.Print(request)
 
 	data, ok := admin.NewAdminService().GetList(request)
 	if ok == nil {
@@ -39,6 +42,21 @@ func (r *AdminController) GetAll(ctx http.Context) http.Response {
 	}
 
 	data, ok := admin.NewAdminService().GetAll(request)
+	if ok == nil {
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
+}
+
+func (r *AdminController) GetOne(ctx http.Context) http.Response {
+
+	var request requests.AdminRequest
+	if err := ctx.Request().Bind(&request); err != nil {
+		return response.Fail(ctx, "", err.Error())
+	}
+
+	data, ok := admin.NewAdminService().GetOne(request.ID)
 	if ok == nil {
 		return response.Success(ctx, data, "成功")
 	} else {

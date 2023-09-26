@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"errors"
 	"github.com/goravel/framework/facades"
 	"goravel/app/models"
 	requests "goravel/app/requests/admin"
@@ -22,51 +23,50 @@ func (r *AdminService) GetList(request requests.AdminRequest) (map[string]interf
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.Name) {
-		orm.Where("name", request.Name)
-	}
-	if !gconv.IsEmpty(request.Password) {
-		orm.Where("password", request.Password)
-	}
-	if !gconv.IsEmpty(request.Salt) {
-		orm.Where("salt", request.Salt)
-	}
-	if !gconv.IsEmpty(request.Sex) {
-		orm.Where("sex", request.Sex)
-	}
-	if !gconv.IsEmpty(request.Email) {
-		orm.Where("email", request.Email)
-	}
-	if !gconv.IsEmpty(request.Mobile) {
-		orm.Where("mobile", request.Mobile)
-	}
-	if !gconv.IsEmpty(request.LoginIp) {
-		orm.Where("login_ip", request.LoginIp)
-	}
-	if !gconv.IsEmpty(request.Status) {
-		orm.Where("status", request.Status)
-	}
-	if !gconv.IsEmpty(request.Avatar) {
-		orm.Where("avatar", request.Avatar)
-	}
-	if !gconv.IsEmpty(request.RealName) {
-		orm.Where("real_name", request.RealName)
-	}
-	if !gconv.IsEmpty(request.TokenTime) {
-		orm.Where("token_time", request.TokenTime)
-	}
-	if !gconv.IsEmpty(request.AdminGroupIds) {
-		orm.Where("admin_group_ids", request.AdminGroupIds)
-	}
-	if !gconv.IsEmpty(request.IsAdmin) {
-		orm.Where("is_admin", request.IsAdmin)
-	}
-	if !gconv.IsEmpty(request.Sort) {
-		orm.Where("sort", request.Sort)
-	}
-	if !gconv.IsEmpty(request.Token) {
-		orm.Where("token", request.Token)
-	}
+	orm.Where("name", request.Name)
+
+	//if !gconv.IsEmpty(request.Name) {
+	//	orm.Where("name", request.Name)
+	//} else {
+	//	fmt.Print("FFFFFFFFFFFFFFFFFFFFF")
+	//}
+	
+	//if !gconv.IsEmpty(request.Sex) {
+	//	orm.Where("sex", request.Sex)
+	//}
+	//if !gconv.IsEmpty(request.Email) {
+	//	orm.Where("email", request.Email)
+	//}
+	//if !gconv.IsEmpty(request.Mobile) {
+	//	orm.Where("mobile", request.Mobile)
+	//}
+	//if !gconv.IsEmpty(request.LoginIp) {
+	//	orm.Where("login_ip", request.LoginIp)
+	//}
+	//if !gconv.IsEmpty(request.Status) {
+	//	orm.Where("status", request.Status)
+	//}
+	//if !gconv.IsEmpty(request.Avatar) {
+	//	orm.Where("avatar", request.Avatar)
+	//}
+	//if !gconv.IsEmpty(request.RealName) {
+	//	orm.Where("real_name", request.RealName)
+	//}
+	//if !gconv.IsEmpty(request.TokenTime) {
+	//	orm.Where("token_time", request.TokenTime)
+	//}
+	//if !gconv.IsEmpty(request.AdminGroupIds) {
+	//	orm.Where("admin_group_ids", request.AdminGroupIds)
+	//}
+	//if !gconv.IsEmpty(request.IsAdmin) {
+	//	orm.Where("is_admin", request.IsAdmin)
+	//}
+	//if !gconv.IsEmpty(request.Sort) {
+	//	orm.Where("sort", request.Sort)
+	//}
+	//if !gconv.IsEmpty(request.Token) {
+	//	orm.Where("token", request.Token)
+	//}
 
 	orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
 
@@ -132,6 +132,21 @@ func (r *AdminService) GetAll(request requests.AdminRequest) ([]models.Admin, er
 	orm.Order("id desc").Get(&list)
 
 	return list, nil
+}
+
+func (r *AdminService) GetOne(id int64) (res models.Admin, err error) {
+
+	if gconv.IsEmpty(id) {
+		return res, errors.New("id不能为空")
+	}
+
+	var admin models.Admin
+	err = facades.Orm().Query().Where("id", id).FirstOrFail(&admin)
+	if err != nil {
+		return res, errors.New("数据不存在")
+	}
+
+	return admin, nil
 }
 
 func (r *AdminService) Add(request requests.AdminRequest) (bool, error) {

@@ -217,12 +217,12 @@ func (r *IndexService) GetGroupTree() (res []map[string]interface{}, err error) 
 	var count int64
 	facades.Orm().Query().Model(&models.AdminGroup{}).Count(&count)
 	if count <= 0 {
-		return res, errors.New("为空")
+		return res, nil
 	}
 
 	var list []*models.AdminGroup
 	//索取所有的菜单
-	facades.Orm().Query().Get(&list)
+	facades.Orm().Query().Order("sort asc").Order("id desc").Get(&list)
 
 	result := make([]map[string]interface{}, len(list))
 	for i, v := range list {
@@ -247,14 +247,14 @@ func (r *IndexService) GetGroupTree() (res []map[string]interface{}, err error) 
 func (r *IndexService) GetMenuTree() (res []map[string]interface{}, err error) {
 
 	var count int64
-	facades.Orm().Query().Model(&models.AdminGroup{}).Count(&count)
+	facades.Orm().Query().Model(&models.AdminPermission{}).Count(&count)
 	if count <= 0 {
-		return res, errors.New("为空")
+		return res, nil
 	}
 
-	var list []*models.AdminGroup
+	var list []*models.AdminPermission
 	//索取所有的菜单
-	facades.Orm().Query().Get(&list)
+	facades.Orm().Query().Order("sort asc").Order("id desc").Get(&list)
 
 	result := make([]map[string]interface{}, len(list))
 	for i, v := range list {
@@ -262,11 +262,25 @@ func (r *IndexService) GetMenuTree() (res []map[string]interface{}, err error) {
 		result[i]["id"] = v.ID
 		result[i]["parent_id"] = v.ParentId
 		result[i]["name"] = v.Name
+		result[i]["path"] = v.Path
+		result[i]["component"] = v.Component
+		result[i]["is_menu"] = v.IsMenu
+		result[i]["icon"] = v.Icon
 		result[i]["create_at"] = v.CreateAt
 		result[i]["update_at"] = v.UpdateAt
 		result[i]["sort"] = v.Sort
-		result[i]["permission_ids"] = v.PermissionIds
+		result[i]["hidden"] = v.Hidden
 		result[i]["children"] = v.Children
+
+		meta := make(map[string]interface{})
+		meta["title"] = v.Name
+		meta["icon"] = v.Icon
+		if v.Hidden == 10 {
+			meta["hidden"] = false
+		} else {
+			meta["hidden"] = true
+		}
+		result[i]["meta"] = meta
 	}
 
 	menu := NewCommonService().TreeMenu(result, 0)
@@ -278,25 +292,176 @@ func (r *IndexService) GetMenuTree() (res []map[string]interface{}, err error) {
 
 func (r *IndexService) GetDownloadCateTree() (res []map[string]interface{}, err error) {
 
-	return res, nil
+	var count int64
+	facades.Orm().Query().Model(&models.DownloadCate{}).Count(&count)
+	if count <= 0 {
+		return res, nil
+	}
+
+	var list []*models.DownloadCate
+	//索取所有的菜单
+	facades.Orm().Query().Order("sort asc").Order("id desc").Get(&list)
+
+	result := make([]map[string]interface{}, len(list))
+	for i, v := range list {
+		result[i] = make(map[string]interface{})
+		result[i]["id"] = v.ID
+		result[i]["parent_id"] = v.ParentId
+		result[i]["name"] = v.Name
+		result[i]["is_show"] = v.IsShow
+		result[i]["create_at"] = v.CreateAt
+		result[i]["update_at"] = v.UpdateAt
+		result[i]["sort"] = v.Sort
+		result[i]["pic"] = v.Pic
+		result[i]["platform"] = v.Platform
+		result[i]["lang"] = v.Lang
+		result[i]["children"] = v.Children
+	}
+
+	menu := NewCommonService().TreeMenu(result, 0)
+	if err != nil {
+		return res, err
+	}
+	return menu, nil
 }
 
 func (r *IndexService) GetNewsCateTree() (res []map[string]interface{}, err error) {
 
-	return res, nil
+	var count int64
+	facades.Orm().Query().Model(&models.NewsCate{}).Count(&count)
+	if count <= 0 {
+		return res, nil
+	}
+
+	var list []*models.NewsCate
+	//索取所有的菜单
+	facades.Orm().Query().Order("sort asc").Order("id desc").Get(&list)
+
+	result := make([]map[string]interface{}, len(list))
+	for i, v := range list {
+		result[i] = make(map[string]interface{})
+		result[i]["id"] = v.ID
+		result[i]["parent_id"] = v.ParentId
+		result[i]["name"] = v.Name
+		result[i]["is_show"] = v.IsShow
+		result[i]["create_at"] = v.CreateAt
+		result[i]["update_at"] = v.UpdateAt
+		result[i]["sort"] = v.Sort
+		result[i]["platform"] = v.Platform
+		result[i]["lang"] = v.Lang
+		result[i]["children"] = v.Children
+	}
+
+	menu := NewCommonService().TreeMenu(result, 0)
+	if err != nil {
+		return res, err
+	}
+	return menu, nil
 }
 
 func (r *IndexService) GetProductCateTree() (res []map[string]interface{}, err error) {
 
-	return res, nil
+	var count int64
+	facades.Orm().Query().Model(&models.ProductCate{}).Count(&count)
+	if count <= 0 {
+		return res, nil
+	}
+
+	var list []*models.ProductCate
+	//索取所有的菜单
+	facades.Orm().Query().Order("sort asc").Order("id desc").Get(&list)
+
+	result := make([]map[string]interface{}, len(list))
+	for i, v := range list {
+		result[i] = make(map[string]interface{})
+		result[i]["id"] = v.ID
+		result[i]["parent_id"] = v.ParentId
+		result[i]["name"] = v.Name
+		result[i]["is_show"] = v.IsShow
+		result[i]["create_at"] = v.CreateAt
+		result[i]["update_at"] = v.UpdateAt
+		result[i]["sort"] = v.Sort
+		result[i]["pic"] = v.Pic
+		result[i]["url"] = v.Url
+		result[i]["description"] = v.Description
+		result[i]["platform"] = v.Platform
+		result[i]["lang"] = v.Lang
+		result[i]["children"] = v.Children
+	}
+
+	menu := NewCommonService().TreeMenu(result, 0)
+	if err != nil {
+		return res, err
+	}
+	return menu, nil
 }
 
 func (r *IndexService) GetVideoCateTree() (res []map[string]interface{}, err error) {
 
-	return res, nil
+	var count int64
+	facades.Orm().Query().Model(&models.VideoCate{}).Count(&count)
+	if count <= 0 {
+		return res, nil
+	}
+
+	var list []*models.VideoCate
+	//索取所有的菜单
+	facades.Orm().Query().Order("sort asc").Order("id desc").Get(&list)
+
+	result := make([]map[string]interface{}, len(list))
+	for i, v := range list {
+		result[i] = make(map[string]interface{})
+		result[i]["id"] = v.ID
+		result[i]["parent_id"] = v.ParentId
+		result[i]["name"] = v.Name
+		result[i]["create_at"] = v.CreateAt
+		result[i]["update_at"] = v.UpdateAt
+		result[i]["sort"] = v.Sort
+		result[i]["is_show"] = v.IsShow
+		result[i]["platform"] = v.Platform
+		result[i]["lang"] = v.Lang
+		result[i]["children"] = v.Children
+	}
+
+	menu := NewCommonService().TreeMenu(result, 0)
+	if err != nil {
+		return res, err
+	}
+	return menu, nil
 }
 
 func (r *IndexService) GetBannerCateTree() (res []map[string]interface{}, err error) {
 
-	return res, nil
+	var count int64
+	facades.Orm().Query().Model(&models.BannerCate{}).Count(&count)
+	if count <= 0 {
+		return res, nil
+	}
+
+	var list []*models.BannerCate
+	//索取所有的菜单
+	facades.Orm().Query().Order("sort asc").Order("id desc").Get(&list)
+
+	result := make([]map[string]interface{}, len(list))
+	for i, v := range list {
+		result[i] = make(map[string]interface{})
+		result[i] = make(map[string]interface{})
+		result[i]["id"] = v.ID
+		result[i]["parent_id"] = v.ParentId
+		result[i]["name"] = v.Name
+		result[i]["create_at"] = v.CreateAt
+		result[i]["update_at"] = v.UpdateAt
+		result[i]["sort"] = v.Sort
+		result[i]["pic"] = v.Pic
+		result[i]["is_show"] = v.IsShow
+		result[i]["platform"] = v.Platform
+		result[i]["lang"] = v.Lang
+		result[i]["children"] = v.Children
+	}
+
+	menu := NewCommonService().TreeMenu(result, 0)
+	if err != nil {
+		return res, err
+	}
+	return menu, nil
 }

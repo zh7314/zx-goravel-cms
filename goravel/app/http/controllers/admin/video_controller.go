@@ -44,6 +44,21 @@ func (r *VideoController) GetAll(ctx http.Context) http.Response {
     }
 }
 
+func (r *VideoController) GetOne(ctx http.Context) http.Response {
+
+	var request requests.VideoRequest
+	if err := ctx.Request().Bind(&request); err != nil {
+		return response.Fail(ctx, "", err.Error())
+	}
+
+	data, ok := admin.NewVideoService().GetOne(request.ID)
+	if ok == nil {
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
+}
+
 func (r *VideoController) Add(ctx http.Context) http.Response {
 
 	var request requests.VideoRequest

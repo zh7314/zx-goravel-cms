@@ -44,6 +44,21 @@ func (r *AdminLogController) GetAll(ctx http.Context) http.Response {
     }
 }
 
+func (r *AdminLogController) GetOne(ctx http.Context) http.Response {
+
+	var request requests.AdminLogRequest
+	if err := ctx.Request().Bind(&request); err != nil {
+		return response.Fail(ctx, "", err.Error())
+	}
+
+	data, ok := admin.NewAdminLogService().GetOne(request.ID)
+	if ok == nil {
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
+}
+
 func (r *AdminLogController) Add(ctx http.Context) http.Response {
 
 	var request requests.AdminLogRequest
