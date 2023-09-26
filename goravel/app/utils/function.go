@@ -10,6 +10,19 @@ import (
 	"time"
 )
 
+//func TreeMenu[T any](list []T, parentId int64) []T {
+//
+//	data := make([]T, 0)
+//	for _, v := range list {
+//		if v.ParentId == parentId {
+//			//v.Label = v.Name
+//			v.Children = TreeMenu(list, v.ID)
+//			data = append(data, v)
+//		}
+//	}
+//	return data
+//}
+
 func ErrorToString(r interface{}) string {
 	switch v := r.(type) {
 	case error:

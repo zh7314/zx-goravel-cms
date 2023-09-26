@@ -2,7 +2,6 @@ package admin
 
 import (
 	"errors"
-	"fmt"
 	"github.com/goravel/framework/contracts/filesystem"
 	"github.com/goravel/framework/database/orm"
 	"github.com/goravel/framework/facades"
@@ -68,23 +67,23 @@ func (r *IndexService) Login(request requests.AdminLoginRequest) (res map[string
 		return res, errors.New("密码不能为空")
 	}
 
-	var admin models.Admin
-	err = facades.Orm().Query().Where("name", request.Username).FirstOrFail(&admin)
+	var a models.Admin
+	err = facades.Orm().Query().Where("name", request.Username).FirstOrFail(&a)
 
 	if err == orm.ErrRecordNotFound {
 		return res, errors.New("账号错误")
 	}
 
-	if str.Md5(str.Md5(request.Password+admin.Salt)) != admin.Password {
+	if str.Md5(str.Md5(request.Password+a.Salt)) != a.Password {
 		return res, errors.New("密码错误")
 	}
 
 	token := utils.GetUniqid()
 
-	admin.TokenTime = time.Now()
-	admin.Token = token
+	a.TokenTime = time.Now()
+	a.Token = token
 
-	err = facades.Orm().Query().Save(&admin)
+	err = facades.Orm().Query().Save(&a)
 	if err != nil {
 		return res, err
 	}
@@ -93,9 +92,9 @@ func (r *IndexService) Login(request requests.AdminLoginRequest) (res map[string
 	userInfo := make(map[string]interface{})
 
 	userInfo["dashboard"] = ""
-	userInfo["userId"] = admin.ID
-	userInfo["avatar"] = admin.Avatar
-	userInfo["userName"] = admin.RealName
+	userInfo["userId"] = a.ID
+	userInfo["avatar"] = a.Avatar
+	userInfo["userName"] = a.RealName
 	userInfo["role"] = []string{"SA", "admin", "Auditor"}
 
 	data["token"] = token
@@ -127,15 +126,6 @@ func (r *IndexService) GetInfo(adminId int64) (res map[string]interface{}, err e
 	return data, nil
 }
 
-func (r *IndexService) GetMenu(request requests.AdminLoginRequest) (res map[string]interface{}, err error) {
-
-	var permission models.AdminPermission
-
-	fmt.Println(permission)
-
-	return res, nil
-}
-
 func (r *IndexService) Logout(adminId int64) (res bool, err error) {
 
 	if gconv.IsEmpty(adminId) {
@@ -161,74 +151,152 @@ func (r *IndexService) GetVersion() (string, error) {
 	return "1.6.9", nil
 }
 
-func (r *IndexService) ChangePwd(request requests.AdminLoginRequest) (res map[string]interface{}, err error) {
+func (r *IndexService) ChangePwd(adminId int64, request requests.AdminChangePwdRequest) (res bool, err error) {
 
-	//res := make(map[string]interface{})
-	//res["list"] = list
-	//res["count"] = count
+	if gconv.IsEmpty(adminId) {
+		return res, errors.New("用户id不能为空")
+	}
+	if gconv.IsEmpty(request.UserPassword) {
+		return res, errors.New("用户id不能为空")
+	}
+	if gconv.IsEmpty(request.NewPassword) {
+		return res, errors.New("用户id不能为空")
+	}
+	if gconv.IsEmpty(request.ConfirmNewPassword) {
+		return res, errors.New("用户id不能为空")
+	}
+	if request.NewPassword != request.ConfirmNewPassword {
+		return false, errors.New("两次新密码不一致")
+	}
+
+	var a models.Admin
+	err = facades.Orm().Query().Where("id", adminId).FirstOrFail(&a)
+	if err != nil {
+		return false, errors.New("用户不存在")
+	}
+
+	if str.Md5(str.Md5(request.UserPassword+a.Salt)) != a.Password {
+		return res, errors.New("密码错误")
+	}
+
+	a.Password = str.Md5(str.Md5(request.NewPassword + a.Salt))
+	//踢掉token
+	a.Token = ""
+
+	err = facades.Orm().Query().Save(&a)
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+func (r *IndexService) GetMenu(adminId int64) (res map[string]interface{}, err error) {
+
+	if gconv.IsEmpty(adminId) {
+		return res, errors.New("用户id不能为空")
+	}
+
+	var a models.Admin
+	err = facades.Orm().Query().Where("id", adminId).FirstOrFail(&a)
+	if err != nil {
+		return res, errors.New("用户不存在")
+	}
+
+	data := make(map[string]interface{})
+	data["dashboardGrid"] = []string{"welcome", "ver", "time", "progress", "echarts", "about"}
+	data["permissions"] = []string{"list.add", "list.edit", "list.delete", "user.add", "user.edit", "user.delete"}
+
+	menu, err := NewCommonService().GetMenu(a.ID, a.IsAdmin)
+	data["menu"] = menu
+
+	return data, nil
+}
+
+func (r *IndexService) GetGroupTree() (res []map[string]interface{}, err error) {
+
+	var count int64
+	facades.Orm().Query().Model(&models.AdminGroup{}).Count(&count)
+	if count <= 0 {
+		return res, errors.New("为空")
+	}
+
+	var list []*models.AdminGroup
+	//索取所有的菜单
+	facades.Orm().Query().Get(&list)
+
+	result := make([]map[string]interface{}, len(list))
+	for i, v := range list {
+		result[i] = make(map[string]interface{})
+		result[i]["id"] = v.ID
+		result[i]["parent_id"] = v.ParentId
+		result[i]["name"] = v.Name
+		result[i]["create_at"] = v.CreateAt
+		result[i]["update_at"] = v.UpdateAt
+		result[i]["sort"] = v.Sort
+		result[i]["permission_ids"] = v.PermissionIds
+		result[i]["children"] = v.Children
+	}
+
+	menu := NewCommonService().TreeMenu(result, 0)
+	if err != nil {
+		return res, err
+	}
+	return menu, nil
+}
+
+func (r *IndexService) GetMenuTree() (res []map[string]interface{}, err error) {
+
+	var count int64
+	facades.Orm().Query().Model(&models.AdminGroup{}).Count(&count)
+	if count <= 0 {
+		return res, errors.New("为空")
+	}
+
+	var list []*models.AdminGroup
+	//索取所有的菜单
+	facades.Orm().Query().Get(&list)
+
+	result := make([]map[string]interface{}, len(list))
+	for i, v := range list {
+		result[i] = make(map[string]interface{})
+		result[i]["id"] = v.ID
+		result[i]["parent_id"] = v.ParentId
+		result[i]["name"] = v.Name
+		result[i]["create_at"] = v.CreateAt
+		result[i]["update_at"] = v.UpdateAt
+		result[i]["sort"] = v.Sort
+		result[i]["permission_ids"] = v.PermissionIds
+		result[i]["children"] = v.Children
+	}
+
+	menu := NewCommonService().TreeMenu(result, 0)
+	if err != nil {
+		return res, err
+	}
+	return menu, nil
+}
+
+func (r *IndexService) GetDownloadCateTree() (res []map[string]interface{}, err error) {
 
 	return res, nil
 }
 
-func (r *IndexService) GetGroupTree(request requests.AdminLoginRequest) (res map[string]interface{}, err error) {
-
-	//res := make(map[string]interface{})
-	//res["list"] = list
-	//res["count"] = count
+func (r *IndexService) GetNewsCateTree() (res []map[string]interface{}, err error) {
 
 	return res, nil
 }
 
-func (r *IndexService) GetMenuTree(request requests.AdminLoginRequest) (res map[string]interface{}, err error) {
-
-	//res := make(map[string]interface{})
-	//res["list"] = list
-	//res["count"] = count
+func (r *IndexService) GetProductCateTree() (res []map[string]interface{}, err error) {
 
 	return res, nil
 }
 
-func (r *IndexService) GetDownloadCateTree(request requests.AdminLoginRequest) (res map[string]interface{}, err error) {
-
-	//res := make(map[string]interface{})
-	//res["list"] = list
-	//res["count"] = count
+func (r *IndexService) GetVideoCateTree() (res []map[string]interface{}, err error) {
 
 	return res, nil
 }
 
-func (r *IndexService) GetNewsCateTree(request requests.AdminLoginRequest) (res map[string]interface{}, err error) {
-
-	//res := make(map[string]interface{})
-	//res["list"] = list
-	//res["count"] = count
-
-	return res, nil
-}
-
-func (r *IndexService) GetProductCateTree(request requests.AdminLoginRequest) (res map[string]interface{}, err error) {
-
-	//res := make(map[string]interface{})
-	//res["list"] = list
-	//res["count"] = count
-
-	return res, nil
-}
-
-func (r *IndexService) GetVideoCateTree(request requests.AdminLoginRequest) (res map[string]interface{}, err error) {
-
-	//res := make(map[string]interface{})
-	//res["list"] = list
-	//res["count"] = count
-
-	return res, nil
-}
-
-func (r *IndexService) GetBannerCateTree(request requests.AdminLoginRequest) (res map[string]interface{}, err error) {
-
-	//res := make(map[string]interface{})
-	//res["list"] = list
-	//res["count"] = count
+func (r *IndexService) GetBannerCateTree() (res []map[string]interface{}, err error) {
 
 	return res, nil
 }

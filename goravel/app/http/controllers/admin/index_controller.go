@@ -62,21 +62,6 @@ func (r *IndexController) UploadFile(ctx http.Context) http.Response {
 	}
 }
 
-func (r *IndexController) GetMenu(ctx http.Context) http.Response {
-
-	var request requests.AdminLoginRequest
-	if err := ctx.Request().Bind(&request); err != nil {
-		return response.Fail(ctx, "", err.Error())
-	}
-
-	data, ok := admin.NewIndexService().GetMenu(request)
-	if ok == nil {
-		return response.Success(ctx, data, "成功")
-	} else {
-		return response.Fail(ctx, "", ok.Error())
-	}
-}
-
 func (r *IndexController) GetInfo(ctx http.Context) http.Response {
 
 	adminId := ctx.Value("admin_id").(int64)
@@ -113,12 +98,26 @@ func (r *IndexController) GetVersion(ctx http.Context) http.Response {
 
 func (r *IndexController) ChangePwd(ctx http.Context) http.Response {
 
-	var request requests.AdminLoginRequest
+	var request requests.AdminChangePwdRequest
 	if err := ctx.Request().Bind(&request); err != nil {
 		return response.Fail(ctx, "", err.Error())
 	}
 
-	data, ok := admin.NewIndexService().ChangePwd(request)
+	adminId := ctx.Value("admin_id").(int64)
+
+	data, ok := admin.NewIndexService().ChangePwd(adminId, request)
+	if ok == nil {
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
+}
+
+func (r *IndexController) GetMenu(ctx http.Context) http.Response {
+
+	adminId := ctx.Value("admin_id").(int64)
+
+	data, ok := admin.NewIndexService().GetMenu(adminId)
 	if ok == nil {
 		return response.Success(ctx, data, "成功")
 	} else {
@@ -127,12 +126,8 @@ func (r *IndexController) ChangePwd(ctx http.Context) http.Response {
 }
 
 func (r *IndexController) GetGroupTree(ctx http.Context) http.Response {
-	var request requests.AdminLoginRequest
-	if err := ctx.Request().Bind(&request); err != nil {
-		return response.Fail(ctx, "", err.Error())
-	}
 
-	data, ok := admin.NewIndexService().GetGroupTree(request)
+	data, ok := admin.NewIndexService().GetGroupTree()
 	if ok == nil {
 		return response.Success(ctx, data, "成功")
 	} else {
@@ -141,12 +136,8 @@ func (r *IndexController) GetGroupTree(ctx http.Context) http.Response {
 }
 
 func (r *IndexController) GetMenuTree(ctx http.Context) http.Response {
-	var request requests.AdminLoginRequest
-	if err := ctx.Request().Bind(&request); err != nil {
-		return response.Fail(ctx, "", err.Error())
-	}
 
-	data, ok := admin.NewIndexService().GetMenuTree(request)
+	data, ok := admin.NewIndexService().GetMenuTree()
 	if ok == nil {
 		return response.Success(ctx, data, "成功")
 	} else {
@@ -155,12 +146,8 @@ func (r *IndexController) GetMenuTree(ctx http.Context) http.Response {
 }
 
 func (r *IndexController) GetDownloadCateTree(ctx http.Context) http.Response {
-	var request requests.AdminLoginRequest
-	if err := ctx.Request().Bind(&request); err != nil {
-		return response.Fail(ctx, "", err.Error())
-	}
 
-	data, ok := admin.NewIndexService().GetDownloadCateTree(request)
+	data, ok := admin.NewIndexService().GetDownloadCateTree()
 	if ok == nil {
 		return response.Success(ctx, data, "成功")
 	} else {
@@ -169,12 +156,8 @@ func (r *IndexController) GetDownloadCateTree(ctx http.Context) http.Response {
 }
 
 func (r *IndexController) GetNewsCateTree(ctx http.Context) http.Response {
-	var request requests.AdminLoginRequest
-	if err := ctx.Request().Bind(&request); err != nil {
-		return response.Fail(ctx, "", err.Error())
-	}
 
-	data, ok := admin.NewIndexService().GetNewsCateTree(request)
+	data, ok := admin.NewIndexService().GetNewsCateTree()
 	if ok == nil {
 		return response.Success(ctx, data, "成功")
 	} else {
@@ -183,12 +166,8 @@ func (r *IndexController) GetNewsCateTree(ctx http.Context) http.Response {
 }
 
 func (r *IndexController) GetProductCateTree(ctx http.Context) http.Response {
-	var request requests.AdminLoginRequest
-	if err := ctx.Request().Bind(&request); err != nil {
-		return response.Fail(ctx, "", err.Error())
-	}
 
-	data, ok := admin.NewIndexService().GetProductCateTree(request)
+	data, ok := admin.NewIndexService().GetProductCateTree()
 	if ok == nil {
 		return response.Success(ctx, data, "成功")
 	} else {
@@ -197,12 +176,8 @@ func (r *IndexController) GetProductCateTree(ctx http.Context) http.Response {
 }
 
 func (r *IndexController) GetVideoCateTree(ctx http.Context) http.Response {
-	var request requests.AdminLoginRequest
-	if err := ctx.Request().Bind(&request); err != nil {
-		return response.Fail(ctx, "", err.Error())
-	}
 
-	data, ok := admin.NewIndexService().GetVideoCateTree(request)
+	data, ok := admin.NewIndexService().GetVideoCateTree()
 	if ok == nil {
 		return response.Success(ctx, data, "成功")
 	} else {
@@ -211,12 +186,8 @@ func (r *IndexController) GetVideoCateTree(ctx http.Context) http.Response {
 }
 
 func (r *IndexController) GetBannerCateTree(ctx http.Context) http.Response {
-	var request requests.AdminLoginRequest
-	if err := ctx.Request().Bind(&request); err != nil {
-		return response.Fail(ctx, "", err.Error())
-	}
 
-	data, ok := admin.NewIndexService().GetBannerCateTree(request)
+	data, ok := admin.NewIndexService().GetBannerCateTree()
 	if ok == nil {
 		return response.Success(ctx, data, "成功")
 	} else {
