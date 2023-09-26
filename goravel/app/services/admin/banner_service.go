@@ -58,7 +58,12 @@ if !gconv.IsEmpty(request.Lang) {
 }
 
 
-	orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
+	if request.Page > 0 && request.PageSize > 0 {
+		orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
+	} else {
+		orm.Order("id desc").Get(&list)
+		count = int64(len(list))
+	}
 
 	res := make(map[string]interface{})
 	res["list"] = list
