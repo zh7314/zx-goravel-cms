@@ -10,14 +10,14 @@ import (
 )
 
 func Web() {
+	//映射静态文件路由
+	facades.Route().Static("upload", "./public/upload")
+
 	facades.Route().Get("/", func(ctx http.Context) http.Response {
 		return ctx.Response().View().Make("welcome.tmpl", map[string]any{
 			"version": support.Version,
 		})
 	})
-	//映射静态文件路由
-	facades.Route().Static("public", "./public")
-
 	//无权限
 	facades.Route().Prefix("/open").Middleware(middleware.Recovery()).Group(func(router route.Router) {
 
