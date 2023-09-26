@@ -9,6 +9,7 @@ import (
 	"github.com/jianfengye/collection"
 	"goravel/app/models"
 	requests "goravel/app/requests/admin"
+	"goravel/app/utils"
 	"goravel/app/utils/gconv"
 	"goravel/app/utils/global"
 	"goravel/app/utils/str"
@@ -44,11 +45,18 @@ func (r *IndexService) UploadFile(file filesystem.File, acceptExt []string, file
 	}
 	//本地存储
 	path, err := file.Store("upload/" + fileType + "/" + time.Now().Format("20060102"))
-	fmt.Println(path)
+	if err != nil {
+		return res, err
+	}
 	url := facades.Storage().Url(path)
-	fmt.Println(url)
 
-	return res, nil
+	data := make(map[string]interface{})
+
+	data["id"] = utils.GetUniqid()
+	data["src"] = url
+	data["fileName"] = file.GetClientOriginalName()
+
+	return data, nil
 }
 
 func (r *IndexService) Login(request requests.AdminLoginRequest) (res map[string]interface{}, err error) {
@@ -71,7 +79,7 @@ func (r *IndexService) Login(request requests.AdminLoginRequest) (res map[string
 		return res, errors.New("密码错误")
 	}
 
-	token := str.GetRandomString(32)
+	token := utils.GetUniqid()
 
 	admin.TokenTime = time.Now()
 	admin.Token = token
@@ -100,6 +108,10 @@ func (r *IndexService) Login(request requests.AdminLoginRequest) (res map[string
 
 func (r *IndexService) GetInfo(adminId int64) (res map[string]interface{}, err error) {
 
+	if gconv.IsEmpty(adminId) {
+		return res, errors.New("用户id不能为空")
+	}
+
 	var a models.Admin
 	err = facades.Orm().Query().Where("id", adminId).FirstOrFail(&a)
 	if err != nil {
@@ -117,29 +129,36 @@ func (r *IndexService) GetInfo(adminId int64) (res map[string]interface{}, err e
 
 func (r *IndexService) GetMenu(request requests.AdminLoginRequest) (res map[string]interface{}, err error) {
 
-	//res := make(map[string]interface{})
-	//res["list"] = list
-	//res["count"] = count
+	var permission models.AdminPermission
+
+	fmt.Println(permission)
 
 	return res, nil
 }
 
-func (r *IndexService) Logout(request requests.AdminLoginRequest) (res map[string]interface{}, err error) {
+func (r *IndexService) Logout(adminId int64) (res bool, err error) {
 
-	//res := make(map[string]interface{})
-	//res["list"] = list
-	//res["count"] = count
+	if gconv.IsEmpty(adminId) {
+		return res, errors.New("用户id不能为空")
+	}
 
-	return res, nil
+	var a models.Admin
+	err = facades.Orm().Query().Where("id", adminId).FirstOrFail(&a)
+	if err != nil {
+		return res, errors.New("用户不存在")
+	}
+	a.Token = ""
+
+	err = facades.Orm().Query().Save(&a)
+	if err != nil {
+		return false, err
+	}
+	return true, nil
 }
 
-func (r *IndexService) GetVersion(request requests.AdminLoginRequest) (res map[string]interface{}, err error) {
+func (r *IndexService) GetVersion() (string, error) {
 
-	//res := make(map[string]interface{})
-	//res["list"] = list
-	//res["count"] = count
-
-	return res, nil
+	return "1.6.9", nil
 }
 
 func (r *IndexService) ChangePwd(request requests.AdminLoginRequest) (res map[string]interface{}, err error) {

@@ -1,8 +1,10 @@
 package utils
 
 import (
+	"github.com/google/uuid"
 	"github.com/goravel/framework/contracts/http"
 	"goravel/app/utils/local"
+	"goravel/app/utils/str"
 	"hash/crc32"
 	"strings"
 	"time"
@@ -20,6 +22,11 @@ func ErrorToString(r interface{}) string {
 func CRC32(input string) uint32 {
 	bytes := []byte(input)
 	return crc32.ChecksumIEEE(bytes)
+}
+
+func GetUniqid() string {
+	id := uuid.New()
+	return str.Md5(id.String())
 }
 
 func GetIP(ctx http.Context) string {

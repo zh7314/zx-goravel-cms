@@ -24,8 +24,9 @@ func init() {
 		"disks": map[string]any{
 			"local": map[string]any{
 				"driver": "local",
-				"root":   "storage/app",
-				"url":    config.Env("APP_URL", "").(string) + "/storage",
+				//"root":   "storage/app",
+				"root": "public",
+				"url":  config.Env("APP_URL", "").(string) + "/",
 			},
 		},
 	})
