@@ -23,14 +23,17 @@ func (r *DownloadCateService) GetList(request requests.DownloadCateRequest) (map
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.Name) {
-	orm = orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.IsShow) {
+	if !gconv.IsEmpty(request.IsShow) {
 	orm = orm.Where("is_show", request.IsShow)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
+if !gconv.IsEmpty(request.Lang) {
+	orm = orm.Where("lang", request.Lang)
+}
+if !gconv.IsEmpty(request.Name) {
+	orm = orm.Where("name", request.Name)
+}
+if !gconv.IsEmpty(request.ParentId) {
+	orm = orm.Where("parent_id", request.ParentId)
 }
 if !gconv.IsEmpty(request.Pic) {
 	orm = orm.Where("pic", request.Pic)
@@ -38,18 +41,15 @@ if !gconv.IsEmpty(request.Pic) {
 if !gconv.IsEmpty(request.Platform) {
 	orm = orm.Where("platform", request.Platform)
 }
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.ParentId) {
-	orm = orm.Where("parent_id", request.ParentId)
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
 }
 
 
 	if request.Page > 0 && request.PageSize > 0 {
-		orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
+		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
 	} else {
-		orm.Order("id desc").Get(&list)
+		orm.Order("sort asc").Order("id desc").Get(&list)
 		count = int64(len(list))
 	}
 
@@ -66,14 +66,17 @@ func (r *DownloadCateService) GetAll(request requests.DownloadCateRequest) ([]mo
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Name) {
-	orm = orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.IsShow) {
+    if !gconv.IsEmpty(request.IsShow) {
 	orm = orm.Where("is_show", request.IsShow)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
+if !gconv.IsEmpty(request.Lang) {
+	orm = orm.Where("lang", request.Lang)
+}
+if !gconv.IsEmpty(request.Name) {
+	orm = orm.Where("name", request.Name)
+}
+if !gconv.IsEmpty(request.ParentId) {
+	orm = orm.Where("parent_id", request.ParentId)
 }
 if !gconv.IsEmpty(request.Pic) {
 	orm = orm.Where("pic", request.Pic)
@@ -81,15 +84,12 @@ if !gconv.IsEmpty(request.Pic) {
 if !gconv.IsEmpty(request.Platform) {
 	orm = orm.Where("platform", request.Platform)
 }
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.ParentId) {
-	orm = orm.Where("parent_id", request.ParentId)
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
 }
 
 
-	orm.Order("id desc").Get(&list)
+	orm.Order("sort asc").Order("id desc").Get(&list)
 
 	return list, nil
 }
@@ -113,13 +113,27 @@ func (r *DownloadCateService) Add(request requests.DownloadCateRequest) (bool, e
 
 	var downloadCate models.DownloadCate
 
-	downloadCate.Name = html.EscapeString(request.Name)
-downloadCate.IsShow = request.IsShow
-downloadCate.Sort = request.Sort
-downloadCate.Pic = html.EscapeString(request.Pic)
-downloadCate.Platform = html.EscapeString(request.Platform)
-downloadCate.Lang = html.EscapeString(request.Lang)
-downloadCate.ParentId = request.ParentId
+		if !gconv.IsEmpty(request.IsShow) {
+		downloadCate.IsShow = request.IsShow
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		downloadCate.Lang = html.EscapeString(request.Lang)
+	}
+	if !gconv.IsEmpty(request.Name) {
+		downloadCate.Name = html.EscapeString(request.Name)
+	}
+	if !gconv.IsEmpty(request.ParentId) {
+		downloadCate.ParentId = request.ParentId
+	}
+	if !gconv.IsEmpty(request.Pic) {
+		downloadCate.Pic = html.EscapeString(request.Pic)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		downloadCate.Platform = html.EscapeString(request.Platform)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		downloadCate.Sort = request.Sort
+	}
 
 
 	err := facades.Orm().Query().Create(&downloadCate)
@@ -131,19 +145,40 @@ downloadCate.ParentId = request.ParentId
 
 func (r *DownloadCateService) Save(request requests.DownloadCateRequest) (bool, error) {
 
+	if gconv.IsEmpty(request.ID) {
+    	return false, errors.New("请求不能为空")
+    }
+
 	var downloadCate models.DownloadCate
+    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&downloadCate)
+    if err != nil {
+    	return false, errors.New("数据不存在")
+    }
 
-	downloadCate.ID = request.ID
-	downloadCate.Name = html.EscapeString(request.Name)
-downloadCate.IsShow = request.IsShow
-downloadCate.Sort = request.Sort
-downloadCate.Pic = html.EscapeString(request.Pic)
-downloadCate.Platform = html.EscapeString(request.Platform)
-downloadCate.Lang = html.EscapeString(request.Lang)
-downloadCate.ParentId = request.ParentId
+		if !gconv.IsEmpty(request.IsShow) {
+		downloadCate.IsShow = request.IsShow
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		downloadCate.Lang = html.EscapeString(request.Lang)
+	}
+	if !gconv.IsEmpty(request.Name) {
+		downloadCate.Name = html.EscapeString(request.Name)
+	}
+	if !gconv.IsEmpty(request.ParentId) {
+		downloadCate.ParentId = request.ParentId
+	}
+	if !gconv.IsEmpty(request.Pic) {
+		downloadCate.Pic = html.EscapeString(request.Pic)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		downloadCate.Platform = html.EscapeString(request.Platform)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		downloadCate.Sort = request.Sort
+	}
 
 
-	err := facades.Orm().Query().Save(&downloadCate)
+	err = facades.Orm().Query().Save(&downloadCate)
 	if err != nil {
 		return false, err
 	}

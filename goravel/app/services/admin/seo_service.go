@@ -23,36 +23,36 @@ func (r *SeoService) GetList(request requests.SeoRequest) (map[string]interface{
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.Title) {
-	orm = orm.Where("title", request.Title)
-}
-if !gconv.IsEmpty(request.Keyword) {
-	orm = orm.Where("keyword", request.Keyword)
-}
-if !gconv.IsEmpty(request.Description) {
+	if !gconv.IsEmpty(request.Description) {
 	orm = orm.Where("description", request.Description)
-}
-if !gconv.IsEmpty(request.Position) {
-	orm = orm.Where("position", request.Position)
 }
 if !gconv.IsEmpty(request.IsShow) {
 	orm = orm.Where("is_show", request.IsShow)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
+if !gconv.IsEmpty(request.Keyword) {
+	orm = orm.Where("keyword", request.Keyword)
 }
 if !gconv.IsEmpty(request.Lang) {
 	orm = orm.Where("lang", request.Lang)
 }
+if !gconv.IsEmpty(request.Platform) {
+	orm = orm.Where("platform", request.Platform)
+}
+if !gconv.IsEmpty(request.Position) {
+	orm = orm.Where("position", request.Position)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.Title) {
+	orm = orm.Where("title", request.Title)
+}
 
 
 	if request.Page > 0 && request.PageSize > 0 {
-		orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
+		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
 	} else {
-		orm.Order("id desc").Get(&list)
+		orm.Order("sort asc").Order("id desc").Get(&list)
 		count = int64(len(list))
 	}
 
@@ -69,33 +69,33 @@ func (r *SeoService) GetAll(request requests.SeoRequest) ([]models.Seo, error) {
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Title) {
-	orm = orm.Where("title", request.Title)
-}
-if !gconv.IsEmpty(request.Keyword) {
-	orm = orm.Where("keyword", request.Keyword)
-}
-if !gconv.IsEmpty(request.Description) {
+    if !gconv.IsEmpty(request.Description) {
 	orm = orm.Where("description", request.Description)
-}
-if !gconv.IsEmpty(request.Position) {
-	orm = orm.Where("position", request.Position)
 }
 if !gconv.IsEmpty(request.IsShow) {
 	orm = orm.Where("is_show", request.IsShow)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
+if !gconv.IsEmpty(request.Keyword) {
+	orm = orm.Where("keyword", request.Keyword)
 }
 if !gconv.IsEmpty(request.Lang) {
 	orm = orm.Where("lang", request.Lang)
 }
+if !gconv.IsEmpty(request.Platform) {
+	orm = orm.Where("platform", request.Platform)
+}
+if !gconv.IsEmpty(request.Position) {
+	orm = orm.Where("position", request.Position)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.Title) {
+	orm = orm.Where("title", request.Title)
+}
 
 
-	orm.Order("id desc").Get(&list)
+	orm.Order("sort asc").Order("id desc").Get(&list)
 
 	return list, nil
 }
@@ -119,14 +119,30 @@ func (r *SeoService) Add(request requests.SeoRequest) (bool, error) {
 
 	var seo models.Seo
 
-	seo.Title = html.EscapeString(request.Title)
-seo.Keyword = html.EscapeString(request.Keyword)
-seo.Description = html.EscapeString(request.Description)
-seo.Position = html.EscapeString(request.Position)
-seo.IsShow = request.IsShow
-seo.Sort = request.Sort
-seo.Platform = html.EscapeString(request.Platform)
-seo.Lang = html.EscapeString(request.Lang)
+		if !gconv.IsEmpty(request.Description) {
+		seo.Description = html.EscapeString(request.Description)
+	}
+	if !gconv.IsEmpty(request.IsShow) {
+		seo.IsShow = request.IsShow
+	}
+	if !gconv.IsEmpty(request.Keyword) {
+		seo.Keyword = html.EscapeString(request.Keyword)
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		seo.Lang = html.EscapeString(request.Lang)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		seo.Platform = html.EscapeString(request.Platform)
+	}
+	if !gconv.IsEmpty(request.Position) {
+		seo.Position = html.EscapeString(request.Position)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		seo.Sort = request.Sort
+	}
+	if !gconv.IsEmpty(request.Title) {
+		seo.Title = html.EscapeString(request.Title)
+	}
 
 
 	err := facades.Orm().Query().Create(&seo)
@@ -138,20 +154,43 @@ seo.Lang = html.EscapeString(request.Lang)
 
 func (r *SeoService) Save(request requests.SeoRequest) (bool, error) {
 
+	if gconv.IsEmpty(request.ID) {
+    	return false, errors.New("请求不能为空")
+    }
+
 	var seo models.Seo
+    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&seo)
+    if err != nil {
+    	return false, errors.New("数据不存在")
+    }
 
-	seo.ID = request.ID
-	seo.Title = html.EscapeString(request.Title)
-seo.Keyword = html.EscapeString(request.Keyword)
-seo.Description = html.EscapeString(request.Description)
-seo.Position = html.EscapeString(request.Position)
-seo.IsShow = request.IsShow
-seo.Sort = request.Sort
-seo.Platform = html.EscapeString(request.Platform)
-seo.Lang = html.EscapeString(request.Lang)
+		if !gconv.IsEmpty(request.Description) {
+		seo.Description = html.EscapeString(request.Description)
+	}
+	if !gconv.IsEmpty(request.IsShow) {
+		seo.IsShow = request.IsShow
+	}
+	if !gconv.IsEmpty(request.Keyword) {
+		seo.Keyword = html.EscapeString(request.Keyword)
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		seo.Lang = html.EscapeString(request.Lang)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		seo.Platform = html.EscapeString(request.Platform)
+	}
+	if !gconv.IsEmpty(request.Position) {
+		seo.Position = html.EscapeString(request.Position)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		seo.Sort = request.Sort
+	}
+	if !gconv.IsEmpty(request.Title) {
+		seo.Title = html.EscapeString(request.Title)
+	}
 
 
-	err := facades.Orm().Query().Save(&seo)
+	err = facades.Orm().Query().Save(&seo)
 	if err != nil {
 		return false, err
 	}

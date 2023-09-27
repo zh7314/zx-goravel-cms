@@ -23,32 +23,29 @@ func (r *DownloadService) GetList(request requests.DownloadRequest) (map[string]
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.Name) {
-	orm = orm.Where("name", request.Name)
+	if !gconv.IsEmpty(request.AdminId) {
+	orm = orm.Where("admin_id", request.AdminId)
+}
+if !gconv.IsEmpty(request.DownloadCateId) {
+	orm = orm.Where("download_cate_id", request.DownloadCateId)
 }
 if !gconv.IsEmpty(request.Introduction) {
 	orm = orm.Where("introduction", request.Introduction)
 }
-if !gconv.IsEmpty(request.Url) {
-	orm = orm.Where("url", request.Url)
-}
 if !gconv.IsEmpty(request.IsLocal) {
 	orm = orm.Where("is_local", request.IsLocal)
-}
-if !gconv.IsEmpty(request.AdminId) {
-	orm = orm.Where("admin_id", request.AdminId)
 }
 if !gconv.IsEmpty(request.IsShow) {
 	orm = orm.Where("is_show", request.IsShow)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
+if !gconv.IsEmpty(request.Lang) {
+	orm = orm.Where("lang", request.Lang)
+}
+if !gconv.IsEmpty(request.Name) {
+	orm = orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.Path) {
 	orm = orm.Where("path", request.Path)
-}
-if !gconv.IsEmpty(request.DownloadCateId) {
-	orm = orm.Where("download_cate_id", request.DownloadCateId)
 }
 if !gconv.IsEmpty(request.Pic) {
 	orm = orm.Where("pic", request.Pic)
@@ -56,15 +53,18 @@ if !gconv.IsEmpty(request.Pic) {
 if !gconv.IsEmpty(request.Platform) {
 	orm = orm.Where("platform", request.Platform)
 }
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.Url) {
+	orm = orm.Where("url", request.Url)
 }
 
 
 	if request.Page > 0 && request.PageSize > 0 {
-		orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
+		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
 	} else {
-		orm.Order("id desc").Get(&list)
+		orm.Order("sort asc").Order("id desc").Get(&list)
 		count = int64(len(list))
 	}
 
@@ -81,32 +81,29 @@ func (r *DownloadService) GetAll(request requests.DownloadRequest) ([]models.Dow
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Name) {
-	orm = orm.Where("name", request.Name)
+    if !gconv.IsEmpty(request.AdminId) {
+	orm = orm.Where("admin_id", request.AdminId)
+}
+if !gconv.IsEmpty(request.DownloadCateId) {
+	orm = orm.Where("download_cate_id", request.DownloadCateId)
 }
 if !gconv.IsEmpty(request.Introduction) {
 	orm = orm.Where("introduction", request.Introduction)
 }
-if !gconv.IsEmpty(request.Url) {
-	orm = orm.Where("url", request.Url)
-}
 if !gconv.IsEmpty(request.IsLocal) {
 	orm = orm.Where("is_local", request.IsLocal)
-}
-if !gconv.IsEmpty(request.AdminId) {
-	orm = orm.Where("admin_id", request.AdminId)
 }
 if !gconv.IsEmpty(request.IsShow) {
 	orm = orm.Where("is_show", request.IsShow)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
+if !gconv.IsEmpty(request.Lang) {
+	orm = orm.Where("lang", request.Lang)
+}
+if !gconv.IsEmpty(request.Name) {
+	orm = orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.Path) {
 	orm = orm.Where("path", request.Path)
-}
-if !gconv.IsEmpty(request.DownloadCateId) {
-	orm = orm.Where("download_cate_id", request.DownloadCateId)
 }
 if !gconv.IsEmpty(request.Pic) {
 	orm = orm.Where("pic", request.Pic)
@@ -114,12 +111,15 @@ if !gconv.IsEmpty(request.Pic) {
 if !gconv.IsEmpty(request.Platform) {
 	orm = orm.Where("platform", request.Platform)
 }
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.Url) {
+	orm = orm.Where("url", request.Url)
 }
 
 
-	orm.Order("id desc").Get(&list)
+	orm.Order("sort asc").Order("id desc").Get(&list)
 
 	return list, nil
 }
@@ -143,18 +143,42 @@ func (r *DownloadService) Add(request requests.DownloadRequest) (bool, error) {
 
 	var download models.Download
 
-	download.Name = html.EscapeString(request.Name)
-download.Introduction = html.EscapeString(request.Introduction)
-download.Url = html.EscapeString(request.Url)
-download.IsLocal = request.IsLocal
-download.AdminId = request.AdminId
-download.IsShow = request.IsShow
-download.Sort = request.Sort
-download.Path = html.EscapeString(request.Path)
-download.DownloadCateId = request.DownloadCateId
-download.Pic = html.EscapeString(request.Pic)
-download.Platform = html.EscapeString(request.Platform)
-download.Lang = html.EscapeString(request.Lang)
+		if !gconv.IsEmpty(request.AdminId) {
+		download.AdminId = request.AdminId
+	}
+	if !gconv.IsEmpty(request.DownloadCateId) {
+		download.DownloadCateId = request.DownloadCateId
+	}
+	if !gconv.IsEmpty(request.Introduction) {
+		download.Introduction = html.EscapeString(request.Introduction)
+	}
+	if !gconv.IsEmpty(request.IsLocal) {
+		download.IsLocal = request.IsLocal
+	}
+	if !gconv.IsEmpty(request.IsShow) {
+		download.IsShow = request.IsShow
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		download.Lang = html.EscapeString(request.Lang)
+	}
+	if !gconv.IsEmpty(request.Name) {
+		download.Name = html.EscapeString(request.Name)
+	}
+	if !gconv.IsEmpty(request.Path) {
+		download.Path = html.EscapeString(request.Path)
+	}
+	if !gconv.IsEmpty(request.Pic) {
+		download.Pic = html.EscapeString(request.Pic)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		download.Platform = html.EscapeString(request.Platform)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		download.Sort = request.Sort
+	}
+	if !gconv.IsEmpty(request.Url) {
+		download.Url = html.EscapeString(request.Url)
+	}
 
 
 	err := facades.Orm().Query().Create(&download)
@@ -166,24 +190,55 @@ download.Lang = html.EscapeString(request.Lang)
 
 func (r *DownloadService) Save(request requests.DownloadRequest) (bool, error) {
 
+	if gconv.IsEmpty(request.ID) {
+    	return false, errors.New("请求不能为空")
+    }
+
 	var download models.Download
+    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&download)
+    if err != nil {
+    	return false, errors.New("数据不存在")
+    }
 
-	download.ID = request.ID
-	download.Name = html.EscapeString(request.Name)
-download.Introduction = html.EscapeString(request.Introduction)
-download.Url = html.EscapeString(request.Url)
-download.IsLocal = request.IsLocal
-download.AdminId = request.AdminId
-download.IsShow = request.IsShow
-download.Sort = request.Sort
-download.Path = html.EscapeString(request.Path)
-download.DownloadCateId = request.DownloadCateId
-download.Pic = html.EscapeString(request.Pic)
-download.Platform = html.EscapeString(request.Platform)
-download.Lang = html.EscapeString(request.Lang)
+		if !gconv.IsEmpty(request.AdminId) {
+		download.AdminId = request.AdminId
+	}
+	if !gconv.IsEmpty(request.DownloadCateId) {
+		download.DownloadCateId = request.DownloadCateId
+	}
+	if !gconv.IsEmpty(request.Introduction) {
+		download.Introduction = html.EscapeString(request.Introduction)
+	}
+	if !gconv.IsEmpty(request.IsLocal) {
+		download.IsLocal = request.IsLocal
+	}
+	if !gconv.IsEmpty(request.IsShow) {
+		download.IsShow = request.IsShow
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		download.Lang = html.EscapeString(request.Lang)
+	}
+	if !gconv.IsEmpty(request.Name) {
+		download.Name = html.EscapeString(request.Name)
+	}
+	if !gconv.IsEmpty(request.Path) {
+		download.Path = html.EscapeString(request.Path)
+	}
+	if !gconv.IsEmpty(request.Pic) {
+		download.Pic = html.EscapeString(request.Pic)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		download.Platform = html.EscapeString(request.Platform)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		download.Sort = request.Sort
+	}
+	if !gconv.IsEmpty(request.Url) {
+		download.Url = html.EscapeString(request.Url)
+	}
 
 
-	err := facades.Orm().Query().Save(&download)
+	err = facades.Orm().Query().Save(&download)
 	if err != nil {
 		return false, err
 	}

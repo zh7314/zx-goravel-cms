@@ -23,11 +23,11 @@ func (r *LangService) GetList(request requests.LangRequest) (map[string]interfac
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Name) {
+	if !gconv.IsEmpty(request.Name) {
 	orm = orm.Where("name", request.Name)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Value) {
 	orm = orm.Where("value", request.Value)
@@ -35,9 +35,9 @@ if !gconv.IsEmpty(request.Value) {
 
 
 	if request.Page > 0 && request.PageSize > 0 {
-		orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
+		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
 	} else {
-		orm.Order("id desc").Get(&list)
+		orm.Order("sort asc").Order("id desc").Get(&list)
 		count = int64(len(list))
 	}
 
@@ -54,18 +54,18 @@ func (r *LangService) GetAll(request requests.LangRequest) ([]models.Lang, error
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Name) {
+    if !gconv.IsEmpty(request.Name) {
 	orm = orm.Where("name", request.Name)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Value) {
 	orm = orm.Where("value", request.Value)
 }
 
 
-	orm.Order("id desc").Get(&list)
+	orm.Order("sort asc").Order("id desc").Get(&list)
 
 	return list, nil
 }
@@ -89,9 +89,15 @@ func (r *LangService) Add(request requests.LangRequest) (bool, error) {
 
 	var lang models.Lang
 
-	lang.Sort = request.Sort
-lang.Name = html.EscapeString(request.Name)
-lang.Value = html.EscapeString(request.Value)
+		if !gconv.IsEmpty(request.Name) {
+		lang.Name = html.EscapeString(request.Name)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		lang.Sort = request.Sort
+	}
+	if !gconv.IsEmpty(request.Value) {
+		lang.Value = html.EscapeString(request.Value)
+	}
 
 
 	err := facades.Orm().Query().Create(&lang)
@@ -103,15 +109,28 @@ lang.Value = html.EscapeString(request.Value)
 
 func (r *LangService) Save(request requests.LangRequest) (bool, error) {
 
+	if gconv.IsEmpty(request.ID) {
+    	return false, errors.New("请求不能为空")
+    }
+
 	var lang models.Lang
+    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&lang)
+    if err != nil {
+    	return false, errors.New("数据不存在")
+    }
 
-	lang.ID = request.ID
-	lang.Sort = request.Sort
-lang.Name = html.EscapeString(request.Name)
-lang.Value = html.EscapeString(request.Value)
+		if !gconv.IsEmpty(request.Name) {
+		lang.Name = html.EscapeString(request.Name)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		lang.Sort = request.Sort
+	}
+	if !gconv.IsEmpty(request.Value) {
+		lang.Value = html.EscapeString(request.Value)
+	}
 
 
-	err := facades.Orm().Query().Save(&lang)
+	err = facades.Orm().Query().Save(&lang)
 	if err != nil {
 		return false, err
 	}

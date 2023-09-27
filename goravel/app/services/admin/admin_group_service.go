@@ -23,11 +23,11 @@ func (r *AdminGroupService) GetList(request requests.AdminGroupRequest) (map[str
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.ParentId) {
-	orm = orm.Where("parent_id", request.ParentId)
-}
-if !gconv.IsEmpty(request.Name) {
+	if !gconv.IsEmpty(request.Name) {
 	orm = orm.Where("name", request.Name)
+}
+if !gconv.IsEmpty(request.ParentId) {
+	orm = orm.Where("parent_id", request.ParentId)
 }
 if !gconv.IsEmpty(request.PermissionIds) {
 	orm = orm.Where("permission_ids", request.PermissionIds)
@@ -38,9 +38,9 @@ if !gconv.IsEmpty(request.Sort) {
 
 
 	if request.Page > 0 && request.PageSize > 0 {
-		orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
+		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
 	} else {
-		orm.Order("id desc").Get(&list)
+		orm.Order("sort asc").Order("id desc").Get(&list)
 		count = int64(len(list))
 	}
 
@@ -57,11 +57,11 @@ func (r *AdminGroupService) GetAll(request requests.AdminGroupRequest) ([]models
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.ParentId) {
-	orm = orm.Where("parent_id", request.ParentId)
-}
-if !gconv.IsEmpty(request.Name) {
+    if !gconv.IsEmpty(request.Name) {
 	orm = orm.Where("name", request.Name)
+}
+if !gconv.IsEmpty(request.ParentId) {
+	orm = orm.Where("parent_id", request.ParentId)
 }
 if !gconv.IsEmpty(request.PermissionIds) {
 	orm = orm.Where("permission_ids", request.PermissionIds)
@@ -71,7 +71,7 @@ if !gconv.IsEmpty(request.Sort) {
 }
 
 
-	orm.Order("id desc").Get(&list)
+	orm.Order("sort asc").Order("id desc").Get(&list)
 
 	return list, nil
 }
@@ -95,10 +95,18 @@ func (r *AdminGroupService) Add(request requests.AdminGroupRequest) (bool, error
 
 	var adminGroup models.AdminGroup
 
-	adminGroup.ParentId = request.ParentId
-adminGroup.Name = html.EscapeString(request.Name)
-adminGroup.PermissionIds = html.EscapeString(request.PermissionIds)
-adminGroup.Sort = request.Sort
+		if !gconv.IsEmpty(request.Name) {
+		adminGroup.Name = html.EscapeString(request.Name)
+	}
+	if !gconv.IsEmpty(request.ParentId) {
+		adminGroup.ParentId = request.ParentId
+	}
+	if !gconv.IsEmpty(request.PermissionIds) {
+		adminGroup.PermissionIds = html.EscapeString(request.PermissionIds)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		adminGroup.Sort = request.Sort
+	}
 
 
 	err := facades.Orm().Query().Create(&adminGroup)
@@ -110,16 +118,31 @@ adminGroup.Sort = request.Sort
 
 func (r *AdminGroupService) Save(request requests.AdminGroupRequest) (bool, error) {
 
+	if gconv.IsEmpty(request.ID) {
+    	return false, errors.New("请求不能为空")
+    }
+
 	var adminGroup models.AdminGroup
+    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&adminGroup)
+    if err != nil {
+    	return false, errors.New("数据不存在")
+    }
 
-	adminGroup.ID = request.ID
-	adminGroup.ParentId = request.ParentId
-adminGroup.Name = html.EscapeString(request.Name)
-adminGroup.PermissionIds = html.EscapeString(request.PermissionIds)
-adminGroup.Sort = request.Sort
+		if !gconv.IsEmpty(request.Name) {
+		adminGroup.Name = html.EscapeString(request.Name)
+	}
+	if !gconv.IsEmpty(request.ParentId) {
+		adminGroup.ParentId = request.ParentId
+	}
+	if !gconv.IsEmpty(request.PermissionIds) {
+		adminGroup.PermissionIds = html.EscapeString(request.PermissionIds)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		adminGroup.Sort = request.Sort
+	}
 
 
-	err := facades.Orm().Query().Save(&adminGroup)
+	err = facades.Orm().Query().Save(&adminGroup)
 	if err != nil {
 		return false, err
 	}

@@ -23,11 +23,32 @@ func (r *AdminService) GetList(request requests.AdminRequest) (map[string]interf
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.Name) {
+	if !gconv.IsEmpty(request.AdminGroupIds) {
+	orm = orm.Where("admin_group_ids", request.AdminGroupIds)
+}
+if !gconv.IsEmpty(request.Avatar) {
+	orm = orm.Where("avatar", request.Avatar)
+}
+if !gconv.IsEmpty(request.Email) {
+	orm = orm.Where("email", request.Email)
+}
+if !gconv.IsEmpty(request.IsAdmin) {
+	orm = orm.Where("is_admin", request.IsAdmin)
+}
+if !gconv.IsEmpty(request.LoginIp) {
+	orm = orm.Where("login_ip", request.LoginIp)
+}
+if !gconv.IsEmpty(request.Mobile) {
+	orm = orm.Where("mobile", request.Mobile)
+}
+if !gconv.IsEmpty(request.Name) {
 	orm = orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.Password) {
 	orm = orm.Where("password", request.Password)
+}
+if !gconv.IsEmpty(request.RealName) {
+	orm = orm.Where("real_name", request.RealName)
 }
 if !gconv.IsEmpty(request.Salt) {
 	orm = orm.Where("salt", request.Salt)
@@ -35,45 +56,24 @@ if !gconv.IsEmpty(request.Salt) {
 if !gconv.IsEmpty(request.Sex) {
 	orm = orm.Where("sex", request.Sex)
 }
-if !gconv.IsEmpty(request.Email) {
-	orm = orm.Where("email", request.Email)
-}
-if !gconv.IsEmpty(request.Mobile) {
-	orm = orm.Where("mobile", request.Mobile)
-}
-if !gconv.IsEmpty(request.LoginIp) {
-	orm = orm.Where("login_ip", request.LoginIp)
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Status) {
 	orm = orm.Where("status", request.Status)
 }
-if !gconv.IsEmpty(request.Avatar) {
-	orm = orm.Where("avatar", request.Avatar)
-}
-if !gconv.IsEmpty(request.RealName) {
-	orm = orm.Where("real_name", request.RealName)
+if !gconv.IsEmpty(request.Token) {
+	orm = orm.Where("token", request.Token)
 }
 if !gconv.IsEmpty(request.TokenTime) {
 	orm = orm.Where("token_time", request.TokenTime)
 }
-if !gconv.IsEmpty(request.AdminGroupIds) {
-	orm = orm.Where("admin_group_ids", request.AdminGroupIds)
-}
-if !gconv.IsEmpty(request.IsAdmin) {
-	orm = orm.Where("is_admin", request.IsAdmin)
-}
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Token) {
-	orm = orm.Where("token", request.Token)
-}
 
 
 	if request.Page > 0 && request.PageSize > 0 {
-		orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
+		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
 	} else {
-		orm.Order("id desc").Get(&list)
+		orm.Order("sort asc").Order("id desc").Get(&list)
 		count = int64(len(list))
 	}
 
@@ -90,11 +90,32 @@ func (r *AdminService) GetAll(request requests.AdminRequest) ([]models.Admin, er
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Name) {
+    if !gconv.IsEmpty(request.AdminGroupIds) {
+	orm = orm.Where("admin_group_ids", request.AdminGroupIds)
+}
+if !gconv.IsEmpty(request.Avatar) {
+	orm = orm.Where("avatar", request.Avatar)
+}
+if !gconv.IsEmpty(request.Email) {
+	orm = orm.Where("email", request.Email)
+}
+if !gconv.IsEmpty(request.IsAdmin) {
+	orm = orm.Where("is_admin", request.IsAdmin)
+}
+if !gconv.IsEmpty(request.LoginIp) {
+	orm = orm.Where("login_ip", request.LoginIp)
+}
+if !gconv.IsEmpty(request.Mobile) {
+	orm = orm.Where("mobile", request.Mobile)
+}
+if !gconv.IsEmpty(request.Name) {
 	orm = orm.Where("name", request.Name)
 }
 if !gconv.IsEmpty(request.Password) {
 	orm = orm.Where("password", request.Password)
+}
+if !gconv.IsEmpty(request.RealName) {
+	orm = orm.Where("real_name", request.RealName)
 }
 if !gconv.IsEmpty(request.Salt) {
 	orm = orm.Where("salt", request.Salt)
@@ -102,42 +123,21 @@ if !gconv.IsEmpty(request.Salt) {
 if !gconv.IsEmpty(request.Sex) {
 	orm = orm.Where("sex", request.Sex)
 }
-if !gconv.IsEmpty(request.Email) {
-	orm = orm.Where("email", request.Email)
-}
-if !gconv.IsEmpty(request.Mobile) {
-	orm = orm.Where("mobile", request.Mobile)
-}
-if !gconv.IsEmpty(request.LoginIp) {
-	orm = orm.Where("login_ip", request.LoginIp)
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
 }
 if !gconv.IsEmpty(request.Status) {
 	orm = orm.Where("status", request.Status)
 }
-if !gconv.IsEmpty(request.Avatar) {
-	orm = orm.Where("avatar", request.Avatar)
-}
-if !gconv.IsEmpty(request.RealName) {
-	orm = orm.Where("real_name", request.RealName)
+if !gconv.IsEmpty(request.Token) {
+	orm = orm.Where("token", request.Token)
 }
 if !gconv.IsEmpty(request.TokenTime) {
 	orm = orm.Where("token_time", request.TokenTime)
 }
-if !gconv.IsEmpty(request.AdminGroupIds) {
-	orm = orm.Where("admin_group_ids", request.AdminGroupIds)
-}
-if !gconv.IsEmpty(request.IsAdmin) {
-	orm = orm.Where("is_admin", request.IsAdmin)
-}
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Token) {
-	orm = orm.Where("token", request.Token)
-}
 
 
-	orm.Order("id desc").Get(&list)
+	orm.Order("sort asc").Order("id desc").Get(&list)
 
 	return list, nil
 }
@@ -161,21 +161,51 @@ func (r *AdminService) Add(request requests.AdminRequest) (bool, error) {
 
 	var admin models.Admin
 
-	admin.Name = html.EscapeString(request.Name)
-admin.Password = html.EscapeString(request.Password)
-admin.Salt = html.EscapeString(request.Salt)
-admin.Sex = request.Sex
-admin.Email = html.EscapeString(request.Email)
-admin.Mobile = html.EscapeString(request.Mobile)
-admin.LoginIp = html.EscapeString(request.LoginIp)
-admin.Status = request.Status
-admin.Avatar = html.EscapeString(request.Avatar)
-admin.RealName = html.EscapeString(request.RealName)
-admin.TokenTime = request.TokenTime
-admin.AdminGroupIds = html.EscapeString(request.AdminGroupIds)
-admin.IsAdmin = request.IsAdmin
-admin.Sort = request.Sort
-admin.Token = html.EscapeString(request.Token)
+		if !gconv.IsEmpty(request.AdminGroupIds) {
+		admin.AdminGroupIds = html.EscapeString(request.AdminGroupIds)
+	}
+	if !gconv.IsEmpty(request.Avatar) {
+		admin.Avatar = html.EscapeString(request.Avatar)
+	}
+	if !gconv.IsEmpty(request.Email) {
+		admin.Email = html.EscapeString(request.Email)
+	}
+	if !gconv.IsEmpty(request.IsAdmin) {
+		admin.IsAdmin = request.IsAdmin
+	}
+	if !gconv.IsEmpty(request.LoginIp) {
+		admin.LoginIp = html.EscapeString(request.LoginIp)
+	}
+	if !gconv.IsEmpty(request.Mobile) {
+		admin.Mobile = html.EscapeString(request.Mobile)
+	}
+	if !gconv.IsEmpty(request.Name) {
+		admin.Name = html.EscapeString(request.Name)
+	}
+	if !gconv.IsEmpty(request.Password) {
+		admin.Password = html.EscapeString(request.Password)
+	}
+	if !gconv.IsEmpty(request.RealName) {
+		admin.RealName = html.EscapeString(request.RealName)
+	}
+	if !gconv.IsEmpty(request.Salt) {
+		admin.Salt = html.EscapeString(request.Salt)
+	}
+	if !gconv.IsEmpty(request.Sex) {
+		admin.Sex = request.Sex
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		admin.Sort = request.Sort
+	}
+	if !gconv.IsEmpty(request.Status) {
+		admin.Status = request.Status
+	}
+	if !gconv.IsEmpty(request.Token) {
+		admin.Token = html.EscapeString(request.Token)
+	}
+	if !gconv.IsEmpty(request.TokenTime) {
+		admin.TokenTime = request.TokenTime
+	}
 
 
 	err := facades.Orm().Query().Create(&admin)
@@ -187,27 +217,64 @@ admin.Token = html.EscapeString(request.Token)
 
 func (r *AdminService) Save(request requests.AdminRequest) (bool, error) {
 
+	if gconv.IsEmpty(request.ID) {
+    	return false, errors.New("请求不能为空")
+    }
+
 	var admin models.Admin
+    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&admin)
+    if err != nil {
+    	return false, errors.New("数据不存在")
+    }
 
-	admin.ID = request.ID
-	admin.Name = html.EscapeString(request.Name)
-admin.Password = html.EscapeString(request.Password)
-admin.Salt = html.EscapeString(request.Salt)
-admin.Sex = request.Sex
-admin.Email = html.EscapeString(request.Email)
-admin.Mobile = html.EscapeString(request.Mobile)
-admin.LoginIp = html.EscapeString(request.LoginIp)
-admin.Status = request.Status
-admin.Avatar = html.EscapeString(request.Avatar)
-admin.RealName = html.EscapeString(request.RealName)
-admin.TokenTime = request.TokenTime
-admin.AdminGroupIds = html.EscapeString(request.AdminGroupIds)
-admin.IsAdmin = request.IsAdmin
-admin.Sort = request.Sort
-admin.Token = html.EscapeString(request.Token)
+		if !gconv.IsEmpty(request.AdminGroupIds) {
+		admin.AdminGroupIds = html.EscapeString(request.AdminGroupIds)
+	}
+	if !gconv.IsEmpty(request.Avatar) {
+		admin.Avatar = html.EscapeString(request.Avatar)
+	}
+	if !gconv.IsEmpty(request.Email) {
+		admin.Email = html.EscapeString(request.Email)
+	}
+	if !gconv.IsEmpty(request.IsAdmin) {
+		admin.IsAdmin = request.IsAdmin
+	}
+	if !gconv.IsEmpty(request.LoginIp) {
+		admin.LoginIp = html.EscapeString(request.LoginIp)
+	}
+	if !gconv.IsEmpty(request.Mobile) {
+		admin.Mobile = html.EscapeString(request.Mobile)
+	}
+	if !gconv.IsEmpty(request.Name) {
+		admin.Name = html.EscapeString(request.Name)
+	}
+	if !gconv.IsEmpty(request.Password) {
+		admin.Password = html.EscapeString(request.Password)
+	}
+	if !gconv.IsEmpty(request.RealName) {
+		admin.RealName = html.EscapeString(request.RealName)
+	}
+	if !gconv.IsEmpty(request.Salt) {
+		admin.Salt = html.EscapeString(request.Salt)
+	}
+	if !gconv.IsEmpty(request.Sex) {
+		admin.Sex = request.Sex
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		admin.Sort = request.Sort
+	}
+	if !gconv.IsEmpty(request.Status) {
+		admin.Status = request.Status
+	}
+	if !gconv.IsEmpty(request.Token) {
+		admin.Token = html.EscapeString(request.Token)
+	}
+	if !gconv.IsEmpty(request.TokenTime) {
+		admin.TokenTime = request.TokenTime
+	}
 
 
-	err := facades.Orm().Query().Save(&admin)
+	err = facades.Orm().Query().Save(&admin)
 	if err != nil {
 		return false, err
 	}

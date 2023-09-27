@@ -23,35 +23,26 @@ func (r *NewsService) GetList(request requests.NewsRequest) (map[string]interfac
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.NewsCateId) {
-	orm = orm.Where("news_cate_id", request.NewsCateId)
-}
-if !gconv.IsEmpty(request.Title) {
-	orm = orm.Where("title", request.Title)
-}
-if !gconv.IsEmpty(request.ShortTitle) {
-	orm = orm.Where("short_title", request.ShortTitle)
+	if !gconv.IsEmpty(request.AdminId) {
+	orm = orm.Where("admin_id", request.AdminId)
 }
 if !gconv.IsEmpty(request.Content) {
 	orm = orm.Where("content", request.Content)
 }
-if !gconv.IsEmpty(request.AdminId) {
-	orm = orm.Where("admin_id", request.AdminId)
-}
 if !gconv.IsEmpty(request.Count) {
 	orm = orm.Where("count", request.Count)
+}
+if !gconv.IsEmpty(request.EndTime) {
+	orm = orm.Where("end_time", request.EndTime)
 }
 if !gconv.IsEmpty(request.IsShow) {
 	orm = orm.Where("is_show", request.IsShow)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
+if !gconv.IsEmpty(request.Lang) {
+	orm = orm.Where("lang", request.Lang)
 }
-if !gconv.IsEmpty(request.StartTime) {
-	orm = orm.Where("start_time", request.StartTime)
-}
-if !gconv.IsEmpty(request.EndTime) {
-	orm = orm.Where("end_time", request.EndTime)
+if !gconv.IsEmpty(request.NewsCateId) {
+	orm = orm.Where("news_cate_id", request.NewsCateId)
 }
 if !gconv.IsEmpty(request.Pic) {
 	orm = orm.Where("pic", request.Pic)
@@ -59,27 +50,36 @@ if !gconv.IsEmpty(request.Pic) {
 if !gconv.IsEmpty(request.Pics) {
 	orm = orm.Where("pics", request.Pics)
 }
-if !gconv.IsEmpty(request.SeoTitle) {
-	orm = orm.Where("seo_title", request.SeoTitle)
-}
-if !gconv.IsEmpty(request.SeoKeyword) {
-	orm = orm.Where("seo_keyword", request.SeoKeyword)
+if !gconv.IsEmpty(request.Platform) {
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.SeoDescription) {
 	orm = orm.Where("seo_description", request.SeoDescription)
 }
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
+if !gconv.IsEmpty(request.SeoKeyword) {
+	orm = orm.Where("seo_keyword", request.SeoKeyword)
 }
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
+if !gconv.IsEmpty(request.SeoTitle) {
+	orm = orm.Where("seo_title", request.SeoTitle)
+}
+if !gconv.IsEmpty(request.ShortTitle) {
+	orm = orm.Where("short_title", request.ShortTitle)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.StartTime) {
+	orm = orm.Where("start_time", request.StartTime)
+}
+if !gconv.IsEmpty(request.Title) {
+	orm = orm.Where("title", request.Title)
 }
 
 
 	if request.Page > 0 && request.PageSize > 0 {
-		orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
+		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
 	} else {
-		orm.Order("id desc").Get(&list)
+		orm.Order("sort asc").Order("id desc").Get(&list)
 		count = int64(len(list))
 	}
 
@@ -96,35 +96,26 @@ func (r *NewsService) GetAll(request requests.NewsRequest) ([]models.News, error
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.NewsCateId) {
-	orm = orm.Where("news_cate_id", request.NewsCateId)
-}
-if !gconv.IsEmpty(request.Title) {
-	orm = orm.Where("title", request.Title)
-}
-if !gconv.IsEmpty(request.ShortTitle) {
-	orm = orm.Where("short_title", request.ShortTitle)
+    if !gconv.IsEmpty(request.AdminId) {
+	orm = orm.Where("admin_id", request.AdminId)
 }
 if !gconv.IsEmpty(request.Content) {
 	orm = orm.Where("content", request.Content)
 }
-if !gconv.IsEmpty(request.AdminId) {
-	orm = orm.Where("admin_id", request.AdminId)
-}
 if !gconv.IsEmpty(request.Count) {
 	orm = orm.Where("count", request.Count)
+}
+if !gconv.IsEmpty(request.EndTime) {
+	orm = orm.Where("end_time", request.EndTime)
 }
 if !gconv.IsEmpty(request.IsShow) {
 	orm = orm.Where("is_show", request.IsShow)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
+if !gconv.IsEmpty(request.Lang) {
+	orm = orm.Where("lang", request.Lang)
 }
-if !gconv.IsEmpty(request.StartTime) {
-	orm = orm.Where("start_time", request.StartTime)
-}
-if !gconv.IsEmpty(request.EndTime) {
-	orm = orm.Where("end_time", request.EndTime)
+if !gconv.IsEmpty(request.NewsCateId) {
+	orm = orm.Where("news_cate_id", request.NewsCateId)
 }
 if !gconv.IsEmpty(request.Pic) {
 	orm = orm.Where("pic", request.Pic)
@@ -132,24 +123,33 @@ if !gconv.IsEmpty(request.Pic) {
 if !gconv.IsEmpty(request.Pics) {
 	orm = orm.Where("pics", request.Pics)
 }
-if !gconv.IsEmpty(request.SeoTitle) {
-	orm = orm.Where("seo_title", request.SeoTitle)
-}
-if !gconv.IsEmpty(request.SeoKeyword) {
-	orm = orm.Where("seo_keyword", request.SeoKeyword)
+if !gconv.IsEmpty(request.Platform) {
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.SeoDescription) {
 	orm = orm.Where("seo_description", request.SeoDescription)
 }
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
+if !gconv.IsEmpty(request.SeoKeyword) {
+	orm = orm.Where("seo_keyword", request.SeoKeyword)
 }
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
+if !gconv.IsEmpty(request.SeoTitle) {
+	orm = orm.Where("seo_title", request.SeoTitle)
+}
+if !gconv.IsEmpty(request.ShortTitle) {
+	orm = orm.Where("short_title", request.ShortTitle)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.StartTime) {
+	orm = orm.Where("start_time", request.StartTime)
+}
+if !gconv.IsEmpty(request.Title) {
+	orm = orm.Where("title", request.Title)
 }
 
 
-	orm.Order("id desc").Get(&list)
+	orm.Order("sort asc").Order("id desc").Get(&list)
 
 	return list, nil
 }
@@ -173,23 +173,57 @@ func (r *NewsService) Add(request requests.NewsRequest) (bool, error) {
 
 	var news models.News
 
-	news.NewsCateId = request.NewsCateId
-news.Title = html.EscapeString(request.Title)
-news.ShortTitle = html.EscapeString(request.ShortTitle)
-news.Content = html.EscapeString(request.Content)
-news.AdminId = request.AdminId
-news.Count = request.Count
-news.IsShow = request.IsShow
-news.Sort = request.Sort
-news.StartTime = request.StartTime
-news.EndTime = request.EndTime
-news.Pic = html.EscapeString(request.Pic)
-news.Pics = html.EscapeString(request.Pics)
-news.SeoTitle = html.EscapeString(request.SeoTitle)
-news.SeoKeyword = html.EscapeString(request.SeoKeyword)
-news.SeoDescription = html.EscapeString(request.SeoDescription)
-news.Platform = html.EscapeString(request.Platform)
-news.Lang = html.EscapeString(request.Lang)
+		if !gconv.IsEmpty(request.AdminId) {
+		news.AdminId = request.AdminId
+	}
+	if !gconv.IsEmpty(request.Content) {
+		news.Content = html.EscapeString(request.Content)
+	}
+	if !gconv.IsEmpty(request.Count) {
+		news.Count = request.Count
+	}
+	if !gconv.IsEmpty(request.EndTime) {
+		news.EndTime = request.EndTime
+	}
+	if !gconv.IsEmpty(request.IsShow) {
+		news.IsShow = request.IsShow
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		news.Lang = html.EscapeString(request.Lang)
+	}
+	if !gconv.IsEmpty(request.NewsCateId) {
+		news.NewsCateId = request.NewsCateId
+	}
+	if !gconv.IsEmpty(request.Pic) {
+		news.Pic = html.EscapeString(request.Pic)
+	}
+	if !gconv.IsEmpty(request.Pics) {
+		news.Pics = html.EscapeString(request.Pics)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		news.Platform = html.EscapeString(request.Platform)
+	}
+	if !gconv.IsEmpty(request.SeoDescription) {
+		news.SeoDescription = html.EscapeString(request.SeoDescription)
+	}
+	if !gconv.IsEmpty(request.SeoKeyword) {
+		news.SeoKeyword = html.EscapeString(request.SeoKeyword)
+	}
+	if !gconv.IsEmpty(request.SeoTitle) {
+		news.SeoTitle = html.EscapeString(request.SeoTitle)
+	}
+	if !gconv.IsEmpty(request.ShortTitle) {
+		news.ShortTitle = html.EscapeString(request.ShortTitle)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		news.Sort = request.Sort
+	}
+	if !gconv.IsEmpty(request.StartTime) {
+		news.StartTime = request.StartTime
+	}
+	if !gconv.IsEmpty(request.Title) {
+		news.Title = html.EscapeString(request.Title)
+	}
 
 
 	err := facades.Orm().Query().Create(&news)
@@ -201,29 +235,70 @@ news.Lang = html.EscapeString(request.Lang)
 
 func (r *NewsService) Save(request requests.NewsRequest) (bool, error) {
 
+	if gconv.IsEmpty(request.ID) {
+    	return false, errors.New("请求不能为空")
+    }
+
 	var news models.News
+    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&news)
+    if err != nil {
+    	return false, errors.New("数据不存在")
+    }
 
-	news.ID = request.ID
-	news.NewsCateId = request.NewsCateId
-news.Title = html.EscapeString(request.Title)
-news.ShortTitle = html.EscapeString(request.ShortTitle)
-news.Content = html.EscapeString(request.Content)
-news.AdminId = request.AdminId
-news.Count = request.Count
-news.IsShow = request.IsShow
-news.Sort = request.Sort
-news.StartTime = request.StartTime
-news.EndTime = request.EndTime
-news.Pic = html.EscapeString(request.Pic)
-news.Pics = html.EscapeString(request.Pics)
-news.SeoTitle = html.EscapeString(request.SeoTitle)
-news.SeoKeyword = html.EscapeString(request.SeoKeyword)
-news.SeoDescription = html.EscapeString(request.SeoDescription)
-news.Platform = html.EscapeString(request.Platform)
-news.Lang = html.EscapeString(request.Lang)
+		if !gconv.IsEmpty(request.AdminId) {
+		news.AdminId = request.AdminId
+	}
+	if !gconv.IsEmpty(request.Content) {
+		news.Content = html.EscapeString(request.Content)
+	}
+	if !gconv.IsEmpty(request.Count) {
+		news.Count = request.Count
+	}
+	if !gconv.IsEmpty(request.EndTime) {
+		news.EndTime = request.EndTime
+	}
+	if !gconv.IsEmpty(request.IsShow) {
+		news.IsShow = request.IsShow
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		news.Lang = html.EscapeString(request.Lang)
+	}
+	if !gconv.IsEmpty(request.NewsCateId) {
+		news.NewsCateId = request.NewsCateId
+	}
+	if !gconv.IsEmpty(request.Pic) {
+		news.Pic = html.EscapeString(request.Pic)
+	}
+	if !gconv.IsEmpty(request.Pics) {
+		news.Pics = html.EscapeString(request.Pics)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		news.Platform = html.EscapeString(request.Platform)
+	}
+	if !gconv.IsEmpty(request.SeoDescription) {
+		news.SeoDescription = html.EscapeString(request.SeoDescription)
+	}
+	if !gconv.IsEmpty(request.SeoKeyword) {
+		news.SeoKeyword = html.EscapeString(request.SeoKeyword)
+	}
+	if !gconv.IsEmpty(request.SeoTitle) {
+		news.SeoTitle = html.EscapeString(request.SeoTitle)
+	}
+	if !gconv.IsEmpty(request.ShortTitle) {
+		news.ShortTitle = html.EscapeString(request.ShortTitle)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		news.Sort = request.Sort
+	}
+	if !gconv.IsEmpty(request.StartTime) {
+		news.StartTime = request.StartTime
+	}
+	if !gconv.IsEmpty(request.Title) {
+		news.Title = html.EscapeString(request.Title)
+	}
 
 
-	err := facades.Orm().Query().Save(&news)
+	err = facades.Orm().Query().Save(&news)
 	if err != nil {
 		return false, err
 	}

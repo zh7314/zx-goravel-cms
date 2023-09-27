@@ -23,7 +23,10 @@ func (r *FileService) GetList(request requests.FileRequest) (map[string]interfac
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.FileName) {
+	if !gconv.IsEmpty(request.AdminId) {
+	orm = orm.Where("admin_id", request.AdminId)
+}
+if !gconv.IsEmpty(request.FileName) {
 	orm = orm.Where("file_name", request.FileName)
 }
 if !gconv.IsEmpty(request.FilePath) {
@@ -32,15 +35,12 @@ if !gconv.IsEmpty(request.FilePath) {
 if !gconv.IsEmpty(request.FileSize) {
 	orm = orm.Where("file_size", request.FileSize)
 }
-if !gconv.IsEmpty(request.AdminId) {
-	orm = orm.Where("admin_id", request.AdminId)
-}
 
 
 	if request.Page > 0 && request.PageSize > 0 {
-		orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
+		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
 	} else {
-		orm.Order("id desc").Get(&list)
+		orm.Order("sort asc").Order("id desc").Get(&list)
 		count = int64(len(list))
 	}
 
@@ -57,7 +57,10 @@ func (r *FileService) GetAll(request requests.FileRequest) ([]models.File, error
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.FileName) {
+    if !gconv.IsEmpty(request.AdminId) {
+	orm = orm.Where("admin_id", request.AdminId)
+}
+if !gconv.IsEmpty(request.FileName) {
 	orm = orm.Where("file_name", request.FileName)
 }
 if !gconv.IsEmpty(request.FilePath) {
@@ -66,12 +69,9 @@ if !gconv.IsEmpty(request.FilePath) {
 if !gconv.IsEmpty(request.FileSize) {
 	orm = orm.Where("file_size", request.FileSize)
 }
-if !gconv.IsEmpty(request.AdminId) {
-	orm = orm.Where("admin_id", request.AdminId)
-}
 
 
-	orm.Order("id desc").Get(&list)
+	orm.Order("sort asc").Order("id desc").Get(&list)
 
 	return list, nil
 }
@@ -95,10 +95,18 @@ func (r *FileService) Add(request requests.FileRequest) (bool, error) {
 
 	var file models.File
 
-	file.FileName = html.EscapeString(request.FileName)
-file.FilePath = html.EscapeString(request.FilePath)
-file.FileSize = request.FileSize
-file.AdminId = request.AdminId
+		if !gconv.IsEmpty(request.AdminId) {
+		file.AdminId = request.AdminId
+	}
+	if !gconv.IsEmpty(request.FileName) {
+		file.FileName = html.EscapeString(request.FileName)
+	}
+	if !gconv.IsEmpty(request.FilePath) {
+		file.FilePath = html.EscapeString(request.FilePath)
+	}
+	if !gconv.IsEmpty(request.FileSize) {
+		file.FileSize = request.FileSize
+	}
 
 
 	err := facades.Orm().Query().Create(&file)
@@ -110,16 +118,31 @@ file.AdminId = request.AdminId
 
 func (r *FileService) Save(request requests.FileRequest) (bool, error) {
 
+	if gconv.IsEmpty(request.ID) {
+    	return false, errors.New("请求不能为空")
+    }
+
 	var file models.File
+    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&file)
+    if err != nil {
+    	return false, errors.New("数据不存在")
+    }
 
-	file.ID = request.ID
-	file.FileName = html.EscapeString(request.FileName)
-file.FilePath = html.EscapeString(request.FilePath)
-file.FileSize = request.FileSize
-file.AdminId = request.AdminId
+		if !gconv.IsEmpty(request.AdminId) {
+		file.AdminId = request.AdminId
+	}
+	if !gconv.IsEmpty(request.FileName) {
+		file.FileName = html.EscapeString(request.FileName)
+	}
+	if !gconv.IsEmpty(request.FilePath) {
+		file.FilePath = html.EscapeString(request.FilePath)
+	}
+	if !gconv.IsEmpty(request.FileSize) {
+		file.FileSize = request.FileSize
+	}
 
 
-	err := facades.Orm().Query().Save(&file)
+	err = facades.Orm().Query().Save(&file)
 	if err != nil {
 		return false, err
 	}

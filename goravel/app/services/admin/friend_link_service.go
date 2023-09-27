@@ -23,20 +23,14 @@ func (r *FriendLinkService) GetList(request requests.FriendLinkRequest) (map[str
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.Title) {
-	orm = orm.Where("title", request.Title)
-}
-if !gconv.IsEmpty(request.Url) {
-	orm = orm.Where("url", request.Url)
-}
-if !gconv.IsEmpty(request.IsFollow) {
+	if !gconv.IsEmpty(request.IsFollow) {
 	orm = orm.Where("is_follow", request.IsFollow)
 }
 if !gconv.IsEmpty(request.IsShow) {
 	orm = orm.Where("is_show", request.IsShow)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
+if !gconv.IsEmpty(request.Lang) {
+	orm = orm.Where("lang", request.Lang)
 }
 if !gconv.IsEmpty(request.Pic) {
 	orm = orm.Where("pic", request.Pic)
@@ -44,15 +38,21 @@ if !gconv.IsEmpty(request.Pic) {
 if !gconv.IsEmpty(request.Platform) {
 	orm = orm.Where("platform", request.Platform)
 }
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.Title) {
+	orm = orm.Where("title", request.Title)
+}
+if !gconv.IsEmpty(request.Url) {
+	orm = orm.Where("url", request.Url)
 }
 
 
 	if request.Page > 0 && request.PageSize > 0 {
-		orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
+		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
 	} else {
-		orm.Order("id desc").Get(&list)
+		orm.Order("sort asc").Order("id desc").Get(&list)
 		count = int64(len(list))
 	}
 
@@ -69,20 +69,14 @@ func (r *FriendLinkService) GetAll(request requests.FriendLinkRequest) ([]models
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Title) {
-	orm = orm.Where("title", request.Title)
-}
-if !gconv.IsEmpty(request.Url) {
-	orm = orm.Where("url", request.Url)
-}
-if !gconv.IsEmpty(request.IsFollow) {
+    if !gconv.IsEmpty(request.IsFollow) {
 	orm = orm.Where("is_follow", request.IsFollow)
 }
 if !gconv.IsEmpty(request.IsShow) {
 	orm = orm.Where("is_show", request.IsShow)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
+if !gconv.IsEmpty(request.Lang) {
+	orm = orm.Where("lang", request.Lang)
 }
 if !gconv.IsEmpty(request.Pic) {
 	orm = orm.Where("pic", request.Pic)
@@ -90,12 +84,18 @@ if !gconv.IsEmpty(request.Pic) {
 if !gconv.IsEmpty(request.Platform) {
 	orm = orm.Where("platform", request.Platform)
 }
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.Title) {
+	orm = orm.Where("title", request.Title)
+}
+if !gconv.IsEmpty(request.Url) {
+	orm = orm.Where("url", request.Url)
 }
 
 
-	orm.Order("id desc").Get(&list)
+	orm.Order("sort asc").Order("id desc").Get(&list)
 
 	return list, nil
 }
@@ -119,14 +119,30 @@ func (r *FriendLinkService) Add(request requests.FriendLinkRequest) (bool, error
 
 	var friendLink models.FriendLink
 
-	friendLink.Title = html.EscapeString(request.Title)
-friendLink.Url = html.EscapeString(request.Url)
-friendLink.IsFollow = request.IsFollow
-friendLink.IsShow = request.IsShow
-friendLink.Sort = request.Sort
-friendLink.Pic = html.EscapeString(request.Pic)
-friendLink.Platform = html.EscapeString(request.Platform)
-friendLink.Lang = html.EscapeString(request.Lang)
+		if !gconv.IsEmpty(request.IsFollow) {
+		friendLink.IsFollow = request.IsFollow
+	}
+	if !gconv.IsEmpty(request.IsShow) {
+		friendLink.IsShow = request.IsShow
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		friendLink.Lang = html.EscapeString(request.Lang)
+	}
+	if !gconv.IsEmpty(request.Pic) {
+		friendLink.Pic = html.EscapeString(request.Pic)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		friendLink.Platform = html.EscapeString(request.Platform)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		friendLink.Sort = request.Sort
+	}
+	if !gconv.IsEmpty(request.Title) {
+		friendLink.Title = html.EscapeString(request.Title)
+	}
+	if !gconv.IsEmpty(request.Url) {
+		friendLink.Url = html.EscapeString(request.Url)
+	}
 
 
 	err := facades.Orm().Query().Create(&friendLink)
@@ -138,20 +154,43 @@ friendLink.Lang = html.EscapeString(request.Lang)
 
 func (r *FriendLinkService) Save(request requests.FriendLinkRequest) (bool, error) {
 
+	if gconv.IsEmpty(request.ID) {
+    	return false, errors.New("请求不能为空")
+    }
+
 	var friendLink models.FriendLink
+    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&friendLink)
+    if err != nil {
+    	return false, errors.New("数据不存在")
+    }
 
-	friendLink.ID = request.ID
-	friendLink.Title = html.EscapeString(request.Title)
-friendLink.Url = html.EscapeString(request.Url)
-friendLink.IsFollow = request.IsFollow
-friendLink.IsShow = request.IsShow
-friendLink.Sort = request.Sort
-friendLink.Pic = html.EscapeString(request.Pic)
-friendLink.Platform = html.EscapeString(request.Platform)
-friendLink.Lang = html.EscapeString(request.Lang)
+		if !gconv.IsEmpty(request.IsFollow) {
+		friendLink.IsFollow = request.IsFollow
+	}
+	if !gconv.IsEmpty(request.IsShow) {
+		friendLink.IsShow = request.IsShow
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		friendLink.Lang = html.EscapeString(request.Lang)
+	}
+	if !gconv.IsEmpty(request.Pic) {
+		friendLink.Pic = html.EscapeString(request.Pic)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		friendLink.Platform = html.EscapeString(request.Platform)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		friendLink.Sort = request.Sort
+	}
+	if !gconv.IsEmpty(request.Title) {
+		friendLink.Title = html.EscapeString(request.Title)
+	}
+	if !gconv.IsEmpty(request.Url) {
+		friendLink.Url = html.EscapeString(request.Url)
+	}
 
 
-	err := facades.Orm().Query().Save(&friendLink)
+	err = facades.Orm().Query().Save(&friendLink)
 	if err != nil {
 		return false, err
 	}

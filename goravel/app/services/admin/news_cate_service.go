@@ -23,30 +23,30 @@ func (r *NewsCateService) GetList(request requests.NewsCateRequest) (map[string]
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.ParentId) {
-	orm = orm.Where("parent_id", request.ParentId)
-}
-if !gconv.IsEmpty(request.Name) {
-	orm = orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.IsShow) {
+	if !gconv.IsEmpty(request.IsShow) {
 	orm = orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Lang) {
 	orm = orm.Where("lang", request.Lang)
 }
+if !gconv.IsEmpty(request.Name) {
+	orm = orm.Where("name", request.Name)
+}
+if !gconv.IsEmpty(request.ParentId) {
+	orm = orm.Where("parent_id", request.ParentId)
+}
+if !gconv.IsEmpty(request.Platform) {
+	orm = orm.Where("platform", request.Platform)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
+}
 
 
 	if request.Page > 0 && request.PageSize > 0 {
-		orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
+		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
 	} else {
-		orm.Order("id desc").Get(&list)
+		orm.Order("sort asc").Order("id desc").Get(&list)
 		count = int64(len(list))
 	}
 
@@ -63,27 +63,27 @@ func (r *NewsCateService) GetAll(request requests.NewsCateRequest) ([]models.New
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.ParentId) {
-	orm = orm.Where("parent_id", request.ParentId)
-}
-if !gconv.IsEmpty(request.Name) {
-	orm = orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.IsShow) {
+    if !gconv.IsEmpty(request.IsShow) {
 	orm = orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Lang) {
 	orm = orm.Where("lang", request.Lang)
 }
+if !gconv.IsEmpty(request.Name) {
+	orm = orm.Where("name", request.Name)
+}
+if !gconv.IsEmpty(request.ParentId) {
+	orm = orm.Where("parent_id", request.ParentId)
+}
+if !gconv.IsEmpty(request.Platform) {
+	orm = orm.Where("platform", request.Platform)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
+}
 
 
-	orm.Order("id desc").Get(&list)
+	orm.Order("sort asc").Order("id desc").Get(&list)
 
 	return list, nil
 }
@@ -107,12 +107,24 @@ func (r *NewsCateService) Add(request requests.NewsCateRequest) (bool, error) {
 
 	var newsCate models.NewsCate
 
-	newsCate.ParentId = request.ParentId
-newsCate.Name = html.EscapeString(request.Name)
-newsCate.IsShow = request.IsShow
-newsCate.Sort = request.Sort
-newsCate.Platform = html.EscapeString(request.Platform)
-newsCate.Lang = html.EscapeString(request.Lang)
+		if !gconv.IsEmpty(request.IsShow) {
+		newsCate.IsShow = request.IsShow
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		newsCate.Lang = html.EscapeString(request.Lang)
+	}
+	if !gconv.IsEmpty(request.Name) {
+		newsCate.Name = html.EscapeString(request.Name)
+	}
+	if !gconv.IsEmpty(request.ParentId) {
+		newsCate.ParentId = request.ParentId
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		newsCate.Platform = html.EscapeString(request.Platform)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		newsCate.Sort = request.Sort
+	}
 
 
 	err := facades.Orm().Query().Create(&newsCate)
@@ -124,18 +136,37 @@ newsCate.Lang = html.EscapeString(request.Lang)
 
 func (r *NewsCateService) Save(request requests.NewsCateRequest) (bool, error) {
 
+	if gconv.IsEmpty(request.ID) {
+    	return false, errors.New("请求不能为空")
+    }
+
 	var newsCate models.NewsCate
+    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&newsCate)
+    if err != nil {
+    	return false, errors.New("数据不存在")
+    }
 
-	newsCate.ID = request.ID
-	newsCate.ParentId = request.ParentId
-newsCate.Name = html.EscapeString(request.Name)
-newsCate.IsShow = request.IsShow
-newsCate.Sort = request.Sort
-newsCate.Platform = html.EscapeString(request.Platform)
-newsCate.Lang = html.EscapeString(request.Lang)
+		if !gconv.IsEmpty(request.IsShow) {
+		newsCate.IsShow = request.IsShow
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		newsCate.Lang = html.EscapeString(request.Lang)
+	}
+	if !gconv.IsEmpty(request.Name) {
+		newsCate.Name = html.EscapeString(request.Name)
+	}
+	if !gconv.IsEmpty(request.ParentId) {
+		newsCate.ParentId = request.ParentId
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		newsCate.Platform = html.EscapeString(request.Platform)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		newsCate.Sort = request.Sort
+	}
 
 
-	err := facades.Orm().Query().Save(&newsCate)
+	err = facades.Orm().Query().Save(&newsCate)
 	if err != nil {
 		return false, err
 	}

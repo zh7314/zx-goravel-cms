@@ -23,38 +23,20 @@ func (r *ProductService) GetList(request requests.ProductRequest) (map[string]in
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.ProductCateId) {
-	orm = orm.Where("product_cate_id", request.ProductCateId)
-}
-if !gconv.IsEmpty(request.Title) {
-	orm = orm.Where("title", request.Title)
-}
-if !gconv.IsEmpty(request.ShortTitle) {
-	orm = orm.Where("short_title", request.ShortTitle)
+	if !gconv.IsEmpty(request.AdminId) {
+	orm = orm.Where("admin_id", request.AdminId)
 }
 if !gconv.IsEmpty(request.Content) {
 	orm = orm.Where("content", request.Content)
 }
-if !gconv.IsEmpty(request.AdminId) {
-	orm = orm.Where("admin_id", request.AdminId)
-}
-if !gconv.IsEmpty(request.ViewCount) {
-	orm = orm.Where("view_count", request.ViewCount)
+if !gconv.IsEmpty(request.EndTime) {
+	orm = orm.Where("end_time", request.EndTime)
 }
 if !gconv.IsEmpty(request.IsShow) {
 	orm = orm.Where("is_show", request.IsShow)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Url) {
-	orm = orm.Where("url", request.Url)
-}
-if !gconv.IsEmpty(request.StartTime) {
-	orm = orm.Where("start_time", request.StartTime)
-}
-if !gconv.IsEmpty(request.EndTime) {
-	orm = orm.Where("end_time", request.EndTime)
+if !gconv.IsEmpty(request.Lang) {
+	orm = orm.Where("lang", request.Lang)
 }
 if !gconv.IsEmpty(request.Pic) {
 	orm = orm.Where("pic", request.Pic)
@@ -62,21 +44,39 @@ if !gconv.IsEmpty(request.Pic) {
 if !gconv.IsEmpty(request.Pics) {
 	orm = orm.Where("pics", request.Pics)
 }
-if !gconv.IsEmpty(request.VideoUrl) {
-	orm = orm.Where("video_url", request.VideoUrl)
-}
 if !gconv.IsEmpty(request.Platform) {
 	orm = orm.Where("platform", request.Platform)
 }
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
+if !gconv.IsEmpty(request.ProductCateId) {
+	orm = orm.Where("product_cate_id", request.ProductCateId)
+}
+if !gconv.IsEmpty(request.ShortTitle) {
+	orm = orm.Where("short_title", request.ShortTitle)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.StartTime) {
+	orm = orm.Where("start_time", request.StartTime)
+}
+if !gconv.IsEmpty(request.Title) {
+	orm = orm.Where("title", request.Title)
+}
+if !gconv.IsEmpty(request.Url) {
+	orm = orm.Where("url", request.Url)
+}
+if !gconv.IsEmpty(request.VideoUrl) {
+	orm = orm.Where("video_url", request.VideoUrl)
+}
+if !gconv.IsEmpty(request.ViewCount) {
+	orm = orm.Where("view_count", request.ViewCount)
 }
 
 
 	if request.Page > 0 && request.PageSize > 0 {
-		orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
+		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
 	} else {
-		orm.Order("id desc").Get(&list)
+		orm.Order("sort asc").Order("id desc").Get(&list)
 		count = int64(len(list))
 	}
 
@@ -93,38 +93,20 @@ func (r *ProductService) GetAll(request requests.ProductRequest) ([]models.Produ
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.ProductCateId) {
-	orm = orm.Where("product_cate_id", request.ProductCateId)
-}
-if !gconv.IsEmpty(request.Title) {
-	orm = orm.Where("title", request.Title)
-}
-if !gconv.IsEmpty(request.ShortTitle) {
-	orm = orm.Where("short_title", request.ShortTitle)
+    if !gconv.IsEmpty(request.AdminId) {
+	orm = orm.Where("admin_id", request.AdminId)
 }
 if !gconv.IsEmpty(request.Content) {
 	orm = orm.Where("content", request.Content)
 }
-if !gconv.IsEmpty(request.AdminId) {
-	orm = orm.Where("admin_id", request.AdminId)
-}
-if !gconv.IsEmpty(request.ViewCount) {
-	orm = orm.Where("view_count", request.ViewCount)
+if !gconv.IsEmpty(request.EndTime) {
+	orm = orm.Where("end_time", request.EndTime)
 }
 if !gconv.IsEmpty(request.IsShow) {
 	orm = orm.Where("is_show", request.IsShow)
 }
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Url) {
-	orm = orm.Where("url", request.Url)
-}
-if !gconv.IsEmpty(request.StartTime) {
-	orm = orm.Where("start_time", request.StartTime)
-}
-if !gconv.IsEmpty(request.EndTime) {
-	orm = orm.Where("end_time", request.EndTime)
+if !gconv.IsEmpty(request.Lang) {
+	orm = orm.Where("lang", request.Lang)
 }
 if !gconv.IsEmpty(request.Pic) {
 	orm = orm.Where("pic", request.Pic)
@@ -132,18 +114,36 @@ if !gconv.IsEmpty(request.Pic) {
 if !gconv.IsEmpty(request.Pics) {
 	orm = orm.Where("pics", request.Pics)
 }
-if !gconv.IsEmpty(request.VideoUrl) {
-	orm = orm.Where("video_url", request.VideoUrl)
-}
 if !gconv.IsEmpty(request.Platform) {
 	orm = orm.Where("platform", request.Platform)
 }
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
+if !gconv.IsEmpty(request.ProductCateId) {
+	orm = orm.Where("product_cate_id", request.ProductCateId)
+}
+if !gconv.IsEmpty(request.ShortTitle) {
+	orm = orm.Where("short_title", request.ShortTitle)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.StartTime) {
+	orm = orm.Where("start_time", request.StartTime)
+}
+if !gconv.IsEmpty(request.Title) {
+	orm = orm.Where("title", request.Title)
+}
+if !gconv.IsEmpty(request.Url) {
+	orm = orm.Where("url", request.Url)
+}
+if !gconv.IsEmpty(request.VideoUrl) {
+	orm = orm.Where("video_url", request.VideoUrl)
+}
+if !gconv.IsEmpty(request.ViewCount) {
+	orm = orm.Where("view_count", request.ViewCount)
 }
 
 
-	orm.Order("id desc").Get(&list)
+	orm.Order("sort asc").Order("id desc").Get(&list)
 
 	return list, nil
 }
@@ -167,22 +167,54 @@ func (r *ProductService) Add(request requests.ProductRequest) (bool, error) {
 
 	var product models.Product
 
-	product.ProductCateId = request.ProductCateId
-product.Title = html.EscapeString(request.Title)
-product.ShortTitle = html.EscapeString(request.ShortTitle)
-product.Content = html.EscapeString(request.Content)
-product.AdminId = request.AdminId
-product.ViewCount = request.ViewCount
-product.IsShow = request.IsShow
-product.Sort = request.Sort
-product.Url = html.EscapeString(request.Url)
-product.StartTime = request.StartTime
-product.EndTime = request.EndTime
-product.Pic = html.EscapeString(request.Pic)
-product.Pics = html.EscapeString(request.Pics)
-product.VideoUrl = html.EscapeString(request.VideoUrl)
-product.Platform = html.EscapeString(request.Platform)
-product.Lang = html.EscapeString(request.Lang)
+		if !gconv.IsEmpty(request.AdminId) {
+		product.AdminId = request.AdminId
+	}
+	if !gconv.IsEmpty(request.Content) {
+		product.Content = html.EscapeString(request.Content)
+	}
+	if !gconv.IsEmpty(request.EndTime) {
+		product.EndTime = request.EndTime
+	}
+	if !gconv.IsEmpty(request.IsShow) {
+		product.IsShow = request.IsShow
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		product.Lang = html.EscapeString(request.Lang)
+	}
+	if !gconv.IsEmpty(request.Pic) {
+		product.Pic = html.EscapeString(request.Pic)
+	}
+	if !gconv.IsEmpty(request.Pics) {
+		product.Pics = html.EscapeString(request.Pics)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		product.Platform = html.EscapeString(request.Platform)
+	}
+	if !gconv.IsEmpty(request.ProductCateId) {
+		product.ProductCateId = request.ProductCateId
+	}
+	if !gconv.IsEmpty(request.ShortTitle) {
+		product.ShortTitle = html.EscapeString(request.ShortTitle)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		product.Sort = request.Sort
+	}
+	if !gconv.IsEmpty(request.StartTime) {
+		product.StartTime = request.StartTime
+	}
+	if !gconv.IsEmpty(request.Title) {
+		product.Title = html.EscapeString(request.Title)
+	}
+	if !gconv.IsEmpty(request.Url) {
+		product.Url = html.EscapeString(request.Url)
+	}
+	if !gconv.IsEmpty(request.VideoUrl) {
+		product.VideoUrl = html.EscapeString(request.VideoUrl)
+	}
+	if !gconv.IsEmpty(request.ViewCount) {
+		product.ViewCount = request.ViewCount
+	}
 
 
 	err := facades.Orm().Query().Create(&product)
@@ -194,28 +226,67 @@ product.Lang = html.EscapeString(request.Lang)
 
 func (r *ProductService) Save(request requests.ProductRequest) (bool, error) {
 
+	if gconv.IsEmpty(request.ID) {
+    	return false, errors.New("请求不能为空")
+    }
+
 	var product models.Product
+    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&product)
+    if err != nil {
+    	return false, errors.New("数据不存在")
+    }
 
-	product.ID = request.ID
-	product.ProductCateId = request.ProductCateId
-product.Title = html.EscapeString(request.Title)
-product.ShortTitle = html.EscapeString(request.ShortTitle)
-product.Content = html.EscapeString(request.Content)
-product.AdminId = request.AdminId
-product.ViewCount = request.ViewCount
-product.IsShow = request.IsShow
-product.Sort = request.Sort
-product.Url = html.EscapeString(request.Url)
-product.StartTime = request.StartTime
-product.EndTime = request.EndTime
-product.Pic = html.EscapeString(request.Pic)
-product.Pics = html.EscapeString(request.Pics)
-product.VideoUrl = html.EscapeString(request.VideoUrl)
-product.Platform = html.EscapeString(request.Platform)
-product.Lang = html.EscapeString(request.Lang)
+		if !gconv.IsEmpty(request.AdminId) {
+		product.AdminId = request.AdminId
+	}
+	if !gconv.IsEmpty(request.Content) {
+		product.Content = html.EscapeString(request.Content)
+	}
+	if !gconv.IsEmpty(request.EndTime) {
+		product.EndTime = request.EndTime
+	}
+	if !gconv.IsEmpty(request.IsShow) {
+		product.IsShow = request.IsShow
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		product.Lang = html.EscapeString(request.Lang)
+	}
+	if !gconv.IsEmpty(request.Pic) {
+		product.Pic = html.EscapeString(request.Pic)
+	}
+	if !gconv.IsEmpty(request.Pics) {
+		product.Pics = html.EscapeString(request.Pics)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		product.Platform = html.EscapeString(request.Platform)
+	}
+	if !gconv.IsEmpty(request.ProductCateId) {
+		product.ProductCateId = request.ProductCateId
+	}
+	if !gconv.IsEmpty(request.ShortTitle) {
+		product.ShortTitle = html.EscapeString(request.ShortTitle)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		product.Sort = request.Sort
+	}
+	if !gconv.IsEmpty(request.StartTime) {
+		product.StartTime = request.StartTime
+	}
+	if !gconv.IsEmpty(request.Title) {
+		product.Title = html.EscapeString(request.Title)
+	}
+	if !gconv.IsEmpty(request.Url) {
+		product.Url = html.EscapeString(request.Url)
+	}
+	if !gconv.IsEmpty(request.VideoUrl) {
+		product.VideoUrl = html.EscapeString(request.VideoUrl)
+	}
+	if !gconv.IsEmpty(request.ViewCount) {
+		product.ViewCount = request.ViewCount
+	}
 
 
-	err := facades.Orm().Query().Save(&product)
+	err = facades.Orm().Query().Save(&product)
 	if err != nil {
 		return false, err
 	}

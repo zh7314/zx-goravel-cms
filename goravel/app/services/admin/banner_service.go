@@ -23,17 +23,26 @@ func (r *BannerService) GetList(request requests.BannerRequest) (map[string]inte
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.BannerCateId) {
+	if !gconv.IsEmpty(request.AdminId) {
+	orm = orm.Where("admin_id", request.AdminId)
+}
+if !gconv.IsEmpty(request.BannerCateId) {
 	orm = orm.Where("banner_cate_id", request.BannerCateId)
+}
+if !gconv.IsEmpty(request.EndTime) {
+	orm = orm.Where("end_time", request.EndTime)
+}
+if !gconv.IsEmpty(request.Lang) {
+	orm = orm.Where("lang", request.Lang)
 }
 if !gconv.IsEmpty(request.Name) {
 	orm = orm.Where("name", request.Name)
 }
-if !gconv.IsEmpty(request.AdminId) {
-	orm = orm.Where("admin_id", request.AdminId)
+if !gconv.IsEmpty(request.PicPath) {
+	orm = orm.Where("pic_path", request.PicPath)
 }
-if !gconv.IsEmpty(request.Url) {
-	orm = orm.Where("url", request.Url)
+if !gconv.IsEmpty(request.Platform) {
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Sort) {
 	orm = orm.Where("sort", request.Sort)
@@ -41,27 +50,18 @@ if !gconv.IsEmpty(request.Sort) {
 if !gconv.IsEmpty(request.StartTime) {
 	orm = orm.Where("start_time", request.StartTime)
 }
-if !gconv.IsEmpty(request.EndTime) {
-	orm = orm.Where("end_time", request.EndTime)
-}
-if !gconv.IsEmpty(request.PicPath) {
-	orm = orm.Where("pic_path", request.PicPath)
+if !gconv.IsEmpty(request.Url) {
+	orm = orm.Where("url", request.Url)
 }
 if !gconv.IsEmpty(request.VideoPath) {
 	orm = orm.Where("video_path", request.VideoPath)
 }
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
-}
 
 
 	if request.Page > 0 && request.PageSize > 0 {
-		orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
+		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
 	} else {
-		orm.Order("id desc").Get(&list)
+		orm.Order("sort asc").Order("id desc").Get(&list)
 		count = int64(len(list))
 	}
 
@@ -78,17 +78,26 @@ func (r *BannerService) GetAll(request requests.BannerRequest) ([]models.Banner,
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.BannerCateId) {
+    if !gconv.IsEmpty(request.AdminId) {
+	orm = orm.Where("admin_id", request.AdminId)
+}
+if !gconv.IsEmpty(request.BannerCateId) {
 	orm = orm.Where("banner_cate_id", request.BannerCateId)
+}
+if !gconv.IsEmpty(request.EndTime) {
+	orm = orm.Where("end_time", request.EndTime)
+}
+if !gconv.IsEmpty(request.Lang) {
+	orm = orm.Where("lang", request.Lang)
 }
 if !gconv.IsEmpty(request.Name) {
 	orm = orm.Where("name", request.Name)
 }
-if !gconv.IsEmpty(request.AdminId) {
-	orm = orm.Where("admin_id", request.AdminId)
+if !gconv.IsEmpty(request.PicPath) {
+	orm = orm.Where("pic_path", request.PicPath)
 }
-if !gconv.IsEmpty(request.Url) {
-	orm = orm.Where("url", request.Url)
+if !gconv.IsEmpty(request.Platform) {
+	orm = orm.Where("platform", request.Platform)
 }
 if !gconv.IsEmpty(request.Sort) {
 	orm = orm.Where("sort", request.Sort)
@@ -96,24 +105,15 @@ if !gconv.IsEmpty(request.Sort) {
 if !gconv.IsEmpty(request.StartTime) {
 	orm = orm.Where("start_time", request.StartTime)
 }
-if !gconv.IsEmpty(request.EndTime) {
-	orm = orm.Where("end_time", request.EndTime)
-}
-if !gconv.IsEmpty(request.PicPath) {
-	orm = orm.Where("pic_path", request.PicPath)
+if !gconv.IsEmpty(request.Url) {
+	orm = orm.Where("url", request.Url)
 }
 if !gconv.IsEmpty(request.VideoPath) {
 	orm = orm.Where("video_path", request.VideoPath)
 }
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
-}
 
 
-	orm.Order("id desc").Get(&list)
+	orm.Order("sort asc").Order("id desc").Get(&list)
 
 	return list, nil
 }
@@ -137,17 +137,39 @@ func (r *BannerService) Add(request requests.BannerRequest) (bool, error) {
 
 	var banner models.Banner
 
-	banner.BannerCateId = request.BannerCateId
-banner.Name = html.EscapeString(request.Name)
-banner.AdminId = request.AdminId
-banner.Url = html.EscapeString(request.Url)
-banner.Sort = request.Sort
-banner.StartTime = request.StartTime
-banner.EndTime = request.EndTime
-banner.PicPath = html.EscapeString(request.PicPath)
-banner.VideoPath = html.EscapeString(request.VideoPath)
-banner.Platform = html.EscapeString(request.Platform)
-banner.Lang = html.EscapeString(request.Lang)
+		if !gconv.IsEmpty(request.AdminId) {
+		banner.AdminId = request.AdminId
+	}
+	if !gconv.IsEmpty(request.BannerCateId) {
+		banner.BannerCateId = request.BannerCateId
+	}
+	if !gconv.IsEmpty(request.EndTime) {
+		banner.EndTime = request.EndTime
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		banner.Lang = html.EscapeString(request.Lang)
+	}
+	if !gconv.IsEmpty(request.Name) {
+		banner.Name = html.EscapeString(request.Name)
+	}
+	if !gconv.IsEmpty(request.PicPath) {
+		banner.PicPath = html.EscapeString(request.PicPath)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		banner.Platform = html.EscapeString(request.Platform)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		banner.Sort = request.Sort
+	}
+	if !gconv.IsEmpty(request.StartTime) {
+		banner.StartTime = request.StartTime
+	}
+	if !gconv.IsEmpty(request.Url) {
+		banner.Url = html.EscapeString(request.Url)
+	}
+	if !gconv.IsEmpty(request.VideoPath) {
+		banner.VideoPath = html.EscapeString(request.VideoPath)
+	}
 
 
 	err := facades.Orm().Query().Create(&banner)
@@ -159,23 +181,52 @@ banner.Lang = html.EscapeString(request.Lang)
 
 func (r *BannerService) Save(request requests.BannerRequest) (bool, error) {
 
+	if gconv.IsEmpty(request.ID) {
+    	return false, errors.New("请求不能为空")
+    }
+
 	var banner models.Banner
+    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&banner)
+    if err != nil {
+    	return false, errors.New("数据不存在")
+    }
 
-	banner.ID = request.ID
-	banner.BannerCateId = request.BannerCateId
-banner.Name = html.EscapeString(request.Name)
-banner.AdminId = request.AdminId
-banner.Url = html.EscapeString(request.Url)
-banner.Sort = request.Sort
-banner.StartTime = request.StartTime
-banner.EndTime = request.EndTime
-banner.PicPath = html.EscapeString(request.PicPath)
-banner.VideoPath = html.EscapeString(request.VideoPath)
-banner.Platform = html.EscapeString(request.Platform)
-banner.Lang = html.EscapeString(request.Lang)
+		if !gconv.IsEmpty(request.AdminId) {
+		banner.AdminId = request.AdminId
+	}
+	if !gconv.IsEmpty(request.BannerCateId) {
+		banner.BannerCateId = request.BannerCateId
+	}
+	if !gconv.IsEmpty(request.EndTime) {
+		banner.EndTime = request.EndTime
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		banner.Lang = html.EscapeString(request.Lang)
+	}
+	if !gconv.IsEmpty(request.Name) {
+		banner.Name = html.EscapeString(request.Name)
+	}
+	if !gconv.IsEmpty(request.PicPath) {
+		banner.PicPath = html.EscapeString(request.PicPath)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		banner.Platform = html.EscapeString(request.Platform)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		banner.Sort = request.Sort
+	}
+	if !gconv.IsEmpty(request.StartTime) {
+		banner.StartTime = request.StartTime
+	}
+	if !gconv.IsEmpty(request.Url) {
+		banner.Url = html.EscapeString(request.Url)
+	}
+	if !gconv.IsEmpty(request.VideoPath) {
+		banner.VideoPath = html.EscapeString(request.VideoPath)
+	}
 
 
-	err := facades.Orm().Query().Save(&banner)
+	err = facades.Orm().Query().Save(&banner)
 	if err != nil {
 		return false, err
 	}

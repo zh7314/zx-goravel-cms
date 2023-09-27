@@ -3,7 +3,6 @@ package admin
 import (
 	"errors"
 	"github.com/goravel/framework/contracts/filesystem"
-	"github.com/goravel/framework/database/orm"
 	"github.com/goravel/framework/facades"
 	"github.com/jianfengye/collection"
 	"goravel/app/models"
@@ -70,7 +69,7 @@ func (r *IndexService) Login(request requests.AdminLoginRequest) (res map[string
 	var a models.Admin
 	err = facades.Orm().Query().Where("name", request.Username).FirstOrFail(&a)
 
-	if err == orm.ErrRecordNotFound {
+	if err != nil {
 		return res, errors.New("账号错误")
 	}
 
@@ -80,6 +79,7 @@ func (r *IndexService) Login(request requests.AdminLoginRequest) (res map[string
 
 	token := utils.GetUniqid()
 
+	//now := time.Now() // Workaround
 	a.TokenTime = time.Now()
 	a.Token = token
 
