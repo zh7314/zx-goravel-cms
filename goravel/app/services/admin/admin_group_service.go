@@ -151,8 +151,12 @@ func (r *AdminGroupService) Save(request requests.AdminGroupRequest) (bool, erro
 
 func (r *AdminGroupService) Delete(id int64) (bool, error) {
 
-	var admin models.AdminGroup
-	_, err := facades.Orm().Query().Delete(&admin)
+	if gconv.IsEmpty(id) {
+		return false, errors.New("id不能为空")
+	}
+
+	var adminGroup models.AdminGroup
+	_, err := facades.Orm().Query().Where("id", id).Delete(&adminGroup)
 	if err != nil {
 		return false, err
 	}

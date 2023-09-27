@@ -199,8 +199,12 @@ func (r *AdminPermissionService) Save(request requests.AdminPermissionRequest) (
 
 func (r *AdminPermissionService) Delete(id int64) (bool, error) {
 
-	var admin models.AdminPermission
-	_, err := facades.Orm().Query().Delete(&admin)
+	if gconv.IsEmpty(id) {
+		return false, errors.New("id不能为空")
+	}
+
+	var adminPermission models.AdminPermission
+	_, err := facades.Orm().Query().Where("id", id).Delete(&adminPermission)
 	if err != nil {
 		return false, err
 	}

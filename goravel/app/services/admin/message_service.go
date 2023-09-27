@@ -24,50 +24,49 @@ func (r *MessageService) GetList(request requests.MessageRequest) (map[string]in
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.Content) {
-	orm = orm.Where("content", request.Content)
-}
-if !gconv.IsEmpty(request.Email) {
-	orm = orm.Where("email", request.Email)
-}
-if !gconv.IsEmpty(request.Ip) {
-	orm = orm.Where("ip", request.Ip)
-}
-if !gconv.IsEmpty(request.IsSent) {
-	orm = orm.Where("is_sent", request.IsSent)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.Mobile) {
-	orm = orm.Where("mobile", request.Mobile)
-}
-if !gconv.IsEmpty(request.Pics) {
-	orm = orm.Where("pics", request.Pics)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
-}
-if !gconv.IsEmpty(request.RealName) {
-	orm = orm.Where("real_name", request.RealName)
-}
-if !gconv.IsEmpty(request.Remark) {
-	orm = orm.Where("remark", request.Remark)
-}
-if !gconv.IsEmpty(request.Status) {
-	orm = orm.Where("status", request.Status)
-}
-if !gconv.IsEmpty(request.Title) {
-	orm = orm.Where("title", request.Title)
-}
-if !gconv.IsEmpty(request.Type) {
-	orm = orm.Where("type", request.Type)
-}
-
+		orm = orm.Where("content", request.Content)
+	}
+	if !gconv.IsEmpty(request.Email) {
+		orm = orm.Where("email", request.Email)
+	}
+	if !gconv.IsEmpty(request.Ip) {
+		orm = orm.Where("ip", request.Ip)
+	}
+	if !gconv.IsEmpty(request.IsSent) {
+		orm = orm.Where("is_sent", request.IsSent)
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		orm = orm.Where("lang", request.Lang)
+	}
+	if !gconv.IsEmpty(request.Mobile) {
+		orm = orm.Where("mobile", request.Mobile)
+	}
+	if !gconv.IsEmpty(request.Pics) {
+		orm = orm.Where("pics", request.Pics)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		orm = orm.Where("platform", request.Platform)
+	}
+	if !gconv.IsEmpty(request.RealName) {
+		orm = orm.Where("real_name", request.RealName)
+	}
+	if !gconv.IsEmpty(request.Remark) {
+		orm = orm.Where("remark", request.Remark)
+	}
+	if !gconv.IsEmpty(request.Status) {
+		orm = orm.Where("status", request.Status)
+	}
+	if !gconv.IsEmpty(request.Title) {
+		orm = orm.Where("title", request.Title)
+	}
+	if !gconv.IsEmpty(request.Type) {
+		orm = orm.Where("type", request.Type)
+	}
 
 	if request.Page > 0 && request.PageSize > 0 {
-		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
+		orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
 	} else {
-		orm.Order("sort asc").Order("id desc").Get(&list)
+		orm.Order("id desc").Get(&list)
 		count = int64(len(list))
 	}
 
@@ -84,48 +83,47 @@ func (r *MessageService) GetAll(request requests.MessageRequest) ([]models.Messa
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Content) {
-	orm = orm.Where("content", request.Content)
-}
-if !gconv.IsEmpty(request.Email) {
-	orm = orm.Where("email", request.Email)
-}
-if !gconv.IsEmpty(request.Ip) {
-	orm = orm.Where("ip", request.Ip)
-}
-if !gconv.IsEmpty(request.IsSent) {
-	orm = orm.Where("is_sent", request.IsSent)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.Mobile) {
-	orm = orm.Where("mobile", request.Mobile)
-}
-if !gconv.IsEmpty(request.Pics) {
-	orm = orm.Where("pics", request.Pics)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
-}
-if !gconv.IsEmpty(request.RealName) {
-	orm = orm.Where("real_name", request.RealName)
-}
-if !gconv.IsEmpty(request.Remark) {
-	orm = orm.Where("remark", request.Remark)
-}
-if !gconv.IsEmpty(request.Status) {
-	orm = orm.Where("status", request.Status)
-}
-if !gconv.IsEmpty(request.Title) {
-	orm = orm.Where("title", request.Title)
-}
-if !gconv.IsEmpty(request.Type) {
-	orm = orm.Where("type", request.Type)
-}
+	if !gconv.IsEmpty(request.Content) {
+		orm = orm.Where("content", request.Content)
+	}
+	if !gconv.IsEmpty(request.Email) {
+		orm = orm.Where("email", request.Email)
+	}
+	if !gconv.IsEmpty(request.Ip) {
+		orm = orm.Where("ip", request.Ip)
+	}
+	if !gconv.IsEmpty(request.IsSent) {
+		orm = orm.Where("is_sent", request.IsSent)
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		orm = orm.Where("lang", request.Lang)
+	}
+	if !gconv.IsEmpty(request.Mobile) {
+		orm = orm.Where("mobile", request.Mobile)
+	}
+	if !gconv.IsEmpty(request.Pics) {
+		orm = orm.Where("pics", request.Pics)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		orm = orm.Where("platform", request.Platform)
+	}
+	if !gconv.IsEmpty(request.RealName) {
+		orm = orm.Where("real_name", request.RealName)
+	}
+	if !gconv.IsEmpty(request.Remark) {
+		orm = orm.Where("remark", request.Remark)
+	}
+	if !gconv.IsEmpty(request.Status) {
+		orm = orm.Where("status", request.Status)
+	}
+	if !gconv.IsEmpty(request.Title) {
+		orm = orm.Where("title", request.Title)
+	}
+	if !gconv.IsEmpty(request.Type) {
+		orm = orm.Where("type", request.Type)
+	}
 
-
-	orm.Order("sort asc").Order("id desc").Get(&list)
+	orm.Order("id desc").Get(&list)
 
 	return list, nil
 }
@@ -149,7 +147,7 @@ func (r *MessageService) Add(request requests.MessageRequest) (bool, error) {
 
 	var message models.Message
 
-		if !gconv.IsEmpty(request.Content) {
+	if !gconv.IsEmpty(request.Content) {
 		message.Content = html.EscapeString(request.Content)
 	}
 	if !gconv.IsEmpty(request.Email) {
@@ -189,27 +187,26 @@ func (r *MessageService) Add(request requests.MessageRequest) (bool, error) {
 		message.Type = request.Type
 	}
 
-
 	err := facades.Orm().Query().Create(&message)
 	if err != nil {
-    		return false, err
-    }
+		return false, err
+	}
 	return true, nil
 }
 
 func (r *MessageService) Save(request requests.MessageRequest) (bool, error) {
 
 	if gconv.IsEmpty(request.ID) {
-    	return false, errors.New("请求不能为空")
-    }
+		return false, errors.New("请求不能为空")
+	}
 
 	var message models.Message
-    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&message)
-    if err != nil {
-    	return false, errors.New("数据不存在")
-    }
+	err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&message)
+	if err != nil {
+		return false, errors.New("数据不存在")
+	}
 
-		if !gconv.IsEmpty(request.Content) {
+	if !gconv.IsEmpty(request.Content) {
 		message.Content = html.EscapeString(request.Content)
 	}
 	if !gconv.IsEmpty(request.Email) {
@@ -248,7 +245,6 @@ func (r *MessageService) Save(request requests.MessageRequest) (bool, error) {
 	if !gconv.IsEmpty(request.Type) {
 		message.Type = request.Type
 	}
-
 
 	err = facades.Orm().Query().Save(&message)
 	if err != nil {
@@ -259,8 +255,12 @@ func (r *MessageService) Save(request requests.MessageRequest) (bool, error) {
 
 func (r *MessageService) Delete(id int64) (bool, error) {
 
-	var admin models.Message
-	_, err := facades.Orm().Query().Delete(&admin)
+	if gconv.IsEmpty(id) {
+		return false, errors.New("id不能为空")
+	}
+
+	var message models.Message
+	_, err := facades.Orm().Query().Where("id", id).Delete(&message)
 	if err != nil {
 		return false, err
 	}

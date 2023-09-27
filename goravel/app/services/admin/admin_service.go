@@ -283,8 +283,12 @@ func (r *AdminService) Save(request requests.AdminRequest) (bool, error) {
 
 func (r *AdminService) Delete(id int64) (bool, error) {
 
+	if gconv.IsEmpty(id) {
+		return false, errors.New("id不能为空")
+	}
+
 	var admin models.Admin
-	_, err := facades.Orm().Query().Delete(&admin)
+	_, err := facades.Orm().Query().Where("id", id).Delete(&admin)
 	if err != nil {
 		return false, err
 	}

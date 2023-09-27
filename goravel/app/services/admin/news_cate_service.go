@@ -175,8 +175,12 @@ func (r *NewsCateService) Save(request requests.NewsCateRequest) (bool, error) {
 
 func (r *NewsCateService) Delete(id int64) (bool, error) {
 
-	var admin models.NewsCate
-	_, err := facades.Orm().Query().Delete(&admin)
+	if gconv.IsEmpty(id) {
+		return false, errors.New("id不能为空")
+	}
+
+	var newsCate models.NewsCate
+	_, err := facades.Orm().Query().Where("id", id).Delete(&newsCate)
 	if err != nil {
 		return false, err
 	}

@@ -139,8 +139,12 @@ func (r *ConfigService) Save(request requests.ConfigRequest) (bool, error) {
 
 func (r *ConfigService) Delete(id int64) (bool, error) {
 
-	var admin models.Config
-	_, err := facades.Orm().Query().Delete(&admin)
+	if gconv.IsEmpty(id) {
+		return false, errors.New("id不能为空")
+	}
+
+	var config models.Config
+	_, err := facades.Orm().Query().Where("id", id).Delete(&config)
 	if err != nil {
 		return false, err
 	}

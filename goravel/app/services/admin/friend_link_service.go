@@ -199,8 +199,12 @@ func (r *FriendLinkService) Save(request requests.FriendLinkRequest) (bool, erro
 
 func (r *FriendLinkService) Delete(id int64) (bool, error) {
 
-	var admin models.FriendLink
-	_, err := facades.Orm().Query().Delete(&admin)
+	if gconv.IsEmpty(id) {
+		return false, errors.New("id不能为空")
+	}
+
+	var friendLink models.FriendLink
+	_, err := facades.Orm().Query().Where("id", id).Delete(&friendLink)
 	if err != nil {
 		return false, err
 	}

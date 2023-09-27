@@ -187,8 +187,12 @@ func (r *RequestLogService) Save(request requests.RequestLogRequest) (bool, erro
 
 func (r *RequestLogService) Delete(id int64) (bool, error) {
 
-	var admin models.RequestLog
-	_, err := facades.Orm().Query().Delete(&admin)
+	if gconv.IsEmpty(id) {
+		return false, errors.New("id不能为空")
+	}
+
+	var requestLog models.RequestLog
+	_, err := facades.Orm().Query().Where("id", id).Delete(&requestLog)
 	if err != nil {
 		return false, err
 	}

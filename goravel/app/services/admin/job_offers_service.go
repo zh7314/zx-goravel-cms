@@ -223,8 +223,12 @@ func (r *JobOffersService) Save(request requests.JobOffersRequest) (bool, error)
 
 func (r *JobOffersService) Delete(id int64) (bool, error) {
 
-	var admin models.JobOffers
-	_, err := facades.Orm().Query().Delete(&admin)
+	if gconv.IsEmpty(id) {
+		return false, errors.New("id不能为空")
+	}
+
+	var jobOffers models.JobOffers
+	_, err := facades.Orm().Query().Where("id", id).Delete(&jobOffers)
 	if err != nil {
 		return false, err
 	}

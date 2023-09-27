@@ -295,8 +295,12 @@ func (r *ProductService) Save(request requests.ProductRequest) (bool, error) {
 
 func (r *ProductService) Delete(id int64) (bool, error) {
 
-	var admin models.Product
-	_, err := facades.Orm().Query().Delete(&admin)
+	if gconv.IsEmpty(id) {
+		return false, errors.New("id不能为空")
+	}
+
+	var product models.Product
+	_, err := facades.Orm().Query().Where("id", id).Delete(&product)
 	if err != nil {
 		return false, err
 	}

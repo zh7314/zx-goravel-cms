@@ -187,8 +187,12 @@ func (r *DownloadCateService) Save(request requests.DownloadCateRequest) (bool, 
 
 func (r *DownloadCateService) Delete(id int64) (bool, error) {
 
-	var admin models.DownloadCate
-	_, err := facades.Orm().Query().Delete(&admin)
+	if gconv.IsEmpty(id) {
+		return false, errors.New("id不能为空")
+	}
+
+	var downloadCate models.DownloadCate
+	_, err := facades.Orm().Query().Where("id", id).Delete(&downloadCate)
 	if err != nil {
 		return false, err
 	}

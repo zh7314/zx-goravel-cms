@@ -235,8 +235,12 @@ func (r *BannerService) Save(request requests.BannerRequest) (bool, error) {
 
 func (r *BannerService) Delete(id int64) (bool, error) {
 
-	var admin models.Banner
-	_, err := facades.Orm().Query().Delete(&admin)
+	if gconv.IsEmpty(id) {
+		return false, errors.New("id不能为空")
+	}
+
+	var banner models.Banner
+	_, err := facades.Orm().Query().Where("id", id).Delete(&banner)
 	if err != nil {
 		return false, err
 	}

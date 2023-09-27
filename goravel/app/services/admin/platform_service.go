@@ -139,8 +139,12 @@ func (r *PlatformService) Save(request requests.PlatformRequest) (bool, error) {
 
 func (r *PlatformService) Delete(id int64) (bool, error) {
 
-	var admin models.Platform
-	_, err := facades.Orm().Query().Delete(&admin)
+	if gconv.IsEmpty(id) {
+		return false, errors.New("id不能为空")
+	}
+
+	var platform models.Platform
+	_, err := facades.Orm().Query().Where("id", id).Delete(&platform)
 	if err != nil {
 		return false, err
 	}

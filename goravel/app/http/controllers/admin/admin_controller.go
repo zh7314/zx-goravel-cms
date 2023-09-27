@@ -23,10 +23,10 @@ func (r *AdminController) GetList(ctx http.Context) http.Response {
 
 	data, ok := admin.NewAdminService().GetList(request)
 	if ok == nil {
-    	return response.Success(ctx, data, "成功")
-    } else {
-    	return response.Fail(ctx, "", ok.Error())
-    }
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
 }
 
 func (r *AdminController) GetAll(ctx http.Context) http.Response {
@@ -38,10 +38,10 @@ func (r *AdminController) GetAll(ctx http.Context) http.Response {
 
 	data, ok := admin.NewAdminService().GetAll(request)
 	if ok == nil {
-    	return response.Success(ctx, data, "成功")
-    } else {
-    	return response.Fail(ctx, "", ok.Error())
-    }
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
 }
 
 func (r *AdminController) GetOne(ctx http.Context) http.Response {
@@ -68,10 +68,10 @@ func (r *AdminController) Add(ctx http.Context) http.Response {
 
 	data, ok := admin.NewAdminService().Add(request)
 	if ok == nil {
-    	return response.Success(ctx, data, "成功")
-    } else {
-    	return response.Fail(ctx, "", ok.Error())
-    }
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
 }
 
 func (r *AdminController) Save(ctx http.Context) http.Response {
@@ -83,10 +83,10 @@ func (r *AdminController) Save(ctx http.Context) http.Response {
 
 	data, ok := admin.NewAdminService().Save(request)
 	if ok == nil {
-    	return response.Success(ctx, data, "成功")
-    } else {
-    	return response.Fail(ctx, "", ok.Error())
-    }
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
 }
 
 func (r *AdminController) Delete(ctx http.Context) http.Response {
