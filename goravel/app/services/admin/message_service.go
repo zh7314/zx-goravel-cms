@@ -123,7 +123,7 @@ func (r *MessageService) GetAll(request requests.MessageRequest) ([]models.Messa
 		orm = orm.Where("type", request.Type)
 	}
 
-	orm.Order("id desc").Get(&list)
+	orm.Order("sort asc").Order("id desc").Get(&list)
 
 	return list, nil
 }

@@ -24,14 +24,15 @@ func (r *LangService) GetList(request requests.LangRequest) (map[string]interfac
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.Name) {
-		orm = orm.Where("name", request.Name)
-	}
-	if !gconv.IsEmpty(request.Sort) {
-		orm = orm.Where("sort", request.Sort)
-	}
-	if !gconv.IsEmpty(request.Value) {
-		orm = orm.Where("value", request.Value)
-	}
+	orm = orm.Where("name", request.Name)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.Value) {
+	orm = orm.Where("value", request.Value)
+}
+
 
 	if request.Page > 0 && request.PageSize > 0 {
 		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
@@ -53,15 +54,16 @@ func (r *LangService) GetAll(request requests.LangRequest) ([]models.Lang, error
 
 	orm := facades.Orm().Query()
 
-	if !gconv.IsEmpty(request.Name) {
-		orm = orm.Where("name", request.Name)
-	}
-	if !gconv.IsEmpty(request.Sort) {
-		orm = orm.Where("sort", request.Sort)
-	}
-	if !gconv.IsEmpty(request.Value) {
-		orm = orm.Where("value", request.Value)
-	}
+    if !gconv.IsEmpty(request.Name) {
+	orm = orm.Where("name", request.Name)
+}
+if !gconv.IsEmpty(request.Sort) {
+	orm = orm.Where("sort", request.Sort)
+}
+if !gconv.IsEmpty(request.Value) {
+	orm = orm.Where("value", request.Value)
+}
+
 
 	orm.Order("sort asc").Order("id desc").Get(&list)
 
@@ -87,7 +89,7 @@ func (r *LangService) Add(request requests.LangRequest) (bool, error) {
 
 	var lang models.Lang
 
-	if !gconv.IsEmpty(request.Name) {
+		if !gconv.IsEmpty(request.Name) {
 		lang.Name = html.EscapeString(request.Name)
 	}
 	if !gconv.IsEmpty(request.Sort) {
@@ -97,26 +99,27 @@ func (r *LangService) Add(request requests.LangRequest) (bool, error) {
 		lang.Value = html.EscapeString(request.Value)
 	}
 
+
 	err := facades.Orm().Query().Create(&lang)
 	if err != nil {
-		return false, err
-	}
+    		return false, err
+    }
 	return true, nil
 }
 
 func (r *LangService) Save(request requests.LangRequest) (bool, error) {
 
 	if gconv.IsEmpty(request.ID) {
-		return false, errors.New("请求不能为空")
-	}
+    	return false, errors.New("请求不能为空")
+    }
 
 	var lang models.Lang
-	err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&lang)
-	if err != nil {
-		return false, errors.New("数据不存在")
-	}
+    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&lang)
+    if err != nil {
+    	return false, errors.New("数据不存在")
+    }
 
-	if !gconv.IsEmpty(request.Name) {
+		if !gconv.IsEmpty(request.Name) {
 		lang.Name = html.EscapeString(request.Name)
 	}
 	if !gconv.IsEmpty(request.Sort) {
@@ -125,6 +128,7 @@ func (r *LangService) Save(request requests.LangRequest) (bool, error) {
 	if !gconv.IsEmpty(request.Value) {
 		lang.Value = html.EscapeString(request.Value)
 	}
+
 
 	err = facades.Orm().Query().Save(&lang)
 	if err != nil {

@@ -65,7 +65,7 @@ if !gconv.IsEmpty(request.Status) {
 if !gconv.IsEmpty(request.Token) {
 	orm = orm.Where("token", request.Token)
 }
-if !gconv.IsEmpty(request.TokenTime) {
+if !request.TokenTime.IsZero() {
 	orm = orm.Where("token_time", request.TokenTime)
 }
 
@@ -132,7 +132,7 @@ if !gconv.IsEmpty(request.Status) {
 if !gconv.IsEmpty(request.Token) {
 	orm = orm.Where("token", request.Token)
 }
-if !gconv.IsEmpty(request.TokenTime) {
+if !request.TokenTime.IsZero() {
 	orm = orm.Where("token_time", request.TokenTime)
 }
 
@@ -203,7 +203,7 @@ func (r *AdminService) Add(request requests.AdminRequest) (bool, error) {
 	if !gconv.IsEmpty(request.Token) {
 		admin.Token = html.EscapeString(request.Token)
 	}
-	if !gconv.IsEmpty(request.TokenTime) {
+	if !request.TokenTime.IsZero() {
 		admin.TokenTime = request.TokenTime
 	}
 
@@ -269,7 +269,7 @@ func (r *AdminService) Save(request requests.AdminRequest) (bool, error) {
 	if !gconv.IsEmpty(request.Token) {
 		admin.Token = html.EscapeString(request.Token)
 	}
-	if !gconv.IsEmpty(request.TokenTime) {
+	if !request.TokenTime.IsZero() {
 		admin.TokenTime = request.TokenTime
 	}
 

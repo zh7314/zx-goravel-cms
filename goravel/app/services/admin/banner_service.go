@@ -29,7 +29,7 @@ func (r *BannerService) GetList(request requests.BannerRequest) (map[string]inte
 if !gconv.IsEmpty(request.BannerCateId) {
 	orm = orm.Where("banner_cate_id", request.BannerCateId)
 }
-if !gconv.IsEmpty(request.EndTime) {
+if !request.EndTime.IsZero() {
 	orm = orm.Where("end_time", request.EndTime)
 }
 if !gconv.IsEmpty(request.Lang) {
@@ -47,7 +47,7 @@ if !gconv.IsEmpty(request.Platform) {
 if !gconv.IsEmpty(request.Sort) {
 	orm = orm.Where("sort", request.Sort)
 }
-if !gconv.IsEmpty(request.StartTime) {
+if !request.StartTime.IsZero() {
 	orm = orm.Where("start_time", request.StartTime)
 }
 if !gconv.IsEmpty(request.Url) {
@@ -84,7 +84,7 @@ func (r *BannerService) GetAll(request requests.BannerRequest) ([]models.Banner,
 if !gconv.IsEmpty(request.BannerCateId) {
 	orm = orm.Where("banner_cate_id", request.BannerCateId)
 }
-if !gconv.IsEmpty(request.EndTime) {
+if !request.EndTime.IsZero() {
 	orm = orm.Where("end_time", request.EndTime)
 }
 if !gconv.IsEmpty(request.Lang) {
@@ -102,7 +102,7 @@ if !gconv.IsEmpty(request.Platform) {
 if !gconv.IsEmpty(request.Sort) {
 	orm = orm.Where("sort", request.Sort)
 }
-if !gconv.IsEmpty(request.StartTime) {
+if !request.StartTime.IsZero() {
 	orm = orm.Where("start_time", request.StartTime)
 }
 if !gconv.IsEmpty(request.Url) {
@@ -143,7 +143,7 @@ func (r *BannerService) Add(request requests.BannerRequest) (bool, error) {
 	if !gconv.IsEmpty(request.BannerCateId) {
 		banner.BannerCateId = request.BannerCateId
 	}
-	if !gconv.IsEmpty(request.EndTime) {
+	if !request.EndTime.IsZero() {
 		banner.EndTime = request.EndTime
 	}
 	if !gconv.IsEmpty(request.Lang) {
@@ -161,7 +161,7 @@ func (r *BannerService) Add(request requests.BannerRequest) (bool, error) {
 	if !gconv.IsEmpty(request.Sort) {
 		banner.Sort = request.Sort
 	}
-	if !gconv.IsEmpty(request.StartTime) {
+	if !request.StartTime.IsZero() {
 		banner.StartTime = request.StartTime
 	}
 	if !gconv.IsEmpty(request.Url) {
@@ -197,7 +197,7 @@ func (r *BannerService) Save(request requests.BannerRequest) (bool, error) {
 	if !gconv.IsEmpty(request.BannerCateId) {
 		banner.BannerCateId = request.BannerCateId
 	}
-	if !gconv.IsEmpty(request.EndTime) {
+	if !request.EndTime.IsZero() {
 		banner.EndTime = request.EndTime
 	}
 	if !gconv.IsEmpty(request.Lang) {
@@ -215,7 +215,7 @@ func (r *BannerService) Save(request requests.BannerRequest) (bool, error) {
 	if !gconv.IsEmpty(request.Sort) {
 		banner.Sort = request.Sort
 	}
-	if !gconv.IsEmpty(request.StartTime) {
+	if !request.StartTime.IsZero() {
 		banner.StartTime = request.StartTime
 	}
 	if !gconv.IsEmpty(request.Url) {

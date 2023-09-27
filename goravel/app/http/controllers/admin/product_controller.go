@@ -23,10 +23,10 @@ func (r *ProductController) GetList(ctx http.Context) http.Response {
 
 	data, ok := admin.NewProductService().GetList(request)
 	if ok == nil {
-    	return response.Success(ctx, data, "成功")
-    } else {
-    	return response.Fail(ctx, "", ok.Error())
-    }
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
 }
 
 func (r *ProductController) GetAll(ctx http.Context) http.Response {
@@ -38,10 +38,10 @@ func (r *ProductController) GetAll(ctx http.Context) http.Response {
 
 	data, ok := admin.NewProductService().GetAll(request)
 	if ok == nil {
-    	return response.Success(ctx, data, "成功")
-    } else {
-    	return response.Fail(ctx, "", ok.Error())
-    }
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
 }
 
 func (r *ProductController) GetOne(ctx http.Context) http.Response {
@@ -68,10 +68,10 @@ func (r *ProductController) Add(ctx http.Context) http.Response {
 
 	data, ok := admin.NewProductService().Add(request)
 	if ok == nil {
-    	return response.Success(ctx, data, "成功")
-    } else {
-    	return response.Fail(ctx, "", ok.Error())
-    }
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
 }
 
 func (r *ProductController) Save(ctx http.Context) http.Response {
@@ -83,10 +83,10 @@ func (r *ProductController) Save(ctx http.Context) http.Response {
 
 	data, ok := admin.NewProductService().Save(request)
 	if ok == nil {
-    	return response.Success(ctx, data, "成功")
-    } else {
-    	return response.Fail(ctx, "", ok.Error())
-    }
+		return response.Success(ctx, data, "成功")
+	} else {
+		return response.Fail(ctx, "", ok.Error())
+	}
 }
 
 func (r *ProductController) Delete(ctx http.Context) http.Response {

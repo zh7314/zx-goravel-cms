@@ -32,7 +32,7 @@ if !gconv.IsEmpty(request.Content) {
 if !gconv.IsEmpty(request.Count) {
 	orm = orm.Where("count", request.Count)
 }
-if !gconv.IsEmpty(request.EndTime) {
+if !request.EndTime.IsZero() {
 	orm = orm.Where("end_time", request.EndTime)
 }
 if !gconv.IsEmpty(request.IsShow) {
@@ -68,7 +68,7 @@ if !gconv.IsEmpty(request.ShortTitle) {
 if !gconv.IsEmpty(request.Sort) {
 	orm = orm.Where("sort", request.Sort)
 }
-if !gconv.IsEmpty(request.StartTime) {
+if !request.StartTime.IsZero() {
 	orm = orm.Where("start_time", request.StartTime)
 }
 if !gconv.IsEmpty(request.Title) {
@@ -105,7 +105,7 @@ if !gconv.IsEmpty(request.Content) {
 if !gconv.IsEmpty(request.Count) {
 	orm = orm.Where("count", request.Count)
 }
-if !gconv.IsEmpty(request.EndTime) {
+if !request.EndTime.IsZero() {
 	orm = orm.Where("end_time", request.EndTime)
 }
 if !gconv.IsEmpty(request.IsShow) {
@@ -141,7 +141,7 @@ if !gconv.IsEmpty(request.ShortTitle) {
 if !gconv.IsEmpty(request.Sort) {
 	orm = orm.Where("sort", request.Sort)
 }
-if !gconv.IsEmpty(request.StartTime) {
+if !request.StartTime.IsZero() {
 	orm = orm.Where("start_time", request.StartTime)
 }
 if !gconv.IsEmpty(request.Title) {
@@ -182,7 +182,7 @@ func (r *NewsService) Add(request requests.NewsRequest) (bool, error) {
 	if !gconv.IsEmpty(request.Count) {
 		news.Count = request.Count
 	}
-	if !gconv.IsEmpty(request.EndTime) {
+	if !request.EndTime.IsZero() {
 		news.EndTime = request.EndTime
 	}
 	if !gconv.IsEmpty(request.IsShow) {
@@ -218,7 +218,7 @@ func (r *NewsService) Add(request requests.NewsRequest) (bool, error) {
 	if !gconv.IsEmpty(request.Sort) {
 		news.Sort = request.Sort
 	}
-	if !gconv.IsEmpty(request.StartTime) {
+	if !request.StartTime.IsZero() {
 		news.StartTime = request.StartTime
 	}
 	if !gconv.IsEmpty(request.Title) {
@@ -254,7 +254,7 @@ func (r *NewsService) Save(request requests.NewsRequest) (bool, error) {
 	if !gconv.IsEmpty(request.Count) {
 		news.Count = request.Count
 	}
-	if !gconv.IsEmpty(request.EndTime) {
+	if !request.EndTime.IsZero() {
 		news.EndTime = request.EndTime
 	}
 	if !gconv.IsEmpty(request.IsShow) {
@@ -290,7 +290,7 @@ func (r *NewsService) Save(request requests.NewsRequest) (bool, error) {
 	if !gconv.IsEmpty(request.Sort) {
 		news.Sort = request.Sort
 	}
-	if !gconv.IsEmpty(request.StartTime) {
+	if !request.StartTime.IsZero() {
 		news.StartTime = request.StartTime
 	}
 	if !gconv.IsEmpty(request.Title) {

@@ -38,7 +38,7 @@ if !gconv.IsEmpty(request.Method) {
 if !gconv.IsEmpty(request.Params) {
 	orm = orm.Where("params", request.Params)
 }
-if !gconv.IsEmpty(request.ReturnAt) {
+if !request.ReturnAt.IsZero() {
 	orm = orm.Where("return_at", request.ReturnAt)
 }
 if !gconv.IsEmpty(request.Url) {
@@ -81,7 +81,7 @@ if !gconv.IsEmpty(request.Method) {
 if !gconv.IsEmpty(request.Params) {
 	orm = orm.Where("params", request.Params)
 }
-if !gconv.IsEmpty(request.ReturnAt) {
+if !request.ReturnAt.IsZero() {
 	orm = orm.Where("return_at", request.ReturnAt)
 }
 if !gconv.IsEmpty(request.Url) {
@@ -128,7 +128,7 @@ func (r *RequestLogService) Add(request requests.RequestLogRequest) (bool, error
 	if !gconv.IsEmpty(request.Params) {
 		requestLog.Params = html.EscapeString(request.Params)
 	}
-	if !gconv.IsEmpty(request.ReturnAt) {
+	if !request.ReturnAt.IsZero() {
 		requestLog.ReturnAt = request.ReturnAt
 	}
 	if !gconv.IsEmpty(request.Url) {
@@ -170,7 +170,7 @@ func (r *RequestLogService) Save(request requests.RequestLogRequest) (bool, erro
 	if !gconv.IsEmpty(request.Params) {
 		requestLog.Params = html.EscapeString(request.Params)
 	}
-	if !gconv.IsEmpty(request.ReturnAt) {
+	if !request.ReturnAt.IsZero() {
 		requestLog.ReturnAt = request.ReturnAt
 	}
 	if !gconv.IsEmpty(request.Url) {
