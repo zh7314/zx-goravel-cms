@@ -14,9 +14,9 @@
 			</el-form-item>
 			<el-form-item label="性别">
 				<el-select v-model="form.sex" placeholder="请选择">
-					<el-option label="保密" value="10"></el-option>
-					<el-option label="男" value="20"></el-option>
-					<el-option label="女" value="30"></el-option>
+					<el-option label="保密" :value=10></el-option>
+					<el-option label="男" :value=20></el-option>
+					<el-option label="女" :value=30></el-option>
 				</el-select>
 			</el-form-item>
 			<!--			<el-form-item label="个性签名">-->
@@ -63,7 +63,8 @@ export default {
 			// console.log(res)
 			if (res.code == 200) {
 				Object.assign(this.form, res.data)
-				this.form.sex = res.data.sex.toString()
+
+				console.log(this.form)
 				//防止重置密码
 				this.form.password = null
 			} else {
