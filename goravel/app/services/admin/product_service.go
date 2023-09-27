@@ -21,7 +21,7 @@ func (r *ProductService) GetList(request requests.ProductRequest) (map[string]in
 	var list []models.Product
 	var count int64
 
-	orm := facades.Orm().Query().With("VideoCate")
+	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.AdminId) {
 		orm = orm.Where("admin_id", request.AdminId)
