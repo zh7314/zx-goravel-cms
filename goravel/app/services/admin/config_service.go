@@ -18,7 +18,7 @@ func NewConfigService() *ConfigService {
 
 func (r *ConfigService) GetList(request requests.ConfigRequest) (map[string]interface{}, error) {
 
-	var list []models.Config
+	var list []*models.Config
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -47,9 +47,9 @@ func (r *ConfigService) GetList(request requests.ConfigRequest) (map[string]inte
 	return res, nil
 }
 
-func (r *ConfigService) GetAll(request requests.ConfigRequest) ([]models.Config, error) {
+func (r *ConfigService) GetAll(request requests.ConfigRequest) ([]*models.Config, error) {
 
-	var list []models.Config
+	var list []*models.Config
 
 	orm := facades.Orm().Query()
 

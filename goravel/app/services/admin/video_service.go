@@ -18,7 +18,7 @@ func NewVideoService() *VideoService {
 
 func (r *VideoService) GetList(request requests.VideoRequest) (map[string]interface{}, error) {
 
-	var list []models.Video
+	var list []*models.Video
 	var count int64
 
 	orm := facades.Orm().Query().With("VideoCate")
@@ -70,6 +70,12 @@ func (r *VideoService) GetList(request requests.VideoRequest) (map[string]interf
 		count = int64(len(list))
 	}
 
+	if len(list) > 0 {
+		for _, v := range list {
+			v.Introduce = html.UnescapeString(v.Introduce)
+		}
+	}
+
 	res := make(map[string]interface{})
 	res["list"] = list
 	res["count"] = count
@@ -77,9 +83,9 @@ func (r *VideoService) GetList(request requests.VideoRequest) (map[string]interf
 	return res, nil
 }
 
-func (r *VideoService) GetAll(request requests.VideoRequest) ([]models.Video, error) {
+func (r *VideoService) GetAll(request requests.VideoRequest) ([]*models.Video, error) {
 
-	var list []models.Video
+	var list []*models.Video
 
 	orm := facades.Orm().Query()
 

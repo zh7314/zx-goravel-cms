@@ -18,7 +18,7 @@ func NewDownloadService() *DownloadService {
 
 func (r *DownloadService) GetList(request requests.DownloadRequest) (map[string]interface{}, error) {
 
-	var list []models.Download
+	var list []*models.Download
 	var count int64
 
 	orm := facades.Orm().Query().With("DownloadCate")
@@ -67,6 +67,12 @@ func (r *DownloadService) GetList(request requests.DownloadRequest) (map[string]
 		count = int64(len(list))
 	}
 
+	if len(list) > 0 {
+		for _, v := range list {
+			v.Introduction = html.UnescapeString(v.Introduction)
+		}
+	}
+
 	res := make(map[string]interface{})
 	res["list"] = list
 	res["count"] = count
@@ -74,9 +80,9 @@ func (r *DownloadService) GetList(request requests.DownloadRequest) (map[string]
 	return res, nil
 }
 
-func (r *DownloadService) GetAll(request requests.DownloadRequest) ([]models.Download, error) {
+func (r *DownloadService) GetAll(request requests.DownloadRequest) ([]*models.Download, error) {
 
-	var list []models.Download
+	var list []*models.Download
 
 	orm := facades.Orm().Query()
 

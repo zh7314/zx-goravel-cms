@@ -21,7 +21,7 @@ func NewAdminService() *AdminService {
 
 func (r *AdminService) GetList(request requests.AdminRequest) (map[string]interface{}, error) {
 
-	var list []models.Admin
+	var list []*models.Admin
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -80,7 +80,7 @@ func (r *AdminService) GetList(request requests.AdminRequest) (map[string]interf
 	}
 
 	result := make([]map[string]interface{}, len(list))
-	if len(list) != 0 {
+	if len(list) > 0 {
 		for i, v := range list {
 			result[i] = make(map[string]interface{})
 			result[i]["id"] = v.ID
@@ -111,9 +111,9 @@ func (r *AdminService) GetList(request requests.AdminRequest) (map[string]interf
 	return res, nil
 }
 
-func (r *AdminService) GetAll(request requests.AdminRequest) ([]models.Admin, error) {
+func (r *AdminService) GetAll(request requests.AdminRequest) ([]*models.Admin, error) {
 
-	var list []models.Admin
+	var list []*models.Admin
 
 	orm := facades.Orm().Query()
 

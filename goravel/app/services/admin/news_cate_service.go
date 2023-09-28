@@ -18,7 +18,7 @@ func NewNewsCateService() *NewsCateService {
 
 func (r *NewsCateService) GetList(request requests.NewsCateRequest) (map[string]interface{}, error) {
 
-	var list []models.NewsCate
+	var list []*models.NewsCate
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -56,9 +56,9 @@ func (r *NewsCateService) GetList(request requests.NewsCateRequest) (map[string]
 	return res, nil
 }
 
-func (r *NewsCateService) GetAll(request requests.NewsCateRequest) ([]models.NewsCate, error) {
+func (r *NewsCateService) GetAll(request requests.NewsCateRequest) ([]*models.NewsCate, error) {
 
-	var list []models.NewsCate
+	var list []*models.NewsCate
 
 	orm := facades.Orm().Query()
 

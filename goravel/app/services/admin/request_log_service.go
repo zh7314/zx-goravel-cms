@@ -18,7 +18,7 @@ func NewRequestLogService() *RequestLogService {
 
 func (r *RequestLogService) GetList(request requests.RequestLogRequest) (map[string]interface{}, error) {
 
-	var list []models.RequestLog
+	var list []*models.RequestLog
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -59,9 +59,9 @@ func (r *RequestLogService) GetList(request requests.RequestLogRequest) (map[str
 	return res, nil
 }
 
-func (r *RequestLogService) GetAll(request requests.RequestLogRequest) ([]models.RequestLog, error) {
+func (r *RequestLogService) GetAll(request requests.RequestLogRequest) ([]*models.RequestLog, error) {
 
-	var list []models.RequestLog
+	var list []*models.RequestLog
 
 	orm := facades.Orm().Query()
 

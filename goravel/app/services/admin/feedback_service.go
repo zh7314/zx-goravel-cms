@@ -18,7 +18,7 @@ func NewFeedbackService() *FeedbackService {
 
 func (r *FeedbackService) GetList(request requests.FeedbackRequest) (map[string]interface{}, error) {
 
-	var list []models.Feedback
+	var list []*models.Feedback
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -53,9 +53,9 @@ func (r *FeedbackService) GetList(request requests.FeedbackRequest) (map[string]
 	return res, nil
 }
 
-func (r *FeedbackService) GetAll(request requests.FeedbackRequest) ([]models.Feedback, error) {
+func (r *FeedbackService) GetAll(request requests.FeedbackRequest) ([]*models.Feedback, error) {
 
-	var list []models.Feedback
+	var list []*models.Feedback
 
 	orm := facades.Orm().Query()
 

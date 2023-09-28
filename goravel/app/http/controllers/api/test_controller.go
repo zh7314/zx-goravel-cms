@@ -3,10 +3,9 @@ package api
 import (
 	"fmt"
 	"github.com/goravel/framework/contracts/http"
-	"goravel/app/utils"
 	"goravel/app/utils/response"
 	"goravel/app/utils/str"
-	"strings"
+	"html"
 )
 
 type TestController struct {
@@ -33,15 +32,14 @@ func (r *TestController) Test(ctx http.Context) http.Response {
 	//fmt.Println(u1.ID())
 	//fmt.Println(u2.ID())
 
-	num_arr := []int{1, 2, 3, 4}
-	var str_arr = make([]string, len(num_arr))
-	for k, v := range num_arr {
-		str_arr[k] = fmt.Sprintf("%d", v)
-	}
-	var str1 = strings.Join(str_arr, ",")
-	fmt.Println(str1)
+	s := "<p>2132131</p>"
 
-	fmt.Println(utils.GetUniqid())
+	s1 := html.EscapeString(s)
+	fmt.Println(s1)
+
+	s2 := html.UnescapeString(s1)
+	fmt.Println(s2)
+	
 	return response.Success(ctx, str.Md5(str.Md5("admin")), "成功")
 
 }

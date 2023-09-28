@@ -18,7 +18,7 @@ func NewBannerService() *BannerService {
 
 func (r *BannerService) GetList(request requests.BannerRequest) (map[string]interface{}, error) {
 
-	var list []models.Banner
+	var list []*models.Banner
 	var count int64
 
 	orm := facades.Orm().Query().With("BannerCate")
@@ -71,9 +71,9 @@ func (r *BannerService) GetList(request requests.BannerRequest) (map[string]inte
 	return res, nil
 }
 
-func (r *BannerService) GetAll(request requests.BannerRequest) ([]models.Banner, error) {
+func (r *BannerService) GetAll(request requests.BannerRequest) ([]*models.Banner, error) {
 
-	var list []models.Banner
+	var list []*models.Banner
 
 	orm := facades.Orm().Query()
 

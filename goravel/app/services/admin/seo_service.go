@@ -18,7 +18,7 @@ func NewSeoService() *SeoService {
 
 func (r *SeoService) GetList(request requests.SeoRequest) (map[string]interface{}, error) {
 
-	var list []models.Seo
+	var list []*models.Seo
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -62,9 +62,9 @@ func (r *SeoService) GetList(request requests.SeoRequest) (map[string]interface{
 	return res, nil
 }
 
-func (r *SeoService) GetAll(request requests.SeoRequest) ([]models.Seo, error) {
+func (r *SeoService) GetAll(request requests.SeoRequest) ([]*models.Seo, error) {
 
-	var list []models.Seo
+	var list []*models.Seo
 
 	orm := facades.Orm().Query()
 

@@ -18,7 +18,7 @@ func NewProductService() *ProductService {
 
 func (r *ProductService) GetList(request requests.ProductRequest) (map[string]interface{}, error) {
 
-	var list []models.Product
+	var list []*models.Product
 	var count int64
 
 	orm := facades.Orm().Query().With("ProductCate")
@@ -79,6 +79,12 @@ func (r *ProductService) GetList(request requests.ProductRequest) (map[string]in
 		count = int64(len(list))
 	}
 
+	if len(list) > 0 {
+		for _, v := range list {
+			v.Content = html.UnescapeString(v.Content)
+		}
+	}
+
 	res := make(map[string]interface{})
 	res["list"] = list
 	res["count"] = count
@@ -86,9 +92,9 @@ func (r *ProductService) GetList(request requests.ProductRequest) (map[string]in
 	return res, nil
 }
 
-func (r *ProductService) GetAll(request requests.ProductRequest) ([]models.Product, error) {
+func (r *ProductService) GetAll(request requests.ProductRequest) ([]*models.Product, error) {
 
-	var list []models.Product
+	var list []*models.Product
 
 	orm := facades.Orm().Query()
 

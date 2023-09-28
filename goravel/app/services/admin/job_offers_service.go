@@ -18,7 +18,7 @@ func NewJobOffersService() *JobOffersService {
 
 func (r *JobOffersService) GetList(request requests.JobOffersRequest) (map[string]interface{}, error) {
 
-	var list []models.JobOffers
+	var list []*models.JobOffers
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -61,6 +61,12 @@ func (r *JobOffersService) GetList(request requests.JobOffersRequest) (map[strin
 		count = int64(len(list))
 	}
 
+	if len(list) > 0 {
+		for _, v := range list {
+			v.Content = html.UnescapeString(v.Content)
+		}
+	}
+
 	res := make(map[string]interface{})
 	res["list"] = list
 	res["count"] = count
@@ -68,9 +74,9 @@ func (r *JobOffersService) GetList(request requests.JobOffersRequest) (map[strin
 	return res, nil
 }
 
-func (r *JobOffersService) GetAll(request requests.JobOffersRequest) ([]models.JobOffers, error) {
+func (r *JobOffersService) GetAll(request requests.JobOffersRequest) ([]*models.JobOffers, error) {
 
-	var list []models.JobOffers
+	var list []*models.JobOffers
 
 	orm := facades.Orm().Query()
 

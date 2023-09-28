@@ -18,7 +18,7 @@ func NewBannerCateService() *BannerCateService {
 
 func (r *BannerCateService) GetList(request requests.BannerCateRequest) (map[string]interface{}, error) {
 
-	var list []models.BannerCate
+	var list []*models.BannerCate
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -59,9 +59,9 @@ func (r *BannerCateService) GetList(request requests.BannerCateRequest) (map[str
 	return res, nil
 }
 
-func (r *BannerCateService) GetAll(request requests.BannerCateRequest) ([]models.BannerCate, error) {
+func (r *BannerCateService) GetAll(request requests.BannerCateRequest) ([]*models.BannerCate, error) {
 
-	var list []models.BannerCate
+	var list []*models.BannerCate
 
 	orm := facades.Orm().Query()
 

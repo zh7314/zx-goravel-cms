@@ -18,7 +18,7 @@ func NewProductCateService() *ProductCateService {
 
 func (r *ProductCateService) GetList(request requests.ProductCateRequest) (map[string]interface{}, error) {
 
-	var list []models.ProductCate
+	var list []*models.ProductCate
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -65,9 +65,9 @@ func (r *ProductCateService) GetList(request requests.ProductCateRequest) (map[s
 	return res, nil
 }
 
-func (r *ProductCateService) GetAll(request requests.ProductCateRequest) ([]models.ProductCate, error) {
+func (r *ProductCateService) GetAll(request requests.ProductCateRequest) ([]*models.ProductCate, error) {
 
-	var list []models.ProductCate
+	var list []*models.ProductCate
 
 	orm := facades.Orm().Query()
 

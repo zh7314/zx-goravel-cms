@@ -18,7 +18,7 @@ func NewMessageService() *MessageService {
 
 func (r *MessageService) GetList(request requests.MessageRequest) (map[string]interface{}, error) {
 
-	var list []models.Message
+	var list []*models.Message
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -77,9 +77,9 @@ func (r *MessageService) GetList(request requests.MessageRequest) (map[string]in
 	return res, nil
 }
 
-func (r *MessageService) GetAll(request requests.MessageRequest) ([]models.Message, error) {
+func (r *MessageService) GetAll(request requests.MessageRequest) ([]*models.Message, error) {
 
-	var list []models.Message
+	var list []*models.Message
 
 	orm := facades.Orm().Query()
 

@@ -18,7 +18,7 @@ func NewNewsService() *NewsService {
 
 func (r *NewsService) GetList(request requests.NewsRequest) (map[string]interface{}, error) {
 
-	var list []models.News
+	var list []*models.News
 	var count int64
 
 	orm := facades.Orm().Query().With("NewsCate")
@@ -82,6 +82,12 @@ func (r *NewsService) GetList(request requests.NewsRequest) (map[string]interfac
 		count = int64(len(list))
 	}
 
+	if len(list) > 0 {
+		for _, v := range list {
+			v.Content = html.UnescapeString(v.Content)
+		}
+	}
+
 	res := make(map[string]interface{})
 	res["list"] = list
 	res["count"] = count
@@ -89,9 +95,9 @@ func (r *NewsService) GetList(request requests.NewsRequest) (map[string]interfac
 	return res, nil
 }
 
-func (r *NewsService) GetAll(request requests.NewsRequest) ([]models.News, error) {
+func (r *NewsService) GetAll(request requests.NewsRequest) ([]*models.News, error) {
 
-	var list []models.News
+	var list []*models.News
 
 	orm := facades.Orm().Query()
 

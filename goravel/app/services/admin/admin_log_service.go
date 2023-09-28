@@ -18,7 +18,7 @@ func NewAdminLogService() *AdminLogService {
 
 func (r *AdminLogService) GetList(request requests.AdminLogRequest) (map[string]interface{}, error) {
 
-	var list []models.AdminLog
+	var list []*models.AdminLog
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -65,9 +65,9 @@ func (r *AdminLogService) GetList(request requests.AdminLogRequest) (map[string]
 	return res, nil
 }
 
-func (r *AdminLogService) GetAll(request requests.AdminLogRequest) ([]models.AdminLog, error) {
+func (r *AdminLogService) GetAll(request requests.AdminLogRequest) ([]*models.AdminLog, error) {
 
-	var list []models.AdminLog
+	var list []*models.AdminLog
 
 	orm := facades.Orm().Query()
 

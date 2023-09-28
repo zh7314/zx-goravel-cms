@@ -18,7 +18,7 @@ func NewPlatformService() *PlatformService {
 
 func (r *PlatformService) GetList(request requests.PlatformRequest) (map[string]interface{}, error) {
 
-	var list []models.Platform
+	var list []*models.Platform
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -47,9 +47,9 @@ func (r *PlatformService) GetList(request requests.PlatformRequest) (map[string]
 	return res, nil
 }
 
-func (r *PlatformService) GetAll(request requests.PlatformRequest) ([]models.Platform, error) {
+func (r *PlatformService) GetAll(request requests.PlatformRequest) ([]*models.Platform, error) {
 
-	var list []models.Platform
+	var list []*models.Platform
 
 	orm := facades.Orm().Query()
 

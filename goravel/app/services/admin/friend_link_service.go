@@ -18,7 +18,7 @@ func NewFriendLinkService() *FriendLinkService {
 
 func (r *FriendLinkService) GetList(request requests.FriendLinkRequest) (map[string]interface{}, error) {
 
-	var list []models.FriendLink
+	var list []*models.FriendLink
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -62,9 +62,9 @@ func (r *FriendLinkService) GetList(request requests.FriendLinkRequest) (map[str
 	return res, nil
 }
 
-func (r *FriendLinkService) GetAll(request requests.FriendLinkRequest) ([]models.FriendLink, error) {
+func (r *FriendLinkService) GetAll(request requests.FriendLinkRequest) ([]*models.FriendLink, error) {
 
-	var list []models.FriendLink
+	var list []*models.FriendLink
 
 	orm := facades.Orm().Query()
 

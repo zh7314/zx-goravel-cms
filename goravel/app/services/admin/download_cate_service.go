@@ -18,7 +18,7 @@ func NewDownloadCateService() *DownloadCateService {
 
 func (r *DownloadCateService) GetList(request requests.DownloadCateRequest) (map[string]interface{}, error) {
 
-	var list []models.DownloadCate
+	var list []*models.DownloadCate
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -59,9 +59,9 @@ func (r *DownloadCateService) GetList(request requests.DownloadCateRequest) (map
 	return res, nil
 }
 
-func (r *DownloadCateService) GetAll(request requests.DownloadCateRequest) ([]models.DownloadCate, error) {
+func (r *DownloadCateService) GetAll(request requests.DownloadCateRequest) ([]*models.DownloadCate, error) {
 
-	var list []models.DownloadCate
+	var list []*models.DownloadCate
 
 	orm := facades.Orm().Query()
 

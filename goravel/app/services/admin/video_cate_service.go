@@ -18,7 +18,7 @@ func NewVideoCateService() *VideoCateService {
 
 func (r *VideoCateService) GetList(request requests.VideoCateRequest) (map[string]interface{}, error) {
 
-	var list []models.VideoCate
+	var list []*models.VideoCate
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -56,9 +56,9 @@ func (r *VideoCateService) GetList(request requests.VideoCateRequest) (map[strin
 	return res, nil
 }
 
-func (r *VideoCateService) GetAll(request requests.VideoCateRequest) ([]models.VideoCate, error) {
+func (r *VideoCateService) GetAll(request requests.VideoCateRequest) ([]*models.VideoCate, error) {
 
-	var list []models.VideoCate
+	var list []*models.VideoCate
 
 	orm := facades.Orm().Query()
 

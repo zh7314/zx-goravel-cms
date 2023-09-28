@@ -18,7 +18,7 @@ func NewFileService() *FileService {
 
 func (r *FileService) GetList(request requests.FileRequest) (map[string]interface{}, error) {
 
-	var list []models.File
+	var list []*models.File
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -50,9 +50,9 @@ func (r *FileService) GetList(request requests.FileRequest) (map[string]interfac
 	return res, nil
 }
 
-func (r *FileService) GetAll(request requests.FileRequest) ([]models.File, error) {
+func (r *FileService) GetAll(request requests.FileRequest) ([]*models.File, error) {
 
-	var list []models.File
+	var list []*models.File
 
 	orm := facades.Orm().Query()
 

@@ -20,7 +20,7 @@ func NewAdminGroupService() *AdminGroupService {
 
 func (r *AdminGroupService) GetList(request requests.AdminGroupRequest) (map[string]interface{}, error) {
 
-	var list []models.AdminGroup
+	var list []*models.AdminGroup
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -52,9 +52,9 @@ func (r *AdminGroupService) GetList(request requests.AdminGroupRequest) (map[str
 	return res, nil
 }
 
-func (r *AdminGroupService) GetAll(request requests.AdminGroupRequest) ([]models.AdminGroup, error) {
+func (r *AdminGroupService) GetAll(request requests.AdminGroupRequest) ([]*models.AdminGroup, error) {
 
-	var list []models.AdminGroup
+	var list []*models.AdminGroup
 
 	orm := facades.Orm().Query()
 

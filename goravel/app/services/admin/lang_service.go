@@ -18,7 +18,7 @@ func NewLangService() *LangService {
 
 func (r *LangService) GetList(request requests.LangRequest) (map[string]interface{}, error) {
 
-	var list []models.Lang
+	var list []*models.Lang
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -47,9 +47,9 @@ func (r *LangService) GetList(request requests.LangRequest) (map[string]interfac
 	return res, nil
 }
 
-func (r *LangService) GetAll(request requests.LangRequest) ([]models.Lang, error) {
+func (r *LangService) GetAll(request requests.LangRequest) ([]*models.Lang, error) {
 
-	var list []models.Lang
+	var list []*models.Lang
 
 	orm := facades.Orm().Query()
 

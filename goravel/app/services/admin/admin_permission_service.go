@@ -18,7 +18,7 @@ func NewAdminPermissionService() *AdminPermissionService {
 
 func (r *AdminPermissionService) GetList(request requests.AdminPermissionRequest) (map[string]interface{}, error) {
 
-	var list []models.AdminPermission
+	var list []*models.AdminPermission
 	var count int64
 
 	orm := facades.Orm().Query()
@@ -62,9 +62,9 @@ func (r *AdminPermissionService) GetList(request requests.AdminPermissionRequest
 	return res, nil
 }
 
-func (r *AdminPermissionService) GetAll(request requests.AdminPermissionRequest) ([]models.AdminPermission, error) {
+func (r *AdminPermissionService) GetAll(request requests.AdminPermissionRequest) ([]*models.AdminPermission, error) {
 
-	var list []models.AdminPermission
+	var list []*models.AdminPermission
 
 	orm := facades.Orm().Query()
 
