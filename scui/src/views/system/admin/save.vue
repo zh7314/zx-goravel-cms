@@ -17,18 +17,18 @@
 			</el-form-item>
 			<el-form-item label="超级管理员" prop="is_admin">
 				<el-radio-group v-model="form.is_admin" class="ml-4">
-					<el-radio label="10" size="large">是</el-radio>
-					<el-radio label="99" size="large">否</el-radio>
+					<el-radio :label=10 size="large">是</el-radio>
+					<el-radio :label=99 size="large">否</el-radio>
 				</el-radio-group>
 			</el-form-item>
 			<el-form-item label="是否登录" prop="status">
-				<el-switch v-model="form.status" active-value="10" inactive-value="20"></el-switch>
+				<el-switch v-model="form.status" :active-value=10 :inactive-value=20></el-switch>
 			</el-form-item>
 			<el-form-item label="性别" prop="sex">
 				<el-radio-group v-model="form.sex" class="ml-4">
-					<el-radio label="10" size="large">保密</el-radio>
-					<el-radio label="20" size="large">男</el-radio>
-					<el-radio label="30" size="large">女</el-radio>
+					<el-radio :label=10 size="large">保密</el-radio>
+					<el-radio :label=20 size="large">男</el-radio>
+					<el-radio :label=30 size="large">女</el-radio>
 				</el-radio-group>
 			</el-form-item>
 			<el-form-item label="手机号" prop="mobile">
@@ -97,9 +97,9 @@ export default {
 		//表单注入数据
 		setData(data) {
 			this.form = data
-			this.form.is_admin = data.is_admin.toString()
-			this.form.sex = data.sex.toString()
-			this.form.status = data.status.toString()
+			// this.form.is_admin = data.is_admin.toString()
+			// this.form.sex = data.sex.toString()
+			// this.form.status = data.status.toString()
 			this.form.password = null
 
 			//可以和上面一样单个注入，也可以像下面一样直接合并进去
