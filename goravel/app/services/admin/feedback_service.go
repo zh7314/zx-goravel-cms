@@ -24,26 +24,25 @@ func (r *FeedbackService) GetList(request requests.FeedbackRequest) (map[string]
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.Contact) {
-	orm = orm.Where("contact", request.Contact)
-}
-if !gconv.IsEmpty(request.Content) {
-	orm = orm.Where("content", request.Content)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.NickName) {
-	orm = orm.Where("nick_name", request.NickName)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
-}
-
+		orm = orm.Where("contact", request.Contact)
+	}
+	if !gconv.IsEmpty(request.Content) {
+		orm = orm.Where("content", request.Content)
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		orm = orm.Where("lang", request.Lang)
+	}
+	if !gconv.IsEmpty(request.NickName) {
+		orm = orm.Where("nick_name", request.NickName)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		orm = orm.Where("platform", request.Platform)
+	}
 
 	if request.Page > 0 && request.PageSize > 0 {
-		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
+		orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
 	} else {
-		orm.Order("sort asc").Order("id desc").Get(&list)
+		orm.Order("id desc").Get(&list)
 		count = int64(len(list))
 	}
 
@@ -60,22 +59,21 @@ func (r *FeedbackService) GetAll(request requests.FeedbackRequest) ([]models.Fee
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Contact) {
-	orm = orm.Where("contact", request.Contact)
-}
-if !gconv.IsEmpty(request.Content) {
-	orm = orm.Where("content", request.Content)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.NickName) {
-	orm = orm.Where("nick_name", request.NickName)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
-}
-
+	if !gconv.IsEmpty(request.Contact) {
+		orm = orm.Where("contact", request.Contact)
+	}
+	if !gconv.IsEmpty(request.Content) {
+		orm = orm.Where("content", request.Content)
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		orm = orm.Where("lang", request.Lang)
+	}
+	if !gconv.IsEmpty(request.NickName) {
+		orm = orm.Where("nick_name", request.NickName)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		orm = orm.Where("platform", request.Platform)
+	}
 
 	orm.Order("sort asc").Order("id desc").Get(&list)
 
@@ -101,7 +99,7 @@ func (r *FeedbackService) Add(request requests.FeedbackRequest) (bool, error) {
 
 	var feedback models.Feedback
 
-		if !gconv.IsEmpty(request.Contact) {
+	if !gconv.IsEmpty(request.Contact) {
 		feedback.Contact = html.EscapeString(request.Contact)
 	}
 	if !gconv.IsEmpty(request.Content) {
@@ -117,27 +115,26 @@ func (r *FeedbackService) Add(request requests.FeedbackRequest) (bool, error) {
 		feedback.Platform = html.EscapeString(request.Platform)
 	}
 
-
 	err := facades.Orm().Query().Create(&feedback)
 	if err != nil {
-    		return false, err
-    }
+		return false, err
+	}
 	return true, nil
 }
 
 func (r *FeedbackService) Save(request requests.FeedbackRequest) (bool, error) {
 
 	if gconv.IsEmpty(request.ID) {
-    	return false, errors.New("请求不能为空")
-    }
+		return false, errors.New("请求不能为空")
+	}
 
 	var feedback models.Feedback
-    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&feedback)
-    if err != nil {
-    	return false, errors.New("数据不存在")
-    }
+	err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&feedback)
+	if err != nil {
+		return false, errors.New("数据不存在")
+	}
 
-		if !gconv.IsEmpty(request.Contact) {
+	if !gconv.IsEmpty(request.Contact) {
 		feedback.Contact = html.EscapeString(request.Contact)
 	}
 	if !gconv.IsEmpty(request.Content) {
@@ -152,7 +149,6 @@ func (r *FeedbackService) Save(request requests.FeedbackRequest) (bool, error) {
 	if !gconv.IsEmpty(request.Platform) {
 		feedback.Platform = html.EscapeString(request.Platform)
 	}
-
 
 	err = facades.Orm().Query().Save(&feedback)
 	if err != nil {
