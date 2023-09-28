@@ -19,7 +19,7 @@ func Web() {
 		})
 	})
 	//无权限
-	facades.Route().Prefix("/open").Middleware(middleware.Recovery()).Group(func(router route.Router) {
+	facades.Route().Prefix("/open").Middleware(middleware.ApiLog(), middleware.Recovery()).Group(func(router route.Router) {
 
 		router.Get("/test", api.NewTestController().Test)
 	})
