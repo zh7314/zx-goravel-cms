@@ -11,6 +11,7 @@ import (
 	"goravel/app/utils/gconv"
 	"goravel/app/utils/global"
 	"goravel/app/utils/str"
+	"strings"
 	"time"
 )
 
@@ -233,7 +234,7 @@ func (r *IndexService) GetGroupTree() (res []map[string]interface{}, err error) 
 		result[i]["create_at"] = v.CreateAt
 		result[i]["update_at"] = v.UpdateAt
 		result[i]["sort"] = v.Sort
-		result[i]["permission_ids"] = v.PermissionIds
+		result[i]["permission_ids"] = strings.Split(v.PermissionIds, ",")
 		result[i]["children"] = v.Children
 	}
 

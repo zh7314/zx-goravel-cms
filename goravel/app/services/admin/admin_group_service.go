@@ -45,22 +45,8 @@ func (r *AdminGroupService) GetList(request requests.AdminGroupRequest) (map[str
 		count = int64(len(list))
 	}
 
-	result := make([]map[string]interface{}, len(list))
-	if len(list) != 0 {
-		for i, v := range list {
-			result[i] = make(map[string]interface{})
-			result[i]["id"] = v.ID
-			result[i]["name"] = v.Name
-			result[i]["parent_id"] = v.ParentId
-			result[i]["permission_ids"] = strings.Split(v.PermissionIds, ",")
-			result[i]["sort"] = v.Sort
-			result[i]["create_at"] = v.CreateAt
-			result[i]["update_at"] = v.UpdateAt
-		}
-	}
-
 	res := make(map[string]interface{})
-	res["list"] = result
+	res["list"] = list
 	res["count"] = count
 
 	return res, nil
