@@ -24,33 +24,32 @@ func (r *ProductCateService) GetList(request requests.ProductCateRequest) (map[s
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.Description) {
-	orm = orm.Where("description", request.Description)
-}
-if !gconv.IsEmpty(request.IsShow) {
-	orm = orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.Name) {
-	orm = orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.ParentId) {
-	orm = orm.Where("parent_id", request.ParentId)
-}
-if !gconv.IsEmpty(request.Pic) {
-	orm = orm.Where("pic", request.Pic)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
-}
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Url) {
-	orm = orm.Where("url", request.Url)
-}
-
+		orm = orm.Where("description", request.Description)
+	}
+	if !gconv.IsEmpty(request.IsShow) {
+		orm = orm.Where("is_show", request.IsShow)
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		orm = orm.Where("lang", request.Lang)
+	}
+	if !gconv.IsEmpty(request.Name) {
+		orm = orm.Where("name", request.Name)
+	}
+	if !gconv.IsEmpty(request.ParentId) {
+		orm = orm.Where("parent_id", request.ParentId)
+	}
+	if !gconv.IsEmpty(request.Pic) {
+		orm = orm.Where("pic", request.Pic)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		orm = orm.Where("platform", request.Platform)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		orm = orm.Where("sort", request.Sort)
+	}
+	if !gconv.IsEmpty(request.Url) {
+		orm = orm.Where("url", request.Url)
+	}
 
 	if request.Page > 0 && request.PageSize > 0 {
 		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
@@ -72,34 +71,33 @@ func (r *ProductCateService) GetAll(request requests.ProductCateRequest) ([]mode
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Description) {
-	orm = orm.Where("description", request.Description)
-}
-if !gconv.IsEmpty(request.IsShow) {
-	orm = orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.Name) {
-	orm = orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.ParentId) {
-	orm = orm.Where("parent_id", request.ParentId)
-}
-if !gconv.IsEmpty(request.Pic) {
-	orm = orm.Where("pic", request.Pic)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
-}
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Url) {
-	orm = orm.Where("url", request.Url)
-}
-
+	if !gconv.IsEmpty(request.Description) {
+		orm = orm.Where("description", request.Description)
+	}
+	if !gconv.IsEmpty(request.IsShow) {
+		orm = orm.Where("is_show", request.IsShow)
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		orm = orm.Where("lang", request.Lang)
+	}
+	if !gconv.IsEmpty(request.Name) {
+		orm = orm.Where("name", request.Name)
+	}
+	if !gconv.IsEmpty(request.ParentId) {
+		orm = orm.Where("parent_id", request.ParentId)
+	}
+	if !gconv.IsEmpty(request.Pic) {
+		orm = orm.Where("pic", request.Pic)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		orm = orm.Where("platform", request.Platform)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		orm = orm.Where("sort", request.Sort)
+	}
+	if !gconv.IsEmpty(request.Url) {
+		orm = orm.Where("url", request.Url)
+	}
 
 	orm.Order("sort asc").Order("id desc").Get(&list)
 
@@ -125,7 +123,7 @@ func (r *ProductCateService) Add(request requests.ProductCateRequest) (bool, err
 
 	var productCate models.ProductCate
 
-		if !gconv.IsEmpty(request.Description) {
+	if !gconv.IsEmpty(request.Description) {
 		productCate.Description = html.EscapeString(request.Description)
 	}
 	if !gconv.IsEmpty(request.IsShow) {
@@ -153,27 +151,26 @@ func (r *ProductCateService) Add(request requests.ProductCateRequest) (bool, err
 		productCate.Url = html.EscapeString(request.Url)
 	}
 
-
 	err := facades.Orm().Query().Create(&productCate)
 	if err != nil {
-    		return false, err
-    }
+		return false, err
+	}
 	return true, nil
 }
 
 func (r *ProductCateService) Save(request requests.ProductCateRequest) (bool, error) {
 
 	if gconv.IsEmpty(request.ID) {
-    	return false, errors.New("请求不能为空")
-    }
+		return false, errors.New("请求不能为空")
+	}
 
 	var productCate models.ProductCate
-    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&productCate)
-    if err != nil {
-    	return false, errors.New("数据不存在")
-    }
+	err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&productCate)
+	if err != nil {
+		return false, errors.New("数据不存在")
+	}
 
-		if !gconv.IsEmpty(request.Description) {
+	if !gconv.IsEmpty(request.Description) {
 		productCate.Description = html.EscapeString(request.Description)
 	}
 	if !gconv.IsEmpty(request.IsShow) {
@@ -200,7 +197,6 @@ func (r *ProductCateService) Save(request requests.ProductCateRequest) (bool, er
 	if !gconv.IsEmpty(request.Url) {
 		productCate.Url = html.EscapeString(request.Url)
 	}
-
 
 	err = facades.Orm().Query().Save(&productCate)
 	if err != nil {

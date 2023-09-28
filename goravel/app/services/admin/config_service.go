@@ -24,15 +24,14 @@ func (r *ConfigService) GetList(request requests.ConfigRequest) (map[string]inte
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.Name) {
-	orm = orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.Type) {
-	orm = orm.Where("type", request.Type)
-}
-if !gconv.IsEmpty(request.Value) {
-	orm = orm.Where("value", request.Value)
-}
-
+		orm = orm.Where("name", request.Name)
+	}
+	if !gconv.IsEmpty(request.Type) {
+		orm = orm.Where("type", request.Type)
+	}
+	if !gconv.IsEmpty(request.Value) {
+		orm = orm.Where("value", request.Value)
+	}
 
 	if request.Page > 0 && request.PageSize > 0 {
 		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
@@ -54,16 +53,15 @@ func (r *ConfigService) GetAll(request requests.ConfigRequest) ([]models.Config,
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Name) {
-	orm = orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.Type) {
-	orm = orm.Where("type", request.Type)
-}
-if !gconv.IsEmpty(request.Value) {
-	orm = orm.Where("value", request.Value)
-}
-
+	if !gconv.IsEmpty(request.Name) {
+		orm = orm.Where("name", request.Name)
+	}
+	if !gconv.IsEmpty(request.Type) {
+		orm = orm.Where("type", request.Type)
+	}
+	if !gconv.IsEmpty(request.Value) {
+		orm = orm.Where("value", request.Value)
+	}
 
 	orm.Order("sort asc").Order("id desc").Get(&list)
 
@@ -89,7 +87,7 @@ func (r *ConfigService) Add(request requests.ConfigRequest) (bool, error) {
 
 	var config models.Config
 
-		if !gconv.IsEmpty(request.Name) {
+	if !gconv.IsEmpty(request.Name) {
 		config.Name = html.EscapeString(request.Name)
 	}
 	if !gconv.IsEmpty(request.Type) {
@@ -99,27 +97,26 @@ func (r *ConfigService) Add(request requests.ConfigRequest) (bool, error) {
 		config.Value = html.EscapeString(request.Value)
 	}
 
-
 	err := facades.Orm().Query().Create(&config)
 	if err != nil {
-    		return false, err
-    }
+		return false, err
+	}
 	return true, nil
 }
 
 func (r *ConfigService) Save(request requests.ConfigRequest) (bool, error) {
 
 	if gconv.IsEmpty(request.ID) {
-    	return false, errors.New("请求不能为空")
-    }
+		return false, errors.New("请求不能为空")
+	}
 
 	var config models.Config
-    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&config)
-    if err != nil {
-    	return false, errors.New("数据不存在")
-    }
+	err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&config)
+	if err != nil {
+		return false, errors.New("数据不存在")
+	}
 
-		if !gconv.IsEmpty(request.Name) {
+	if !gconv.IsEmpty(request.Name) {
 		config.Name = html.EscapeString(request.Name)
 	}
 	if !gconv.IsEmpty(request.Type) {
@@ -128,7 +125,6 @@ func (r *ConfigService) Save(request requests.ConfigRequest) (bool, error) {
 	if !gconv.IsEmpty(request.Value) {
 		config.Value = html.EscapeString(request.Value)
 	}
-
 
 	err = facades.Orm().Query().Save(&config)
 	if err != nil {

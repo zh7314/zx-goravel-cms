@@ -24,15 +24,14 @@ func (r *PlatformService) GetList(request requests.PlatformRequest) (map[string]
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.Name) {
-	orm = orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Value) {
-	orm = orm.Where("value", request.Value)
-}
-
+		orm = orm.Where("name", request.Name)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		orm = orm.Where("sort", request.Sort)
+	}
+	if !gconv.IsEmpty(request.Value) {
+		orm = orm.Where("value", request.Value)
+	}
 
 	if request.Page > 0 && request.PageSize > 0 {
 		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
@@ -54,16 +53,15 @@ func (r *PlatformService) GetAll(request requests.PlatformRequest) ([]models.Pla
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Name) {
-	orm = orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Value) {
-	orm = orm.Where("value", request.Value)
-}
-
+	if !gconv.IsEmpty(request.Name) {
+		orm = orm.Where("name", request.Name)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		orm = orm.Where("sort", request.Sort)
+	}
+	if !gconv.IsEmpty(request.Value) {
+		orm = orm.Where("value", request.Value)
+	}
 
 	orm.Order("sort asc").Order("id desc").Get(&list)
 
@@ -89,7 +87,7 @@ func (r *PlatformService) Add(request requests.PlatformRequest) (bool, error) {
 
 	var platform models.Platform
 
-		if !gconv.IsEmpty(request.Name) {
+	if !gconv.IsEmpty(request.Name) {
 		platform.Name = html.EscapeString(request.Name)
 	}
 	if !gconv.IsEmpty(request.Sort) {
@@ -99,27 +97,26 @@ func (r *PlatformService) Add(request requests.PlatformRequest) (bool, error) {
 		platform.Value = html.EscapeString(request.Value)
 	}
 
-
 	err := facades.Orm().Query().Create(&platform)
 	if err != nil {
-    		return false, err
-    }
+		return false, err
+	}
 	return true, nil
 }
 
 func (r *PlatformService) Save(request requests.PlatformRequest) (bool, error) {
 
 	if gconv.IsEmpty(request.ID) {
-    	return false, errors.New("请求不能为空")
-    }
+		return false, errors.New("请求不能为空")
+	}
 
 	var platform models.Platform
-    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&platform)
-    if err != nil {
-    	return false, errors.New("数据不存在")
-    }
+	err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&platform)
+	if err != nil {
+		return false, errors.New("数据不存在")
+	}
 
-		if !gconv.IsEmpty(request.Name) {
+	if !gconv.IsEmpty(request.Name) {
 		platform.Name = html.EscapeString(request.Name)
 	}
 	if !gconv.IsEmpty(request.Sort) {
@@ -128,7 +125,6 @@ func (r *PlatformService) Save(request requests.PlatformRequest) (bool, error) {
 	if !gconv.IsEmpty(request.Value) {
 		platform.Value = html.EscapeString(request.Value)
 	}
-
 
 	err = facades.Orm().Query().Save(&platform)
 	if err != nil {

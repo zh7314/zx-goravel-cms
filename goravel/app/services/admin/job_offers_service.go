@@ -24,36 +24,35 @@ func (r *JobOffersService) GetList(request requests.JobOffersRequest) (map[strin
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.Content) {
-	orm = orm.Where("content", request.Content)
-}
-if !gconv.IsEmpty(request.IsShow) {
-	orm = orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.Number) {
-	orm = orm.Where("number", request.Number)
-}
-if !gconv.IsEmpty(request.Place) {
-	orm = orm.Where("place", request.Place)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
-}
-if !gconv.IsEmpty(request.SalaryRange) {
-	orm = orm.Where("salary_range", request.SalaryRange)
-}
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Title) {
-	orm = orm.Where("title", request.Title)
-}
-if !gconv.IsEmpty(request.Url) {
-	orm = orm.Where("url", request.Url)
-}
-
+		orm = orm.Where("content", request.Content)
+	}
+	if !gconv.IsEmpty(request.IsShow) {
+		orm = orm.Where("is_show", request.IsShow)
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		orm = orm.Where("lang", request.Lang)
+	}
+	if !gconv.IsEmpty(request.Number) {
+		orm = orm.Where("number", request.Number)
+	}
+	if !gconv.IsEmpty(request.Place) {
+		orm = orm.Where("place", request.Place)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		orm = orm.Where("platform", request.Platform)
+	}
+	if !gconv.IsEmpty(request.SalaryRange) {
+		orm = orm.Where("salary_range", request.SalaryRange)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		orm = orm.Where("sort", request.Sort)
+	}
+	if !gconv.IsEmpty(request.Title) {
+		orm = orm.Where("title", request.Title)
+	}
+	if !gconv.IsEmpty(request.Url) {
+		orm = orm.Where("url", request.Url)
+	}
 
 	if request.Page > 0 && request.PageSize > 0 {
 		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
@@ -75,37 +74,36 @@ func (r *JobOffersService) GetAll(request requests.JobOffersRequest) ([]models.J
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.Content) {
-	orm = orm.Where("content", request.Content)
-}
-if !gconv.IsEmpty(request.IsShow) {
-	orm = orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.Number) {
-	orm = orm.Where("number", request.Number)
-}
-if !gconv.IsEmpty(request.Place) {
-	orm = orm.Where("place", request.Place)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
-}
-if !gconv.IsEmpty(request.SalaryRange) {
-	orm = orm.Where("salary_range", request.SalaryRange)
-}
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-if !gconv.IsEmpty(request.Title) {
-	orm = orm.Where("title", request.Title)
-}
-if !gconv.IsEmpty(request.Url) {
-	orm = orm.Where("url", request.Url)
-}
-
+	if !gconv.IsEmpty(request.Content) {
+		orm = orm.Where("content", request.Content)
+	}
+	if !gconv.IsEmpty(request.IsShow) {
+		orm = orm.Where("is_show", request.IsShow)
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		orm = orm.Where("lang", request.Lang)
+	}
+	if !gconv.IsEmpty(request.Number) {
+		orm = orm.Where("number", request.Number)
+	}
+	if !gconv.IsEmpty(request.Place) {
+		orm = orm.Where("place", request.Place)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		orm = orm.Where("platform", request.Platform)
+	}
+	if !gconv.IsEmpty(request.SalaryRange) {
+		orm = orm.Where("salary_range", request.SalaryRange)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		orm = orm.Where("sort", request.Sort)
+	}
+	if !gconv.IsEmpty(request.Title) {
+		orm = orm.Where("title", request.Title)
+	}
+	if !gconv.IsEmpty(request.Url) {
+		orm = orm.Where("url", request.Url)
+	}
 
 	orm.Order("sort asc").Order("id desc").Get(&list)
 
@@ -131,7 +129,7 @@ func (r *JobOffersService) Add(request requests.JobOffersRequest) (bool, error) 
 
 	var jobOffers models.JobOffers
 
-		if !gconv.IsEmpty(request.Content) {
+	if !gconv.IsEmpty(request.Content) {
 		jobOffers.Content = html.EscapeString(request.Content)
 	}
 	if !gconv.IsEmpty(request.IsShow) {
@@ -162,27 +160,26 @@ func (r *JobOffersService) Add(request requests.JobOffersRequest) (bool, error) 
 		jobOffers.Url = html.EscapeString(request.Url)
 	}
 
-
 	err := facades.Orm().Query().Create(&jobOffers)
 	if err != nil {
-    		return false, err
-    }
+		return false, err
+	}
 	return true, nil
 }
 
 func (r *JobOffersService) Save(request requests.JobOffersRequest) (bool, error) {
 
 	if gconv.IsEmpty(request.ID) {
-    	return false, errors.New("请求不能为空")
-    }
+		return false, errors.New("请求不能为空")
+	}
 
 	var jobOffers models.JobOffers
-    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&jobOffers)
-    if err != nil {
-    	return false, errors.New("数据不存在")
-    }
+	err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&jobOffers)
+	if err != nil {
+		return false, errors.New("数据不存在")
+	}
 
-		if !gconv.IsEmpty(request.Content) {
+	if !gconv.IsEmpty(request.Content) {
 		jobOffers.Content = html.EscapeString(request.Content)
 	}
 	if !gconv.IsEmpty(request.IsShow) {
@@ -212,7 +209,6 @@ func (r *JobOffersService) Save(request requests.JobOffersRequest) (bool, error)
 	if !gconv.IsEmpty(request.Url) {
 		jobOffers.Url = html.EscapeString(request.Url)
 	}
-
 
 	err = facades.Orm().Query().Save(&jobOffers)
 	if err != nil {

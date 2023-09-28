@@ -24,24 +24,23 @@ func (r *VideoCateService) GetList(request requests.VideoCateRequest) (map[strin
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.IsShow) {
-	orm = orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.Name) {
-	orm = orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.ParentId) {
-	orm = orm.Where("parent_id", request.ParentId)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
-}
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-
+		orm = orm.Where("is_show", request.IsShow)
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		orm = orm.Where("lang", request.Lang)
+	}
+	if !gconv.IsEmpty(request.Name) {
+		orm = orm.Where("name", request.Name)
+	}
+	if !gconv.IsEmpty(request.ParentId) {
+		orm = orm.Where("parent_id", request.ParentId)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		orm = orm.Where("platform", request.Platform)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		orm = orm.Where("sort", request.Sort)
+	}
 
 	if request.Page > 0 && request.PageSize > 0 {
 		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
@@ -63,25 +62,24 @@ func (r *VideoCateService) GetAll(request requests.VideoCateRequest) ([]models.V
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.IsShow) {
-	orm = orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.Name) {
-	orm = orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.ParentId) {
-	orm = orm.Where("parent_id", request.ParentId)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
-}
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-
+	if !gconv.IsEmpty(request.IsShow) {
+		orm = orm.Where("is_show", request.IsShow)
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		orm = orm.Where("lang", request.Lang)
+	}
+	if !gconv.IsEmpty(request.Name) {
+		orm = orm.Where("name", request.Name)
+	}
+	if !gconv.IsEmpty(request.ParentId) {
+		orm = orm.Where("parent_id", request.ParentId)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		orm = orm.Where("platform", request.Platform)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		orm = orm.Where("sort", request.Sort)
+	}
 
 	orm.Order("sort asc").Order("id desc").Get(&list)
 
@@ -107,7 +105,7 @@ func (r *VideoCateService) Add(request requests.VideoCateRequest) (bool, error) 
 
 	var videoCate models.VideoCate
 
-		if !gconv.IsEmpty(request.IsShow) {
+	if !gconv.IsEmpty(request.IsShow) {
 		videoCate.IsShow = request.IsShow
 	}
 	if !gconv.IsEmpty(request.Lang) {
@@ -126,27 +124,26 @@ func (r *VideoCateService) Add(request requests.VideoCateRequest) (bool, error) 
 		videoCate.Sort = request.Sort
 	}
 
-
 	err := facades.Orm().Query().Create(&videoCate)
 	if err != nil {
-    		return false, err
-    }
+		return false, err
+	}
 	return true, nil
 }
 
 func (r *VideoCateService) Save(request requests.VideoCateRequest) (bool, error) {
 
 	if gconv.IsEmpty(request.ID) {
-    	return false, errors.New("请求不能为空")
-    }
+		return false, errors.New("请求不能为空")
+	}
 
 	var videoCate models.VideoCate
-    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&videoCate)
-    if err != nil {
-    	return false, errors.New("数据不存在")
-    }
+	err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&videoCate)
+	if err != nil {
+		return false, errors.New("数据不存在")
+	}
 
-		if !gconv.IsEmpty(request.IsShow) {
+	if !gconv.IsEmpty(request.IsShow) {
 		videoCate.IsShow = request.IsShow
 	}
 	if !gconv.IsEmpty(request.Lang) {
@@ -164,7 +161,6 @@ func (r *VideoCateService) Save(request requests.VideoCateRequest) (bool, error)
 	if !gconv.IsEmpty(request.Sort) {
 		videoCate.Sort = request.Sort
 	}
-
 
 	err = facades.Orm().Query().Save(&videoCate)
 	if err != nil {

@@ -24,27 +24,26 @@ func (r *BannerCateService) GetList(request requests.BannerCateRequest) (map[str
 	orm := facades.Orm().Query()
 
 	if !gconv.IsEmpty(request.IsShow) {
-	orm = orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.Name) {
-	orm = orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.ParentId) {
-	orm = orm.Where("parent_id", request.ParentId)
-}
-if !gconv.IsEmpty(request.Pic) {
-	orm = orm.Where("pic", request.Pic)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
-}
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-
+		orm = orm.Where("is_show", request.IsShow)
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		orm = orm.Where("lang", request.Lang)
+	}
+	if !gconv.IsEmpty(request.Name) {
+		orm = orm.Where("name", request.Name)
+	}
+	if !gconv.IsEmpty(request.ParentId) {
+		orm = orm.Where("parent_id", request.ParentId)
+	}
+	if !gconv.IsEmpty(request.Pic) {
+		orm = orm.Where("pic", request.Pic)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		orm = orm.Where("platform", request.Platform)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		orm = orm.Where("sort", request.Sort)
+	}
 
 	if request.Page > 0 && request.PageSize > 0 {
 		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
@@ -66,28 +65,27 @@ func (r *BannerCateService) GetAll(request requests.BannerCateRequest) ([]models
 
 	orm := facades.Orm().Query()
 
-    if !gconv.IsEmpty(request.IsShow) {
-	orm = orm.Where("is_show", request.IsShow)
-}
-if !gconv.IsEmpty(request.Lang) {
-	orm = orm.Where("lang", request.Lang)
-}
-if !gconv.IsEmpty(request.Name) {
-	orm = orm.Where("name", request.Name)
-}
-if !gconv.IsEmpty(request.ParentId) {
-	orm = orm.Where("parent_id", request.ParentId)
-}
-if !gconv.IsEmpty(request.Pic) {
-	orm = orm.Where("pic", request.Pic)
-}
-if !gconv.IsEmpty(request.Platform) {
-	orm = orm.Where("platform", request.Platform)
-}
-if !gconv.IsEmpty(request.Sort) {
-	orm = orm.Where("sort", request.Sort)
-}
-
+	if !gconv.IsEmpty(request.IsShow) {
+		orm = orm.Where("is_show", request.IsShow)
+	}
+	if !gconv.IsEmpty(request.Lang) {
+		orm = orm.Where("lang", request.Lang)
+	}
+	if !gconv.IsEmpty(request.Name) {
+		orm = orm.Where("name", request.Name)
+	}
+	if !gconv.IsEmpty(request.ParentId) {
+		orm = orm.Where("parent_id", request.ParentId)
+	}
+	if !gconv.IsEmpty(request.Pic) {
+		orm = orm.Where("pic", request.Pic)
+	}
+	if !gconv.IsEmpty(request.Platform) {
+		orm = orm.Where("platform", request.Platform)
+	}
+	if !gconv.IsEmpty(request.Sort) {
+		orm = orm.Where("sort", request.Sort)
+	}
 
 	orm.Order("sort asc").Order("id desc").Get(&list)
 
@@ -113,7 +111,7 @@ func (r *BannerCateService) Add(request requests.BannerCateRequest) (bool, error
 
 	var bannerCate models.BannerCate
 
-		if !gconv.IsEmpty(request.IsShow) {
+	if !gconv.IsEmpty(request.IsShow) {
 		bannerCate.IsShow = request.IsShow
 	}
 	if !gconv.IsEmpty(request.Lang) {
@@ -135,27 +133,26 @@ func (r *BannerCateService) Add(request requests.BannerCateRequest) (bool, error
 		bannerCate.Sort = request.Sort
 	}
 
-
 	err := facades.Orm().Query().Create(&bannerCate)
 	if err != nil {
-    		return false, err
-    }
+		return false, err
+	}
 	return true, nil
 }
 
 func (r *BannerCateService) Save(request requests.BannerCateRequest) (bool, error) {
 
 	if gconv.IsEmpty(request.ID) {
-    	return false, errors.New("请求不能为空")
-    }
+		return false, errors.New("请求不能为空")
+	}
 
 	var bannerCate models.BannerCate
-    err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&bannerCate)
-    if err != nil {
-    	return false, errors.New("数据不存在")
-    }
+	err := facades.Orm().Query().Where("id", request.ID).FirstOrFail(&bannerCate)
+	if err != nil {
+		return false, errors.New("数据不存在")
+	}
 
-		if !gconv.IsEmpty(request.IsShow) {
+	if !gconv.IsEmpty(request.IsShow) {
 		bannerCate.IsShow = request.IsShow
 	}
 	if !gconv.IsEmpty(request.Lang) {
@@ -176,7 +173,6 @@ func (r *BannerCateService) Save(request requests.BannerCateRequest) (bool, erro
 	if !gconv.IsEmpty(request.Sort) {
 		bannerCate.Sort = request.Sort
 	}
-
 
 	err = facades.Orm().Query().Save(&bannerCate)
 	if err != nil {
