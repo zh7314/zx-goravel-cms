@@ -16,14 +16,14 @@
 			</el-form-item>
 			<el-form-item label="是否菜单" prop="is_menu">
 				<el-radio-group v-model="form.is_menu" class="ml-4">
-					<el-radio label="10" size="large">是</el-radio>
-					<el-radio label="20" size="large">否</el-radio>
+					<el-radio :label=10 size="large">是</el-radio>
+					<el-radio :label=20 size="large">否</el-radio>
 				</el-radio-group>
 			</el-form-item>
 			<el-form-item label="菜单是否显示" prop="hidden">
 				<el-radio-group v-model="form.hidden" class="ml-4">
-					<el-radio label="10" size="large">是</el-radio>
-					<el-radio label="20" size="large">否</el-radio>
+					<el-radio :label=10 size="large">是</el-radio>
+					<el-radio :label=20 size="large">否</el-radio>
 				</el-radio-group>
 			</el-form-item>
 			<el-form-item label="图标" prop="icon">
@@ -59,8 +59,8 @@ export default {
 				parent_id: "",
 				name: "",
 				sort: 255,
-				is_menu: "10",
-				hidden: "20",
+				is_menu: 10,
+				hidden: 20,
 			},
 			//验证规则
 			rules: {

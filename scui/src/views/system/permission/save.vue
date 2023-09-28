@@ -16,14 +16,14 @@
 			</el-form-item>
 			<el-form-item label="是否菜单" prop="is_menu">
 				<el-radio-group v-model="form.is_menu" class="ml-4">
-					<el-radio label="10" size="large">是</el-radio>
-					<el-radio label="20" size="large">否</el-radio>
+					<el-radio :label=10 size="large">是</el-radio>
+					<el-radio :label=20 size="large">否</el-radio>
 				</el-radio-group>
 			</el-form-item>
 			<el-form-item label="菜单是否显示" prop="hidden">
 				<el-radio-group v-model="form.hidden" class="ml-4">
-					<el-radio label="10" size="large">是</el-radio>
-					<el-radio label="20" size="large">否</el-radio>
+					<el-radio :label=10 size="large">是</el-radio>
+					<el-radio :label=20 size="large">否</el-radio>
 				</el-radio-group>
 			</el-form-item>
 			<el-form-item label="图标" prop="icon">
@@ -124,8 +124,8 @@ export default {
 		setData(data) {
 			//可以和上面一样单个注入，也可以像下面一样直接合并进去
 			Object.assign(this.form, data)
-			this.form.is_menu = this.form.is_menu.toString()
-			this.form.hidden = this.form.hidden.toString()
+			// this.form.is_menu = this.form.is_menu.toString()
+			// this.form.hidden = this.form.hidden.toString()
 		}
 	}
 }
