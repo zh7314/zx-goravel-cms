@@ -178,7 +178,7 @@ func (r *ProductService) Add(request requests.ProductRequest) (bool, error) {
 		product.Content = html.EscapeString(request.Content)
 	}
 	if !request.EndTime.IsZero() {
-		product.EndTime = request.EndTime
+		product.EndTime = &request.EndTime
 	}
 	if !gconv.IsEmpty(request.IsShow) {
 		product.IsShow = request.IsShow
@@ -205,7 +205,7 @@ func (r *ProductService) Add(request requests.ProductRequest) (bool, error) {
 		product.Sort = request.Sort
 	}
 	if !request.StartTime.IsZero() {
-		product.StartTime = request.StartTime
+		product.StartTime = &request.StartTime
 	}
 	if !gconv.IsEmpty(request.Title) {
 		product.Title = html.EscapeString(request.Title)
@@ -246,7 +246,7 @@ func (r *ProductService) Save(request requests.ProductRequest) (bool, error) {
 		product.Content = html.EscapeString(request.Content)
 	}
 	if !request.EndTime.IsZero() {
-		product.EndTime = request.EndTime
+		product.EndTime = &request.EndTime
 	}
 	if !gconv.IsEmpty(request.IsShow) {
 		product.IsShow = request.IsShow
@@ -273,7 +273,7 @@ func (r *ProductService) Save(request requests.ProductRequest) (bool, error) {
 		product.Sort = request.Sort
 	}
 	if !request.StartTime.IsZero() {
-		product.StartTime = request.StartTime
+		product.StartTime = &request.StartTime
 	}
 	if !gconv.IsEmpty(request.Title) {
 		product.Title = html.EscapeString(request.Title)

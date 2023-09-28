@@ -187,7 +187,7 @@ func (r *NewsService) Add(request requests.NewsRequest) (bool, error) {
 		news.Count = request.Count
 	}
 	if !request.EndTime.IsZero() {
-		news.EndTime = request.EndTime
+		news.EndTime = &request.EndTime
 	}
 	if !gconv.IsEmpty(request.IsShow) {
 		news.IsShow = request.IsShow
@@ -223,7 +223,7 @@ func (r *NewsService) Add(request requests.NewsRequest) (bool, error) {
 		news.Sort = request.Sort
 	}
 	if !request.StartTime.IsZero() {
-		news.StartTime = request.StartTime
+		news.StartTime = &request.StartTime
 	}
 	if !gconv.IsEmpty(request.Title) {
 		news.Title = html.EscapeString(request.Title)
@@ -258,7 +258,7 @@ func (r *NewsService) Save(request requests.NewsRequest) (bool, error) {
 		news.Count = request.Count
 	}
 	if !request.EndTime.IsZero() {
-		news.EndTime = request.EndTime
+		news.EndTime = &request.EndTime
 	}
 	if !gconv.IsEmpty(request.IsShow) {
 		news.IsShow = request.IsShow
@@ -294,7 +294,7 @@ func (r *NewsService) Save(request requests.NewsRequest) (bool, error) {
 		news.Sort = request.Sort
 	}
 	if !request.StartTime.IsZero() {
-		news.StartTime = request.StartTime
+		news.StartTime = &request.StartTime
 	}
 	if !gconv.IsEmpty(request.Title) {
 		news.Title = html.EscapeString(request.Title)

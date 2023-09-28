@@ -127,7 +127,7 @@ func (r *RequestLogService) Add(request requests.RequestLogRequest) (bool, error
 		requestLog.Params = html.EscapeString(request.Params)
 	}
 	if !request.ReturnAt.IsZero() {
-		requestLog.ReturnAt = request.ReturnAt
+		requestLog.ReturnAt = &request.ReturnAt
 	}
 	if !gconv.IsEmpty(request.Url) {
 		requestLog.Url = html.EscapeString(request.Url)
@@ -168,7 +168,7 @@ func (r *RequestLogService) Save(request requests.RequestLogRequest) (bool, erro
 		requestLog.Params = html.EscapeString(request.Params)
 	}
 	if !request.ReturnAt.IsZero() {
-		requestLog.ReturnAt = request.ReturnAt
+		requestLog.ReturnAt = &request.ReturnAt
 	}
 	if !gconv.IsEmpty(request.Url) {
 		requestLog.Url = html.EscapeString(request.Url)

@@ -142,7 +142,7 @@ func (r *BannerService) Add(request requests.BannerRequest) (bool, error) {
 		banner.BannerCateId = request.BannerCateId
 	}
 	if !request.EndTime.IsZero() {
-		banner.EndTime = request.EndTime
+		banner.EndTime = &request.EndTime
 	}
 	if !gconv.IsEmpty(request.Lang) {
 		banner.Lang = html.EscapeString(request.Lang)
@@ -160,7 +160,7 @@ func (r *BannerService) Add(request requests.BannerRequest) (bool, error) {
 		banner.Sort = request.Sort
 	}
 	if !request.StartTime.IsZero() {
-		banner.StartTime = request.StartTime
+		banner.StartTime = &request.StartTime
 	}
 	if !gconv.IsEmpty(request.Url) {
 		banner.Url = html.EscapeString(request.Url)
@@ -195,7 +195,7 @@ func (r *BannerService) Save(request requests.BannerRequest) (bool, error) {
 		banner.BannerCateId = request.BannerCateId
 	}
 	if !request.EndTime.IsZero() {
-		banner.EndTime = request.EndTime
+		banner.EndTime = &request.EndTime
 	}
 	if !gconv.IsEmpty(request.Lang) {
 		banner.Lang = html.EscapeString(request.Lang)
@@ -213,7 +213,7 @@ func (r *BannerService) Save(request requests.BannerRequest) (bool, error) {
 		banner.Sort = request.Sort
 	}
 	if !request.StartTime.IsZero() {
-		banner.StartTime = request.StartTime
+		banner.StartTime = &request.StartTime
 	}
 	if !gconv.IsEmpty(request.Url) {
 		banner.Url = html.EscapeString(request.Url)

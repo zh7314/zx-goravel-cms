@@ -235,7 +235,7 @@ func (r *AdminService) Add(request requests.AdminRequest) (bool, error) {
 		admin.Token = html.EscapeString(request.Token)
 	}
 	if !request.TokenTime.IsZero() {
-		admin.TokenTime = request.TokenTime
+		admin.TokenTime = &request.TokenTime
 	}
 
 	err := facades.Orm().Query().Create(&admin)
@@ -305,7 +305,7 @@ func (r *AdminService) Save(request requests.AdminRequest) (bool, error) {
 		admin.Token = html.EscapeString(request.Token)
 	}
 	if !request.TokenTime.IsZero() {
-		admin.TokenTime = request.TokenTime
+		admin.TokenTime = &request.TokenTime
 	}
 
 	err = facades.Orm().Query().Save(&admin)

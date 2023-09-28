@@ -80,8 +80,8 @@ func (r *IndexService) Login(request requests.AdminLoginRequest) (res map[string
 
 	token := utils.GetUniqid()
 
-	//now := time.Now() // Workaround
-	a.TokenTime = time.Now()
+	now := time.Now() // Workaround
+	a.TokenTime = &now
 	a.Token = token
 
 	err = facades.Orm().Query().Save(&a)
