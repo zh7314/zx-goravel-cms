@@ -22,12 +22,10 @@
 				<el-input v-model="form.url" clearable></el-input>
 			</el-form-item>
 			<el-form-item label="显示开始时间" prop="start_time">
-				<el-date-picker v-model="form.start_time" type="datetime" placeholder="请选择"
-								value-format="YYYY-MM-DD HH:mm:ss"/>
+				<el-date-picker v-model="form.start_time" type="datetime" placeholder="请选择"/>
 			</el-form-item>
 			<el-form-item label="显示结束时间" prop="end_time">
-				<el-date-picker v-model="form.end_time" type="datetime" placeholder="请选择"
-								value-format="YYYY-MM-DD HH:mm:ss"/>
+				<el-date-picker v-model="form.end_time" type="datetime" placeholder="请选择"/>
 			</el-form-item>
 			<el-form-item label="所属平台" prop="platform">
 				<el-cascader v-model="form.platform" :options="platform.list" :props="platform.props"
