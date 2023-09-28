@@ -2,11 +2,13 @@ package admin
 
 import (
 	"errors"
+	"fmt"
 	"github.com/goravel/framework/facades"
 	"goravel/app/models"
 	requests "goravel/app/requests/admin"
 	"goravel/app/utils/gconv"
 	"html"
+	"strings"
 )
 
 type AdminGroupService struct {
@@ -43,8 +45,22 @@ func (r *AdminGroupService) GetList(request requests.AdminGroupRequest) (map[str
 		count = int64(len(list))
 	}
 
+	result := make([]map[string]interface{}, len(list))
+	if len(list) != 0 {
+		for i, v := range list {
+			result[i] = make(map[string]interface{})
+			result[i]["id"] = v.ID
+			result[i]["name"] = v.Name
+			result[i]["parent_id"] = v.ParentId
+			result[i]["permission_ids"] = strings.Split(v.PermissionIds, ",")
+			result[i]["sort"] = v.Sort
+			result[i]["create_at"] = v.CreateAt
+			result[i]["update_at"] = v.UpdateAt
+		}
+	}
+
 	res := make(map[string]interface{})
-	res["list"] = list
+	res["list"] = result
 	res["count"] = count
 
 	return res, nil
@@ -100,7 +116,11 @@ func (r *AdminGroupService) Add(request requests.AdminGroupRequest) (bool, error
 		adminGroup.ParentId = request.ParentId
 	}
 	if !gconv.IsEmpty(request.PermissionIds) {
-		adminGroup.PermissionIds = html.EscapeString(request.PermissionIds)
+		var permissionIds = make([]string, len(request.PermissionIds))
+		for k, v := range request.PermissionIds {
+			permissionIds[k] = fmt.Sprintf("%d", v)
+		}
+		adminGroup.PermissionIds = strings.Join(permissionIds, ",")
 	}
 	if !gconv.IsEmpty(request.Sort) {
 		adminGroup.Sort = request.Sort
@@ -132,7 +152,11 @@ func (r *AdminGroupService) Save(request requests.AdminGroupRequest) (bool, erro
 		adminGroup.ParentId = request.ParentId
 	}
 	if !gconv.IsEmpty(request.PermissionIds) {
-		adminGroup.PermissionIds = html.EscapeString(request.PermissionIds)
+		var permissionIds = make([]string, len(request.PermissionIds))
+		for k, v := range request.PermissionIds {
+			permissionIds[k] = fmt.Sprintf("%d", v)
+		}
+		adminGroup.PermissionIds = strings.Join(permissionIds, ",")
 	}
 	if !gconv.IsEmpty(request.Sort) {
 		adminGroup.Sort = request.Sort

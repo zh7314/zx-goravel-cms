@@ -46,9 +46,9 @@ func (r *RequestLogService) GetList(request requests.RequestLogRequest) (map[str
 	}
 
 	if request.Page > 0 && request.PageSize > 0 {
-		orm.Order("sort asc").Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
+		orm.Order("id desc").Paginate(request.Page, request.PageSize, &list, &count)
 	} else {
-		orm.Order("sort asc").Order("id desc").Get(&list)
+		orm.Order("id desc").Get(&list)
 		count = int64(len(list))
 	}
 

@@ -2,11 +2,14 @@ package admin
 
 import (
 	"errors"
+	"fmt"
 	"github.com/goravel/framework/facades"
 	"goravel/app/models"
 	requests "goravel/app/requests/admin"
 	"goravel/app/utils/gconv"
+	"goravel/app/utils/str"
 	"html"
+	"strings"
 )
 
 type AdminService struct {
@@ -76,8 +79,33 @@ func (r *AdminService) GetList(request requests.AdminRequest) (map[string]interf
 		count = int64(len(list))
 	}
 
+	result := make([]map[string]interface{}, len(list))
+	if len(list) != 0 {
+		for i, v := range list {
+			result[i] = make(map[string]interface{})
+			result[i]["id"] = v.ID
+			result[i]["admin_group_ids"] = strings.Split(v.AdminGroupIds, ",")
+			result[i]["avatar"] = v.Avatar
+			result[i]["email"] = v.Email
+			result[i]["is_admin"] = v.IsAdmin
+			result[i]["login_ip"] = v.LoginIp
+			result[i]["mobile"] = v.Mobile
+			result[i]["name"] = v.Name
+			result[i]["password"] = v.Password
+			result[i]["real_name"] = v.RealName
+			result[i]["salt"] = v.Salt
+			result[i]["sex"] = v.Sex
+			result[i]["sort"] = v.Sort
+			result[i]["status"] = v.Status
+			result[i]["token"] = v.Token
+			result[i]["token_time"] = v.TokenTime
+			result[i]["create_at"] = v.CreateAt
+			result[i]["update_at"] = v.UpdateAt
+		}
+	}
+
 	res := make(map[string]interface{})
-	res["list"] = list
+	res["list"] = result
 	res["count"] = count
 
 	return res, nil
@@ -160,7 +188,12 @@ func (r *AdminService) Add(request requests.AdminRequest) (bool, error) {
 	var admin models.Admin
 
 	if !gconv.IsEmpty(request.AdminGroupIds) {
-		admin.AdminGroupIds = html.EscapeString(request.AdminGroupIds)
+		var adminGroupIds = make([]string, len(request.AdminGroupIds))
+		for k, v := range request.AdminGroupIds {
+			adminGroupIds[k] = fmt.Sprintf("%d", v)
+		}
+
+		admin.AdminGroupIds = strings.Join(adminGroupIds, ",")
 	}
 	if !gconv.IsEmpty(request.Avatar) {
 		admin.Avatar = html.EscapeString(request.Avatar)
@@ -181,7 +214,7 @@ func (r *AdminService) Add(request requests.AdminRequest) (bool, error) {
 		admin.Name = html.EscapeString(request.Name)
 	}
 	if !gconv.IsEmpty(request.Password) {
-		admin.Password = html.EscapeString(request.Password)
+		admin.Password = str.Md5(str.Md5(html.EscapeString(request.Password)))
 	}
 	if !gconv.IsEmpty(request.RealName) {
 		admin.RealName = html.EscapeString(request.RealName)
@@ -225,7 +258,12 @@ func (r *AdminService) Save(request requests.AdminRequest) (bool, error) {
 	}
 
 	if !gconv.IsEmpty(request.AdminGroupIds) {
-		admin.AdminGroupIds = html.EscapeString(request.AdminGroupIds)
+		var adminGroupIds = make([]string, len(request.AdminGroupIds))
+		for k, v := range request.AdminGroupIds {
+			adminGroupIds[k] = fmt.Sprintf("%d", v)
+		}
+
+		admin.AdminGroupIds = strings.Join(adminGroupIds, ",")
 	}
 	if !gconv.IsEmpty(request.Avatar) {
 		admin.Avatar = html.EscapeString(request.Avatar)
@@ -246,7 +284,7 @@ func (r *AdminService) Save(request requests.AdminRequest) (bool, error) {
 		admin.Name = html.EscapeString(request.Name)
 	}
 	if !gconv.IsEmpty(request.Password) {
-		admin.Password = html.EscapeString(request.Password)
+		admin.Password = str.Md5(str.Md5(html.EscapeString(request.Password)))
 	}
 	if !gconv.IsEmpty(request.RealName) {
 		admin.RealName = html.EscapeString(request.RealName)

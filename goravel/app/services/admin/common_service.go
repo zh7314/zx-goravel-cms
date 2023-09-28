@@ -43,7 +43,6 @@ func (r *CommonService) GetMenu(adminId int64, IsAdmin int) (res []map[string]in
 		result[i]["update_at"] = v.UpdateAt
 		result[i]["sort"] = v.Sort
 		result[i]["hidden"] = v.Hidden
-		//result[i]["children"] = make([]map[string]interface{}, 0)
 		result[i]["children"] = v.Children
 
 		meta := make(map[string]interface{})

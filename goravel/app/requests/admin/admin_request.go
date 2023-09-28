@@ -6,7 +6,7 @@ type AdminRequest struct {
 	ID            int64     `form:"id" json:"id"`                           // ID
 	Page          int       `form:"page" json:"page"`                       // 页码
 	PageSize      int       `form:"pageSize" json:"pageSize"`               // 页大小
-	AdminGroupIds string    `form:"admin_group_ids" json:"admin_group_ids"` // comment 用户权限组ID集合
+	AdminGroupIds []int     `form:"admin_group_ids" json:"admin_group_ids"` // comment 用户权限组ID集合
 	Avatar        string    `form:"avatar" json:"avatar"`                   // comment 用户头像
 	Email         string    `form:"email" json:"email"`                     // comment 邮件
 	IsAdmin       int       `form:"is_admin" json:"is_admin"`               // comment 是否管理员 10是，99不是
