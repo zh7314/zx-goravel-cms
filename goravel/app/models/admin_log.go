@@ -17,7 +17,6 @@ type AdminLog struct {
 	RouteName string           `gorm:"column:route_name" json:"route_name"`               // comment 框架里定义的路由名称
 	UpdateAt  *carbon.DateTime `gorm:"column:update_at;->" json:"update_at"`              // comment 更新时间
 	Url       string           `gorm:"column:url" json:"url"`                             // comment 请求url带参数
-
 }
 
 func (*AdminLog) TableName() string {

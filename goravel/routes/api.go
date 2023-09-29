@@ -18,7 +18,7 @@ func Api() {
 	})
 
 	//有权限检查 middleware.AdminCheck()
-	facades.Route().Prefix("api/admin").Middleware(middleware.AdminLog(), middleware.AdminCheck(), middleware.Recovery()).Group(func(router route.Router) {
+	facades.Route().Prefix("api/admin").Middleware(middleware.AdminCheck(), middleware.AdminLog(), middleware.Recovery()).Group(func(router route.Router) {
 
 		router.Post("getMenu", admin.NewIndexController().GetMenu)       //获取菜单信息
 		router.Post("getInfo", admin.NewIndexController().GetInfo)       //获取用户信息

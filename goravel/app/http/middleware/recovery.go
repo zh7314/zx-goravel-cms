@@ -12,11 +12,9 @@ func Recovery() http.Middleware {
 		defer func() {
 			if r := recover(); r != nil {
 				fmt.Println("系统内部错误")
-				response.Fail(ctx, "", utils.ErrorToString(r))
+				response.AbortFail(ctx, "", utils.ErrorToString(r))
 			}
 		}()
-
-		//fmt.Println("Recovery")
 
 		ctx.Request().Next()
 	}

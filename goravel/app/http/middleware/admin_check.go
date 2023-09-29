@@ -2,12 +2,10 @@ package middleware
 
 import (
 	"errors"
-	"fmt"
 	"github.com/goravel/framework/contracts/http"
 	"github.com/goravel/framework/facades"
 	"goravel/app/models"
 	services "goravel/app/services/admin"
-	"goravel/app/utils"
 	"goravel/app/utils/global"
 	"goravel/app/utils/response"
 	"time"
@@ -19,15 +17,7 @@ func AdminCheck() http.Middleware {
 		_, err := check(ctx)
 		if err != nil {
 			response.Grant(ctx, "", err.Error())
-			return
 		}
-		defer func() {
-			if r := recover(); r != nil {
-				fmt.Println("系统内部错误")
-				response.Fail(ctx, "", utils.ErrorToString(r))
-				return
-			}
-		}()
 		ctx.Request().Next()
 	}
 }
