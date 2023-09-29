@@ -46,7 +46,7 @@ func check(ctx http.Context) (res bool, ok error) {
 
 	url := ctx.Request().Path()
 	//权限验证
-	err = services.NewCommonService().Check(a.ID, url)
+	_, err = services.NewCommonService().Check(a.ID, url)
 	if err != nil {
 		return false, err
 	}
