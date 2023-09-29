@@ -1,6 +1,8 @@
 package admin
 
 import (
+	"errors"
+	"fmt"
 	"github.com/goravel/framework/facades"
 	"goravel/app/models"
 )
@@ -88,12 +90,33 @@ func (r *CommonService) TreeMenus(menu []*models.AdminPermission, parentId int64
 	return data
 }
 
+/*
+ * 过滤权限
+ */
 func (r *CommonService) FilterMenu(menu []map[string]interface{}, adminId int64) (res []map[string]interface{}, err error) {
 
 	return res, nil
 }
 
+func (r *CommonService) GetAllowUrl() []string {
+	return []string{"/api/admin/main", "/api/admin/login", "/api/admin/main", "/api/admin/logout", "/api/admin/upload", "/api/admin/adminPermission/getMenu", "/api/admin/adminPermission/getPermissionTree", "/api/admin/getInfo"}
+}
+
+/*
+ * 验证权限
+ */
 func (r *CommonService) Check(adminId int64, url string) (res bool, err error) {
 
+	var admin models.Admin
+
+	_, err = facades.Orm().Query().Where("id", adminId).Delete(&admin)
+	if err != nil {
+		return false, errors.New("管理员信息丢失，联系管理员")
+	}
+	if admin.IsAdmin != 10 {
+		urls := r.GetAllowUrl()
+		fmt.Print(urls)
+
+	}
 	return true, nil
 }
