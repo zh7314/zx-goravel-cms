@@ -63,10 +63,10 @@ export default {
 			// console.log(res)
 			if (res.code == 200) {
 				Object.assign(this.form, res.data)
-
-				console.log(this.form)
 				//防止重置密码
 				this.form.password = null
+				this.form.admin_group_ids = null
+				// console.log(this.form)
 			} else {
 				this.$alert(res.msg, "提示", {type: 'error'})
 			}
