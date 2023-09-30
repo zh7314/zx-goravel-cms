@@ -4,7 +4,10 @@ import (
 	"errors"
 	"fmt"
 	"github.com/goravel/framework/facades"
+	"github.com/jianfengye/collection"
 	"goravel/app/models"
+	"goravel/app/utils/gconv"
+	"strings"
 )
 
 type CommonService struct {
@@ -12,6 +15,10 @@ type CommonService struct {
 
 func NewCommonService() *CommonService {
 	return &CommonService{}
+}
+
+func (r *CommonService) GetAllowUrl() []string {
+	return []string{"/api/admin/main", "/api/admin/login", "/api/admin/main", "/api/admin/logout", "/api/admin/upload", "/api/admin/adminPermission/getMenu", "/api/admin/adminPermission/getPermissionTree", "/api/admin/getInfo"}
 }
 
 func (r *CommonService) GetMenu(adminId int64, IsAdmin int) (res []map[string]interface{}, err error) {
@@ -57,11 +64,13 @@ func (r *CommonService) GetMenu(adminId int64, IsAdmin int) (res []map[string]in
 
 	menu := r.TreeMenu(result, 0)
 
-	if IsAdmin == 10 {
-		return menu, nil
-	} else {
-		return r.FilterMenu(menu, adminId)
-	}
+	//if IsAdmin == 10 {
+	//	return menu, nil
+	//} else {
+	//	return r.FilterMenu(menu, adminId)
+	//}
+
+	return menu, nil
 }
 
 func (r *CommonService) TreeMenu(menu []map[string]interface{}, parentId int64) []map[string]interface{} {
@@ -91,15 +100,11 @@ func (r *CommonService) TreeMenus(menu []*models.AdminPermission, parentId int64
 }
 
 /*
- * 过滤权限
+ * 过滤权限 占时无法实现
  */
 func (r *CommonService) FilterMenu(menu []map[string]interface{}, adminId int64) (res []map[string]interface{}, err error) {
 
 	return res, nil
-}
-
-func (r *CommonService) GetAllowUrl() []string {
-	return []string{"/api/admin/main", "/api/admin/login", "/api/admin/main", "/api/admin/logout", "/api/admin/upload", "/api/admin/adminPermission/getMenu", "/api/admin/adminPermission/getPermissionTree", "/api/admin/getInfo"}
 }
 
 /*
@@ -108,15 +113,84 @@ func (r *CommonService) GetAllowUrl() []string {
 func (r *CommonService) Check(adminId int64, url string) (res bool, err error) {
 
 	var admin models.Admin
-
-	_, err = facades.Orm().Query().Where("id", adminId).Delete(&admin)
+	err = facades.Orm().Query().Where("id", adminId).FirstOrFail(&admin)
 	if err != nil {
-		return false, errors.New("管理员信息丢失，联系管理员")
+		return false, errors.New("用户没设置权限")
 	}
+
+	//管理员不需要处理
 	if admin.IsAdmin != 10 {
 		urls := r.GetAllowUrl()
-		fmt.Print(urls)
+		//是否在通用
+		co := collection.NewStrCollection(urls)
+		if !co.Contains(url) {
+			//不在$allow_url，再查询在授权数据里面是否有
+			permissionIds, ok := r.GetAdminPermission(adminId, false)
 
+			if ok != nil {
+				return false, ok
+			}
+			fmt.Print("11111111111111111111")
+			fmt.Print(permissionIds)
+		}
 	}
 	return true, nil
+}
+
+func (r *CommonService) GetAdminPermission(adminId int64, father bool) (res []int64, err error) {
+
+	var admin models.Admin
+	err = facades.Orm().Query().Where("id", adminId).FirstOrFail(&admin)
+	if err != nil {
+		return res, errors.New("用户数据不存在")
+	}
+	if gconv.IsEmpty(admin.AdminGroupIds) {
+		return res, errors.New("没有权限")
+	}
+	ids := strings.Split(admin.AdminGroupIds, ",")
+
+	var groups []models.AdminGroup
+	facades.Orm().Query().Select("permission_ids").Where("id in ?", ids).Get(&groups)
+
+	if gconv.IsEmpty(groups) {
+		return res, errors.New("没有权限")
+	}
+
+	var groupIds []string
+	for _, v := range groups {
+		temp := strings.Split(v.PermissionIds, ",")
+		groupIds = append(groupIds, temp...)
+	}
+
+	co := collection.NewStrCollection(groupIds)
+	cn := co.Unique()
+	uniqueIds, err := cn.ToStrings()
+	if err != nil {
+		return res, err
+	}
+	//fmt.Print(uniqueIds)
+	//防止数据出错
+	var permissions []models.AdminPermission
+	facades.Orm().Query().Where("id in ?", uniqueIds).Get(&permissions)
+
+	var returnIds []int64
+	for _, v := range permissions {
+		if father {
+			returnIds = append(returnIds, v.ParentId)
+		} else {
+			returnIds = append(returnIds, v.ID)
+		}
+	}
+	return returnIds, nil
+}
+
+func (r *CommonService) GetPermissionUrl(ids []int64) []models.AdminPermission {
+
+	var permissions []models.AdminPermission
+	facades.Orm().Query().Where("id in ?", ids).Get(&permissions)
+
+	//facades.Orm().Query().Find(&permissions, ids)
+	//var urls []string
+	//facades.Orm().Query().Model(&models.AdminPermission{}).Pluck("age", &urls)
+	return permissions
 }
