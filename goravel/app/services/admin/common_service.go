@@ -126,12 +126,13 @@ func (r *CommonService) Check(adminId int64, url string) (res bool, err error) {
 		if !co.Contains(url) {
 			//不在$allow_url，再查询在授权数据里面是否有
 			permissionIds, ok := r.GetAdminPermission(adminId, false)
-
 			if ok != nil {
 				return false, ok
 			}
+
 			fmt.Print("11111111111111111111")
 			fmt.Print(permissionIds)
+
 		}
 	}
 	return true, nil

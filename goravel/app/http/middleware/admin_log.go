@@ -6,6 +6,7 @@ import (
 	"github.com/goravel/framework/contracts/http"
 	"github.com/goravel/framework/facades"
 	"goravel/app/models"
+	"goravel/app/utils/gconv"
 )
 
 func AdminLog() http.Middleware {
@@ -33,8 +34,11 @@ func log(ctx http.Context) (res bool, ok error) {
 	log.Url = ctx.Request().Url()
 	log.Path = ctx.Request().Path()
 
-	adminId := ctx.Value("admin_id").(int64)
-	log.AdminId = adminId
+	adminId := ctx.Value("admin_id")
+	if !gconv.IsEmpty(adminId) {
+		log.AdminId = adminId.(int64)
+	}
+
 	log.RequestIp = ctx.Request().Ip()
 
 	err := facades.Orm().Query().Save(&log)
