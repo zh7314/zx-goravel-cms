@@ -5,6 +5,7 @@ import (
 	"github.com/goravel/framework/contracts/http"
 	"github.com/goravel/framework/facades"
 	"goravel/app/models"
+	"goravel/app/services/admin"
 	"goravel/app/utils/global"
 	"goravel/app/utils/response"
 	"time"
@@ -44,11 +45,11 @@ func check(ctx http.Context) (res bool, ok error) {
 	ctx.WithValue("admin_id", a.ID)
 
 	//权限验证
-	//url := ctx.Request().Path()
-	//_, err = services.NewCommonService().Check(a.ID, url)
-	//if err != nil {
-	//	return false, err
-	//}
+	url := ctx.Request().Path()
+	_, err = admin.NewCommonService().Check(a.ID, url)
+	if err != nil {
+		return false, err
+	}
 
 	return true, nil
 }

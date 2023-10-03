@@ -18,7 +18,7 @@ func NewCommonService() *CommonService {
 }
 
 func (r *CommonService) GetAllowUrl() []string {
-	return []string{"/api/admin/main", "/api/admin/login", "/api/admin/main", "/api/admin/logout", "/api/admin/upload", "/api/admin/adminPermission/getMenu", "/api/admin/adminPermission/getPermissionTree", "/api/admin/getInfo"}
+	return []string{"/api/admin/main", "/api/admin/login", "/api/admin/main", "/api/admin/logout", "/api/admin/upload", "/api/admin/getMenu", "/api/admin/uploadPic", "/api/admin/uploadFile", "/api/admin/getInfo"}
 }
 
 func (r *CommonService) GetMenu(adminId int64, IsAdmin int) (res []map[string]interface{}, err error) {
@@ -64,11 +64,11 @@ func (r *CommonService) GetMenu(adminId int64, IsAdmin int) (res []map[string]in
 
 	menu := r.TreeMenu(result, 0)
 
-	//if IsAdmin == 10 {
-	//	return menu, nil
-	//} else {
-	//	return r.FilterMenu(menu, adminId)
-	//}
+	if IsAdmin == 10 {
+		return menu, nil
+	} else {
+		return r.FilterMenu(menu, adminId)
+	}
 
 	return menu, nil
 }
@@ -104,6 +104,25 @@ func (r *CommonService) TreeMenus(menu []*models.AdminPermission, parentId int64
  */
 func (r *CommonService) FilterMenu(menu []map[string]interface{}, adminId int64) (res []map[string]interface{}, err error) {
 
+	ids, err := r.GetAdminPermission(adminId, false)
+	if err != nil {
+		return res, err
+	}
+	fmt.Print(ids)
+
+	newMenu := make(map[string]interface{})
+	fmt.Print(newMenu)
+
+	//if gconv.IsEmpty(menu) {
+	//	for _, v1 := range menu {
+	//		if gconv.IsEmpty(v1["children"]) {
+	//			for _, v2 := range v1["children"] {
+	//				fmt.Print(v2)
+	//			}
+	//		}
+	//	}
+	//}
+
 	return res, nil
 }
 
@@ -120,9 +139,9 @@ func (r *CommonService) Check(adminId int64, url string) (res bool, err error) {
 
 	//管理员不需要处理
 	if admin.IsAdmin != 10 {
-		urls := r.GetAllowUrl()
-		//是否在通用
-		co := collection.NewStrCollection(urls)
+		allowUrl := r.GetAllowUrl()
+		//是否在通用url
+		co := collection.NewStrCollection(allowUrl)
 		if !co.Contains(url) {
 			//不在$allow_url，再查询在授权数据里面是否有
 			permissionIds, ok := r.GetAdminPermission(adminId, false)
@@ -130,8 +149,15 @@ func (r *CommonService) Check(adminId int64, url string) (res bool, err error) {
 				return false, ok
 			}
 
-			fmt.Print("11111111111111111111")
-			fmt.Print(permissionIds)
+			urls := r.GetPermissionUrl(permissionIds)
+			if gconv.IsEmpty(urls) {
+				return false, errors.New("没有权限1")
+			}
+
+			c := collection.NewStrCollection(urls)
+			if !c.Contains(url) {
+				return false, errors.New("没有权限2")
+			}
 
 		}
 	}
@@ -185,13 +211,21 @@ func (r *CommonService) GetAdminPermission(adminId int64, father bool) (res []in
 	return returnIds, nil
 }
 
-func (r *CommonService) GetPermissionUrl(ids []int64) []models.AdminPermission {
+func (r *CommonService) GetPermissionUrl(ids []int64) []string {
 
 	var permissions []models.AdminPermission
-	facades.Orm().Query().Where("id in ?", ids).Get(&permissions)
+	facades.Orm().Query().Select("path").Where("id in ?", ids).Get(&permissions)
 
 	//facades.Orm().Query().Find(&permissions, ids)
 	//var urls []string
 	//facades.Orm().Query().Model(&models.AdminPermission{}).Pluck("age", &urls)
-	return permissions
+
+	urls := []string{}
+	if len(permissions) > 0 {
+
+		for _, v := range permissions {
+			urls = append(urls, v.Path)
+		}
+	}
+	return urls
 }

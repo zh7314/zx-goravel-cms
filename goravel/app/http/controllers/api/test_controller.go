@@ -20,9 +20,13 @@ func NewTestController() *TestController {
 
 func (r *TestController) Test(ctx http.Context) http.Response {
 
-	res, err := admin.NewCommonService().Check(5, "/api/admin/login1111")
+	res, err := admin.NewCommonService().GetMenu(5, 99)
 	fmt.Print(res)
 	fmt.Print(err)
+
+	//ids := []int64{1, 2, 3, 10}
+	//tt := admin.NewCommonService().GetPermissionUrl(ids)
+	//fmt.Print(tt)
 
 	return response.Success(ctx, str.Md5(str.Md5("admin")), "成功")
 }
