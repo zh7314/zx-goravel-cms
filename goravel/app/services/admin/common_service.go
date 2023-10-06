@@ -64,11 +64,11 @@ func (r *CommonService) GetMenu(adminId int64, IsAdmin int) (res []map[string]in
 
 	menu := r.TreeMenu(result, 0)
 
-	if IsAdmin == 10 {
-		return menu, nil
-	} else {
-		return r.FilterMenu(menu, adminId)
-	}
+	//if IsAdmin == 10 {
+	//	return menu, nil
+	//} else {
+	//	return r.FilterMenu(menu, adminId)
+	//}
 
 	return menu, nil
 }
@@ -104,6 +104,8 @@ func (r *CommonService) TreeMenus(menu []*models.AdminPermission, parentId int64
  */
 func (r *CommonService) FilterMenu(menu []map[string]interface{}, adminId int64) (res []map[string]interface{}, err error) {
 
+	//fmt.Print(menu)
+
 	ids, err := r.GetAdminPermission(adminId, false)
 	if err != nil {
 		return res, err
@@ -113,15 +115,17 @@ func (r *CommonService) FilterMenu(menu []map[string]interface{}, adminId int64)
 	newMenu := make(map[string]interface{})
 	fmt.Print(newMenu)
 
-	//if gconv.IsEmpty(menu) {
-	//	for _, v1 := range menu {
-	//		if gconv.IsEmpty(v1["children"]) {
-	//			for _, v2 := range v1["children"] {
-	//				fmt.Print(v2)
-	//			}
-	//		}
-	//	}
-	//}
+	if gconv.IsEmpty(menu) {
+		for _, v1 := range menu {
+			//if gconv.IsEmpty(v1["children"]) {
+			//	for _, v2 := range v1["children"] {
+			//		fmt.Print(v2)
+			//	}
+			//}
+
+			fmt.Print(v1)
+		}
+	}
 
 	return res, nil
 }
