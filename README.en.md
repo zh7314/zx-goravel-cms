@@ -19,6 +19,10 @@ Goravel 1.13
 scui 1.6.9      
 node v14.21.3       
 
+### curd tools
+https://gitee.com/open-php/php-code-generator  
+https://github.com/zh7314/php-code-generator
+
 ### effect picture
 ![1.png](./images/1.png)
 ![2.png](./images/2.png)
