@@ -13,7 +13,8 @@ go 1.20
 Goravel 1.13     
 
 ### database sql(use the latest date file)
-`goravel\doc\sql_bak` mysql 8.0
+`goravel\doc\sql_bak` 
+mysql 8.0
 Default system account password: admin/admin
 
 ### Front-end development component

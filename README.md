@@ -13,7 +13,8 @@ go 1.20
 Goravel 1.13    
 
 ### 数据库 sql(使用最新日期文件)
-`goravel\doc\sql_bak` mysql 8.0
+`goravel\doc\sql_bak` 
+mysql 8.0
 系统默认账号密码： admin/admin
 
 ### 前端开发组件
